@@ -4,7 +4,7 @@
 
 - use yarn only <br>
 
-You should already have yarn installed. If not look her for [info on installation](https://classic.yarnpkg.com/lang/en/docs/install/).
+You should already have yarn installed. If not look for [info on installation](https://classic.yarnpkg.com/lang/en/docs/install/).
 
 
 Run  
