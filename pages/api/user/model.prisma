@@ -1,5 +1,5 @@
 model User{
-  id String @id @default(uuid())
+  identifier String @id @default(uuid())
   name String
   image String 
   username String
