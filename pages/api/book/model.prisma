@@ -1,0 +1,5 @@
+model book {
+    identifier String   @id @default(uuid())
+    createdAt DateTime @default(now())   
+    updatedAt DateTime @updatedAt   
+}
