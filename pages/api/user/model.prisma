@@ -1,7 +1,10 @@
 model User{
   identifier String @id @default(uuid())
-  name String
-  image String 
+  name String?
+  image String? 
   username String
-  telegramid String
+  telegramId String
+  
+
 }
+
