@@ -21,7 +21,8 @@
 		"prismix": "^1.0.21",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
-		"util": "^0.12.4"
+		"util": "^0.12.4",
+		"zod": "^3.19.1"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.19.0",

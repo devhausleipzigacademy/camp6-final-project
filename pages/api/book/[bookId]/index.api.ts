@@ -6,7 +6,6 @@ import { LANGUAGES, GENRES } from "../index.api";
 
 // Zod Model for Updating Book
 const putBook = z.object({
-	// TODO: update for put
 	title: z.string().optional(),
 	author: z.string().optional(),
 	language: z.enum(LANGUAGES).optional(),
