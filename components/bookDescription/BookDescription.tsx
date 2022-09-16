@@ -3,11 +3,36 @@ import { FaTelegram } from "react-icons/fa";
 import { HiChevronLeft } from "react-icons/hi";
 import { AiOutlineHeart } from "react-icons/ai";
 import Image from "next/image";
+import { type } from "os";
+import { ReactNode } from "react";
 
 function event() {
 	return console.log("event triggered");
 }
-function BookDescription() {
+
+export type BookDescriptionProps = {
+	backButtonHandler: Function;
+	likedButtonHandler: Function;
+	title: String;
+	author: String;
+	description: String;
+	image: String;
+	children: [ReactNode, ReactNode, ReactNode];
+};
+
+export function BookDescription({
+	backButtonHandler,
+	likedButtonHandler,
+	title,
+	author,
+	description,
+	image,
+	children,
+}: BookDescriptionProps) {
+	console.log(children);
+	console.log("sdsd");
+	const [Tags, GoogleButton, TelegramButton] = children;
+
 	const myLoader = () => {
 		return `http://gingkopress.com/wp/wp-content/uploads/product_images/palate-palette/c01.jpg`;
 	};
@@ -27,44 +52,27 @@ function BookDescription() {
 						<Image
 							className="rounded-xl "
 							loader={myLoader}
-							src="/public/testingImages/book.jpg"
+							src={image as string}
 							alt="Picture of the author"
 							width={215}
 							height={300}
 						/>
 						<div className="flex flex-col items-center">
-							<p className="font-bold text-2xl">Palate Pallete</p>
-							<p className="text-slate-500 text-lg">by Viktionary</p>
+							<p className="font-bold text-2xl">{title}</p>
+							<p className="text-slate-500 text-lg">by {author}</p>
 						</div>
 					</div>
 				</div>
 				<div className="flex flex-col ml-10 pl-2">
 					<div className=" border-l-2 pl-2">
 						<p className="mb-2 text-xl font-bold">Description</p>
-						<p className="text-gray-400">
-							Palate Palette was inspired by a simple question that floated around the
-							victionary studio one day: ‘What do the best artists/illustrators around
-							the world love to eat?’
-						</p>
+						<p className="text-gray-400">{description}</p>
 					</div>
-					<div className="flex mt-4 gap-2">
-						<div className="bg-[#fef1e0] w-fit p-4 rounded-xl ">Art</div>
-						<div className="bg-[#fbe9e6] w-fit p-4 rounded-xl">Food & Drinks</div>
-					</div>
+					<p>{Tags}</p>
 				</div>
 				<div className="flex gap-7 my-10">
-					<button onClick={event}>
-						<div className="bg-slate-300 gap-1 p-6 items-center flex rounded-2xl ">
-							<GrLocation />
-							<p>open in maps</p>
-						</div>
-					</button>
-					<button onClick={event}>
-						<div className="bg-slate-300 flex gap-1 rounded-2xl items-center p-6">
-							<FaTelegram />
-							<p>message user</p>
-						</div>
-					</button>
+					<button>{GoogleButton}</button>
+					<button>{TelegramButton}</button>
 				</div>
 			</div>
 		</>
