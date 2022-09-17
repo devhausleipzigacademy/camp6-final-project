@@ -29,8 +29,6 @@ export function BookDescription({
 	image,
 	children,
 }: BookDescriptionProps) {
-	console.log(children);
-	console.log("sdsd");
 	const [Tags, GoogleButton, TelegramButton] = children;
 
 	const myLoader = () => {

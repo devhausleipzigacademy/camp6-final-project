@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import BookDescription from "../components/bookDescription/BookDescription";
+import BookDescription from "../components/BookDescription/BookDescription";
 
 function MyApp({ Component, pageProps }: AppProps) {
 	return (

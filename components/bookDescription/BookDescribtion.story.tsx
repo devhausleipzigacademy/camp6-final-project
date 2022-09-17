@@ -3,7 +3,6 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 import { FaTelegram } from "react-icons/fa";
 import { GrLocation } from "react-icons/gr";
-import BookDescriptionProps from "./BookDescription";
 import BookDescription from "./BookDescription";
 
 export function ExampleTags() {
@@ -37,6 +36,9 @@ export function ExampleTelegramButton() {
 export default {
 	title: "Book Review/Descripton",
 	component: BookDescription,
+	argTypes: {
+		onClick: { action: "cliskc" },
+	},
 } as ComponentMeta<typeof BookDescription>;
 const Template: ComponentStory<typeof BookDescription> = (args) => (
 	<BookDescription {...args} />
