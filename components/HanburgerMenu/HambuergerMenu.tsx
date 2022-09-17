@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { TiThMenu } from "react-icons/ti";
+import clsx from "clsx";
 
 export interface HamburgerMenuProps {
 	active?: boolean;
@@ -13,11 +15,26 @@ export function HamburgerMenu({
 	children,
 	...props
 }: HamburgerMenuProps) {
+	const [isactive, setIsActive] = useState(false);
+
+	function clickHandler(e: any) {
+		setIsActive((prev) => !prev);
+		e.preventDefault();
+		return console.log("sadasd");
+	}
+	console.log(isactive);
 	return (
 		<>
-			<button className={size} type="button">
-				<TiThMenu />
+			<button onClick={clickHandler}>
+				<TiThMenu
+					className={clsx(
+						isactive ? "text-purple-700" : "text-yellow-500",
+						"active:text-green-500 h-10 w-10"
+					)}
+				/>
 			</button>
+
+			<form action=""></form>
 		</>
 	);
 }

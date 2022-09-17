@@ -15,8 +15,10 @@
 		"db:studio": "yarn prisma studio"
 	},
 	"dependencies": {
+		"@headlessui/react": "^1.7.2",
 		"@prisma/client": "^4.3.1",
 		"@storybook/addon-viewport": "^6.5.12",
+		"clsx": "^1.2.1",
 		"next": "12.3.0",
 		"prisma": "^4.3.1",
 		"prismix": "^1.0.21",
