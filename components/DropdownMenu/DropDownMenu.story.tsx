@@ -3,7 +3,7 @@ import { FaDropbox } from "react-icons/fa";
 import DropDownMenu from "./DropdownMenu";
 
 export default {
-	title: "Dropdown/menu",
+	title: "Dropdown/DropdownExample",
 	component: DropDownMenu,
 	argTypes: {
 		onClick: { action: "cliskc" },

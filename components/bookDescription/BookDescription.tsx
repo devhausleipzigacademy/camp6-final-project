@@ -5,6 +5,8 @@ import { AiOutlineHeart } from "react-icons/ai";
 import Image from "next/image";
 import { type } from "os";
 import { ReactNode } from "react";
+import { CSSProperties } from "react";
+import { ExampleTags } from "./BookDescribtion.story";
 
 function event() {
 	return console.log("event triggered");
@@ -18,6 +20,8 @@ export type BookDescriptionProps = {
 	description: String;
 	image: String;
 	children: [ReactNode, ReactNode, ReactNode];
+	onClick: () => void;
+	backgroundColor: String;
 };
 
 export function BookDescription({
@@ -28,6 +32,8 @@ export function BookDescription({
 	description,
 	image,
 	children,
+	backgroundColor,
+	...props
 }: BookDescriptionProps) {
 	const [Tags, GoogleButton, TelegramButton] = children;
 
@@ -37,12 +43,15 @@ export function BookDescription({
 	return (
 		<>
 			<div className="w-mobile flex flex-col py-5 items-center">
-				<div className="bg-[#fef1e0] px-36 h-fit  relative rounded-3xl py-20 my-5 ">
+				<div
+					style={{ backgroundColor } as CSSProperties}
+					className="bg-[#fef1e0] px-36 h-fit  relative rounded-3xl py-20 my-5 "
+				>
 					<div>
-						<button onClick={event} className="absolute  left-1 top-4">
+						<button {...props} className="absolute  left-1 top-4">
 							<HiChevronLeft className="h-10 w-10" />
 						</button>
-						<button onClick={event} className="absolute top-4 right-3">
+						<button {...props} className="absolute top-4 right-3">
 							<AiOutlineHeart className="h-8 w-8" />
 						</button>
 					</div>
@@ -66,11 +75,11 @@ export function BookDescription({
 						<p className="mb-2 text-xl font-bold">Description</p>
 						<p className="text-gray-400">{description}</p>
 					</div>
-					<p>{Tags}</p>
+					<ExampleTags />
 				</div>
 				<div className="flex gap-7 my-10">
-					<button>{GoogleButton}</button>
-					<button>{TelegramButton}</button>
+					<button {...props}>{GoogleButton}</button>
+					<button {...props}>{TelegramButton}</button>
 				</div>
 			</div>
 		</>

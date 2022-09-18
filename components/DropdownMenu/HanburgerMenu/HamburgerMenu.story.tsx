@@ -3,7 +3,7 @@ import { HamburgerMenu } from "./HambuergerMenu";
 
 const ex = () => console.log("s");
 export default {
-	title: "Component/HamburgerMenu",
+	title: "DropDown/Example1HamburgerMenu",
 	component: HamburgerMenu,
 	argTypes: {
 		onClick: { action: 'console.log("s")' },
