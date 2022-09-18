@@ -6,9 +6,8 @@ import { GrLocation } from "react-icons/gr";
 import BookDescription from "./BookDescription";
 
 import { ReactNode } from "react";
-import { string } from "zod";
 
-export const tagslist = [
+const tagslist = [
 	"Fiction",
 	"Comedy",
 	"Children’s",
@@ -23,27 +22,23 @@ function randomNumber() {
 	return Math.floor(Math.random() * 6);
 }
 
-export const colorss = ["blue", "pink", "red", "orange", "violet", "green"];
+const colors = ["blue", "pink", "red", "orange", "violet", "green"];
 
 // export const colorrr = colorss.slice(0, randomNumber());
 
 export function ExampleTags() {
 	return (
-		<>
+		<div className="flex gap-2 mt-4 ml-1">
 			{tagslist.map((x, idx) => (
 				<>
-					<div className="h-full  w-full p-5">
-						<div className="flex  flex-row ml-10 pl-2">
-							<div
-								className={`bg-${colorss[idx]}-200 rounded-lg text-gray-400 px-2 py-1`}
-							>
-								<p>{x}</p>
-							</div>
-						</div>
-					</div>
+					<button
+						className={`bg-${colors[idx]}-200 rounded-lg text-gray-400   w-fit  px-2 py-1`}
+					>
+						<p>{x}</p>
+					</button>
 				</>
 			))}
-		</>
+		</div>
 	);
 }
 
