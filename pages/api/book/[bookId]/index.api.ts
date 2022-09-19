@@ -12,16 +12,35 @@ const putBook = z.object({
 	description: z.string().optional(),
 	isbn: z.string().optional(),
 	publishYear: z.date().optional(),
-	genre: z.enum(GENRES).array(),
-	tags: z.string().array(),
+	genres: z
+		.enum(GENRES)
+		.array()
+		.refine((arg) => JSON.stringify(arg)),
+	tags: z
+		.string()
+		.array()
+		.refine((arg) => JSON.stringify(arg)),
 	isReserved: z.boolean().optional(),
 });
 
-type PutBook = z.infer<typeof putBook>;
+const getBook = putBook.extend({
+	genres: z.string().refine((arg) => JSON.parse(arg)),
+	tags: z.string().refine((arg) => JSON.parse(arg)),
+	identifier: z.string(),
+	createdAt: z.date(),
+	updatedAt: z.date(),
+	borrowerId: z.string(),
+});
+
+type PostBook = z.infer<typeof putBook>;
+
+type GetBook = z.infer<typeof getBook>;
 
 export default async function handler(
 	req: NextApiRequest,
-	res: NextApiResponse<Book | { id: string } | { message: string; error: any }>
+	res: NextApiResponse<
+		GetBook | { id: string } | { message: string; error: any }
+	>
 ) {
 	try {
 		if (req.method === "GET") {
@@ -30,7 +49,8 @@ export default async function handler(
 			const book = await prisma.book.findFirstOrThrow({
 				where: { identifier: bookId },
 			});
-			res.status(200).json(book);
+			const parsedBook = getBook.parse(book);
+			res.status(200).json(parsedBook);
 		}
 		if (req.method === "PUT") {
 			const data = putBook.parse(req.body);
@@ -53,7 +73,8 @@ export default async function handler(
 					identifier: bookId,
 				},
 			});
-			res.status(200).json(deletedBook);
+			const parsedBook = getBook.parse(deletedBook);
+			res.status(200).json(parsedBook);
 		}
 	} catch (err) {
 		if (err instanceof ZodError) {

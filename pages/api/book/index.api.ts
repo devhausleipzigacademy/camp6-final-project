@@ -1,4 +1,3 @@
-import { Book } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "../../../prisma/db";
 import * as languagesJSON from "../../../languages/ISO-languages.json";
@@ -44,17 +43,34 @@ const postBook = z.object({
 	description: z.string().optional(),
 	isbn: z.string().optional(),
 	publishYear: z.date().optional(),
-	genre: z.enum(GENRES).array(),
-	tags: z.string().array(),
+	genres: z
+		.enum(GENRES)
+		.array()
+		.refine((arg) => JSON.stringify(arg)),
+	tags: z
+		.string()
+		.array()
+		.refine((arg) => JSON.stringify(arg)),
 	isReserved: z.boolean().optional(),
+});
+
+const getBook = postBook.extend({
+	genres: z.string().refine((arg) => JSON.parse(arg)),
+	tags: z.string().refine((arg) => JSON.parse(arg)),
+	identifier: z.string(),
+	createdAt: z.date(),
+	updatedAt: z.date(),
+	borrowerId: z.string(),
 });
 
 type PostBook = z.infer<typeof postBook>;
 
+type GetBook = z.infer<typeof getBook>;
+
 export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse<
-		Book[] | { id: string } | { message: string; error: any }
+		GetBook[] | { id: string } | { message: string; error: any }
 	>
 ) {
 	try {
@@ -62,7 +78,9 @@ export default async function handler(
 			// space to add search filters at some later stage in time
 
 			const books = await prisma.book.findMany();
-			res.status(200).json(books);
+			const parsedBooks = books.map((book) => getBook.parse(book));
+
+			res.status(200).json(parsedBooks);
 		}
 		if (req.method === "POST") {
 			const data = postBook.parse(req.body);
