@@ -1,20 +1,14 @@
-import { type } from "os";
 import { AiOutlineClose } from "react-icons/ai";
-
-export type InputFormProps = {
-	children: [String, String, String, Number, any, any];
-	onClick: () => void;
-};
-
-function InputForm({ children, ...props }: InputFormProps) {
-	const [bookInfo, title, author, postCode, telegramHandle, language] = children;
+import languagesJSON from "../../languages/ISO-languages.json";
+function InputForm() {
 	return (
 		<>
 			<div className="flex flex-col p-10 text-center min  ">
 				<button className="self-end">
 					<AiOutlineClose className="text-slate-400" />
 				</button>
-				<p className="my-4 text-slate-400">{bookInfo}</p>
+
+				<p className="my-4 text-slate-400"></p>
 				<form className="">
 					<div className="flex  flex-col">
 						<input
@@ -23,7 +17,7 @@ function InputForm({ children, ...props }: InputFormProps) {
 							className="py-2 pl-2 outline-none border-gray-300 shadow shadow-slate-300 border rounded-md my-2 placeholder-slate-400"
 						/>
 						<input
-							type="text"
+							type="number"
 							placeholder="###Author"
 							className="py-2 pl-2 outline-noneplaceholder-slate-400 border-gray-300 shadow shadow-slate-300 border rounded-md my-2 "
 						/>
@@ -38,10 +32,24 @@ function InputForm({ children, ...props }: InputFormProps) {
 							className="py-2 pl-2 outline-none border-gray-300 shadow placeholder-slate-400 shadow-slate-300 border rounded-md my-2 "
 						/>
 
-						<select className="py-2 pl-2 text-slate-400 outline-none border-gray-300 shadow shadow-slate-300 border rounded-md my-2">
-							<option>###Language</option>
-							<option>Option 2</option>
-							<option>Option 3</option>
+						<select
+							value={undefined}
+							placeholder="Langugae"
+							className="py-2 pl-2 text-slate-400 outline-none border-gray-300 shadow shadow-slate-300 border rounded-md my-2"
+						>
+							<option disabled hidden value="">
+								Language
+							</option>
+							{Object.entries(languagesJSON).reduce((acc, value) => {
+								const [isoCode, langNames] = value;
+								langNames.forEach((langName) => {
+									if (langName !== "") {
+										// @ts-ignore
+										acc.push(<option value={isoCode}>{langName}</option>);
+									}
+								});
+								return acc;
+							}, [])}
 						</select>
 					</div>
 				</form>

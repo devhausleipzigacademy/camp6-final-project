@@ -9,12 +9,8 @@ export default {
 	},
 } as ComponentMeta<typeof InputForm>;
 
-const Template: ComponentStory<typeof InputForm> = (args) => (
-	<InputForm {...args} />
-);
+const Template: ComponentStory<typeof InputForm> = (args) => <InputForm />;
 
 export const Form = Template.bind({});
 
-Form.args = {
-	children: [],
-};
+Form.args = {};
