@@ -4,7 +4,9 @@ import InputForm from "./InputForm";
 export default {
 	title: "InputForm",
 	component: InputForm,
-	argTypes: {},
+	argTypes: {
+		onClick: { actions: "click" },
+	},
 } as ComponentMeta<typeof InputForm>;
 
 const Template: ComponentStory<typeof InputForm> = (args) => (
@@ -12,3 +14,7 @@ const Template: ComponentStory<typeof InputForm> = (args) => (
 );
 
 export const Form = Template.bind({});
+
+Form.args = {
+	children: [],
+};

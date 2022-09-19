@@ -1,13 +1,20 @@
+import { type } from "os";
 import { AiOutlineClose } from "react-icons/ai";
 
-function InputForm() {
+export type InputFormProps = {
+	children: [String, String, String, Number, any, any];
+	onClick: () => void;
+};
+
+function InputForm({ children, ...props }: InputFormProps) {
+	const [bookInfo, title, author, postCode, telegramHandle, language] = children;
 	return (
 		<>
 			<div className="flex flex-col p-10 text-center min  ">
 				<button className="self-end">
 					<AiOutlineClose className="text-slate-400" />
 				</button>
-				<p className="my-4 text-slate-400">###Book info</p>
+				<p className="my-4 text-slate-400">{bookInfo}</p>
 				<form className="">
 					<div className="flex  flex-col">
 						<input
