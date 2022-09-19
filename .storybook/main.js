@@ -5,6 +5,8 @@ module.exports = {
 	addons: [
 		"@storybook/addon-links",
 		"@storybook/addon-essentials",
+		"@storybook/addon-controls",
+		"@storybook/addon-actions",
 		{
 			/**
 			 * NOTE: fix Storybook issue with PostCSS@8
@@ -35,10 +37,7 @@ module.exports = {
 		 * Fixes font import with /
 		 * @see https://github.com/storybookjs/storybook/issues/12844#issuecomment-867544160
 		 */
-		config.resolve.roots = [
-			path.resolve(__dirname, "../public"),
-			"node_modules",
-		];
+		config.resolve.roots = [path.resolve(__dirname, "../public"), "node_modules"];
 
 		return config;
 	},
