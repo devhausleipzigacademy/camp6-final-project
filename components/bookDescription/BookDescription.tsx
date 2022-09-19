@@ -42,10 +42,10 @@ export function BookDescription({
 	};
 	return (
 		<>
-			<div className="w-mobile flex flex-col py-5 items-center">
+			<div className="flex w-mobile flex-col items-center py-5">
 				<div
 					style={{ backgroundColor } as CSSProperties}
-					className="bg-[#fef1e0] px-36 h-fit  relative rounded-3xl py-20 my-5 "
+					className="relative my-5 h-fit  rounded-3xl bg-[#fef1e0] px-36 py-20 "
 				>
 					<div>
 						<button {...props} className="absolute  left-1 top-4">
@@ -65,19 +65,19 @@ export function BookDescription({
 							height={300}
 						/>
 						<div className="flex flex-col items-center">
-							<p className="font-bold text-2xl">{title}</p>
-							<p className="text-slate-500 text-lg">by {author}</p>
+							<p className="text-2xl font-bold">{title}</p>
+							<p className="text-lg text-slate-500">by {author}</p>
 						</div>
 					</div>
 				</div>
-				<div className="flex flex-col ml-10 pl-2">
+				<div className="ml-10 flex flex-col pl-2">
 					<div className=" border-l-2 pl-2">
 						<p className="mb-2 text-xl font-bold">Description</p>
 						<p className="text-gray-400">{description}</p>
 					</div>
 					<ExampleTags />
 				</div>
-				<div className="flex gap-7 my-10">
+				<div className="my-10 flex gap-7">
 					<button {...props}>{GoogleButton}</button>
 					<button {...props}>{TelegramButton}</button>
 				</div>
