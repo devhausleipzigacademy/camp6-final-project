@@ -34,10 +34,6 @@ interface ButtonProps {
 	 */
 	children: ReactNode;
 	/**
-	 * Optional label
-	 */
-	label?: string;
-	/**
 	 * Is the button disabled (optional)?
 	 */
 	disabled?: boolean;
@@ -54,7 +50,6 @@ export const Button = ({
 	children,
 	size = "Small",
 	functionality = "Genre",
-	label,
 	backgroundColor = "blue",
 	disabled = false,
 
@@ -106,8 +101,7 @@ export const Button = ({
 				{...props}
 				disabled={disabled}
 			>
-				{children}
-				{label}
+				<div className="flex items-center gap-2">{children}</div>
 			</button>
 		</>
 	);

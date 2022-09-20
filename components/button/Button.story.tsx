@@ -20,30 +20,26 @@ export const Genre = Template.bind({});
 Genre.args = {
 	functionality: "Genre",
 	backgroundColor: "aquamarine",
-	label: "Fine Dining",
+	children: ["Fine Dining"],
 };
 
 export const External = Template.bind({});
 External.args = {
 	functionality: "External",
 	backgroundColor: "OliveDrab",
-	children: (
-		<div className="flex items-center gap-2">
-			<FaTelegram /> message user
-		</div>
-	),
+	children: [<FaTelegram />, "message user"],
 };
 
 export const FormSubmit = Template.bind({});
 FormSubmit.args = {
 	functionality: "FormSubmit",
-	label: "Submit a book",
+	children: ["Submit a book"],
 	backgroundColor: "OliveDrab",
 };
 
 export const Disabled = Template.bind({});
-FormSubmit.args = {
+Disabled.args = {
 	functionality: "FormSubmit",
-	label: "Are you sure?",
+	children: ["Are you sure?"],
 	disabled: true,
 };
