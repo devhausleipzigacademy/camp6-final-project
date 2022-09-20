@@ -12,7 +12,7 @@ export default async function handler(
 	res: NextApiResponse
 ) {
 	try {
-		if (req.me thod === "PUT ") {
+		if (req.method === "PUT ") {
 			const data = putUser.parse(req.body);
 			const userId = req.query.userId as string;
 			const user = await prisma.user.update({
