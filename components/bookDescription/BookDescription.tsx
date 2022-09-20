@@ -1,4 +1,4 @@
-import { GrLocation } from "react-icons/gr";
+import { GoLocation } from "react-icons/go";
 import { FaTelegram } from "react-icons/fa";
 import { HiChevronLeft } from "react-icons/hi";
 import { AiOutlineHeart } from "react-icons/ai";
@@ -7,6 +7,8 @@ import { type } from "os";
 import { ReactNode } from "react";
 import { CSSProperties } from "react";
 import { ExampleTags } from "./BookDescribtion.story";
+import { Button } from "../button/Button";
+import { External } from "../button/Button.story";
 
 function event() {
 	return console.log("event triggered");
@@ -78,8 +80,14 @@ export function BookDescription({
 					<ExampleTags />
 				</div>
 				<div className="my-10 flex gap-7">
-					<button {...props}>{GoogleButton}</button>
-					<button {...props}>{TelegramButton}</button>
+					<Button {...props} functionality="External">
+						<FaTelegram />
+						Message user
+					</Button>
+					<Button {...props} functionality="External">
+						<GoLocation className="text-white" />
+						Open in maps
+					</Button>
 				</div>
 			</div>
 		</>
