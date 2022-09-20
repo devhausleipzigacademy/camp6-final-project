@@ -1,4 +1,5 @@
 import Image, { StaticImageData } from "next/future/image";
+import Link from "next/link";
 import Thraxas from "../../public/thraxas_and_the_dance_of_death.jpg";
 
 interface BookPreviewProps {
@@ -7,13 +8,17 @@ interface BookPreviewProps {
 	 */
 	imgSrc: string | StaticImageData;
 	/**
+	 * Alt text of image?
+	 */
+	imgAlt: string;
+	/**
 	 * How large should the image be?
 	 */
 	height: string;
 	/**
-	 * Alt text of image?
+	 * Link target of where preview takes you to
 	 */
-	imgAlt: string;
+	linkHref: string;
 	/**
 	 * Annoying nextjs image prop?
 	 */
@@ -28,6 +33,7 @@ export const BookPreview = ({
 	imgAlt = "School of Athens",
 	sizes = "30vw",
 	height = "128px",
+	linkHref,
 
 	...props
 }: BookPreviewProps) => {
@@ -36,14 +42,18 @@ export const BookPreview = ({
 			className="relative aspect-6/9 w-fit bg-slate-600"
 			style={{ height: height }}
 		>
-			<Image
-				src={imgSrc}
-				fill
-				alt={imgAlt}
-				sizes={sizes}
-				title={imgAlt}
-				style={{ objectFit: "contain" }}
-			/>
+			<Link href={linkHref}>
+				<a>
+					<Image
+						src={imgSrc}
+						fill
+						alt={imgAlt}
+						sizes={sizes}
+						title={imgAlt}
+						style={{ objectFit: "contain" }}
+					/>
+				</a>
+			</Link>
 
 			<div className="absolute right-3 -bottom-2 -z-10 ml-10 h-bookShadow w-full bg-slate-200"></div>
 		</div>

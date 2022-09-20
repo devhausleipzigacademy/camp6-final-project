@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import "./button.css";
+
 import clsx from "clsx";
 
 const FUNCTIONS = {
@@ -38,6 +38,10 @@ interface ButtonProps {
 	 */
 	label?: string;
 	/**
+	 * Is the button disabled (optional)?
+	 */
+	disabled?: boolean;
+	/**
 	 * Optional click handler
 	 */
 	onClick?: () => void;
@@ -52,6 +56,7 @@ export const Button = ({
 	functionality = "Genre",
 	label,
 	backgroundColor = "blue",
+	disabled = false,
 
 	...props
 }: ButtonProps) => {
@@ -93,11 +98,13 @@ export const Button = ({
 				type={type}
 				className={clsx(
 					"rounded-md py-1 px-2 text-sm shadow-md",
+					disabled ? "bg-slate-600" : "bg-current",
 					classes,
 					dimension
 				)}
 				style={{ backgroundColor }}
 				{...props}
+				disabled={disabled}
 			>
 				{children}
 				{label}

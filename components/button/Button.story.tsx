@@ -40,3 +40,10 @@ FormSubmit.args = {
 	label: "Submit a book",
 	backgroundColor: "OliveDrab",
 };
+
+export const Disabled = Template.bind({});
+FormSubmit.args = {
+	functionality: "FormSubmit",
+	label: "Are you sure?",
+	disabled: true,
+};

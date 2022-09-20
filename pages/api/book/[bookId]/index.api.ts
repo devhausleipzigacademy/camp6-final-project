@@ -1,4 +1,3 @@
-import { Book } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "../../../../prisma/db";
 import { z, ZodError } from "zod";
