@@ -26,6 +26,22 @@ You can start editing the page by modifying `pages/index.tsx`. The page auto-upd
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
+## Unit Testing with Jest
+
+We use Jest to test our code. It is already set up, just make sure to **yarn install** and create a test file.
+
+Test files should be placed in the same folder as the code you wish to test. The file should have the same name as your code file, plus test.ts: "MyCodeFile.test.ts"
+
+The actual tests are written similarly to Vitest. For details and examples check the documentation linked below.
+
+Open your terminal and use the following script to run Jest:
+
+```bash
+yarn test
+```
+
+Check out [the guide](https://jestjs.io/docs/getting-started) for details.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
