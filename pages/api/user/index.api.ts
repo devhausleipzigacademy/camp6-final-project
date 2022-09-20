@@ -2,7 +2,6 @@ import { PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "../../../prisma/db";
 import { z, ZodError } from "zod";
-//TODO:POST at '/user/' should contain:
 
 const postUser = z.object({
 	identifier: z.string(),
@@ -27,7 +26,7 @@ export default async function handler(
 				},
 			});
 
-			res.status(201).json({ identifier: user.id });
+			res.status(201).json({ id: user.identifier });
 		}
 	} catch (err) {
 		if (err instanceof ZodError) {
