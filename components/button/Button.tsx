@@ -4,7 +4,7 @@ import clsx from "clsx";
 
 const FUNCTIONS = {
 	Genre: "font-serif text-gray-500",
-	External: "text-white font-semibold ",
+	External: "text-white font-semibold fill-white",
 	FormSubmit: "font-sans font-bold text-white",
 };
 
@@ -22,15 +22,15 @@ interface ButtonProps {
 	 */
 	functionality: keyof typeof FUNCTIONS;
 	/**
-	 * What background color to use
+	 * What background color to use (only accepts CSS presets for now)
 	 */
 	backgroundColor?: string;
 	/**
-	 * How large should the button be?
+	 * How large should the button be (default is small)?
 	 */
 	size?: keyof typeof SIZES;
 	/**
-	 * Button contents
+	 * Button contents (can be icon and/or string)
 	 */
 	children: ReactNode;
 	/**
@@ -50,7 +50,7 @@ export const Button = ({
 	children,
 	size = "Small",
 	functionality = "Genre",
-	backgroundColor = "blue",
+	backgroundColor = "aquamarine",
 	disabled = false,
 
 	...props
