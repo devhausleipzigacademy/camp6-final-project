@@ -10,16 +10,19 @@ import { PlaceHolder } from "../components/placeholder";
 import { Button } from "../components/button/Button";
 import { FaTelegram } from "react-icons/fa";
 import { GoLocation } from "react-icons/go";
+import { generateBook } from "./api/book/generator";
 
 const Home: NextPage = (props) => {
-	return (
-		<>
-			{/* <PlaceHolder /> */}
+    console.log(generateBook());
 
-			<InputForm />
-			{/* <SearchBar /> */}
-		</>
-	);
+    return (
+        <>
+            {/* <PlaceHolder /> */}
+
+            <InputForm />
+            {/* <SearchBar /> */}
+        </>
+    );
 };
 
 export default Home;
