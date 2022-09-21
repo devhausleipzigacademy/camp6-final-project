@@ -3,6 +3,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { GoLocation } from "react-icons/go";
 import languagesJSON from "../../languages/ISO-languages.json";
 import { Button } from "../button/Button";
+import { SearchBar } from "../SearchBar/example";
 function InputForm() {
 	const [selectedLang, setSelectedLang] = useState(null);
 	const [queryy, setQuerry] = useState("");
@@ -43,26 +44,9 @@ function InputForm() {
 							className="my-2 rounded-md border-b-2 border-yellow-300 py-2 pl-2 placeholder-slate-400 shadow shadow-slate-300 outline-none"
 						/>
 
-						<select
-							value={undefined}
-							placeholder="Langugae"
-							className="my-2 rounded-md border-b-2 border-yellow-300 py-4 pl-2 placeholder-slate-400 shadow shadow-slate-300 outline-none"
-						>
-							<option disabled hidden value="">
-								Language
-							</option>
-
-							{Object.entries(languagesJSON).reduce((acc, value) => {
-								const [isoCode, langNames] = value;
-								langNames.forEach((langName) => {
-									if (langName !== "") {
-										// @ts-ignore
-										acc.push(<option value={isoCode}>{langName}</option>);
-									}
-								});
-								return acc;
-							}, [])}
-						</select>
+						<form className="my-2 rounded-md border-b-2 border-yellow-300 py-4 pl-2 placeholder-slate-400 shadow shadow-slate-300 outline-none">
+							<SearchBar />
+						</form>
 					</div>
 				</form>
 				<button className="text-end text-xs text-slate-400 underline">
