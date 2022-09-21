@@ -10,7 +10,6 @@ import { PlaceHolder } from "../components/placeholder";
 import { Button } from "../components/button/Button";
 import { FaTelegram } from "react-icons/fa";
 import { GoLocation } from "react-icons/go";
-import { Example } from "../components/examples/example";
 
 const Home: NextPage = (props) => {
 	return (
@@ -18,7 +17,7 @@ const Home: NextPage = (props) => {
 			{/* <PlaceHolder /> */}
 
 			<InputForm />
-			<Example />
+			{/* <SearchBar /> */}
 		</>
 	);
 };
