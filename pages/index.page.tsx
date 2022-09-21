@@ -6,24 +6,19 @@ import { HamburgerMenu } from "../components/DropdownMenu/HanburgerMenu/Hambuerg
 import DropdownMenu from "../components/DropdownMenu/DropdownMenu";
 import { ExampleTags } from "../components/bookDescription/BookDescribtion.story";
 import InputForm from "../components/InputForm/InputForm";
-import Placeholder from "../components/placeholder";
+import { PlaceHolder } from "../components/placeholder";
 import { Button } from "../components/button/Button";
 import { FaTelegram } from "react-icons/fa";
 import { GoLocation } from "react-icons/go";
+import { Example } from "../components/examples/example";
 
 const Home: NextPage = (props) => {
 	return (
 		<>
-			<div className="my-10 flex gap-7">
-				<Button {...props} functionality="External">
-					<FaTelegram />
-					Message user
-				</Button>
-				<Button {...props} functionality="External">
-					<GoLocation className="text-white" />
-					Open in maps
-				</Button>
-			</div>
+			{/* <PlaceHolder /> */}
+
+			<InputForm />
+			<Example />
 		</>
 	);
 };

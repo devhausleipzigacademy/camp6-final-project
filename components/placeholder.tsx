@@ -1,44 +1,68 @@
 import { Combobox } from "@headlessui/react";
-import { useState } from "react";
+import { Fragment, useState } from "react";
+// import languagesJSON from "../languages/ISO-languages.json";
+import exampleJSON from "../languages/ISO-languages.json";
+import { Button } from "./button/Button";
 
-const list = [
-	"furdddkan",
-	"ahmet",
-	"mehmet",
-	"necdet",
-	"stuff",
-	"aslan",
-	"kaplan",
+const people = [
+	"Durward Reynolds",
+	"Kenton Towne",
+	"Therese Wunsch",
+	"Benedict Kessler",
+	"Katelyn Rohan",
 ];
-function Placeholder() {
+
+export function PlaceHolder() {
+	// const [selectedPerson, setSelectedPerson] = useState(langList);
 	const [query, setQuery] = useState("");
-	const filter =
+	const langList = Object.entries(exampleJSON);
+	const listing = Object.entries(exampleJSON).reduce((acc, value) => {
+		const [isoCode, langNames] = value;
+		langNames.forEach((langName) => {
+			if (langName !== "") {
+				// @ts-ignore
+				acc.push(
+					<Combobox.Option key={isoCode} value={langNames}>
+						{langNames}
+					</Combobox.Option>
+				);
+			}
+		});
+		return acc;
+	}, []);
+	console.log(exampleJSON);
+	console.log(listing);
+	const filteredPeople =
 		query === ""
-			? list
-			: list.filter((person) => {
-					console.log(person);
-					return person.includes(query.toLowerCase());
+			? Object.entries(exampleJSON)
+			: Object.entries(exampleJSON).reduce((acc, value) => {
+					const [code, lang] = value;
+					lang.filter((x) => {
+						return x.toLowerCase().includes(query.toLowerCase());
+					});
 			  });
 
-	console.log(filter);
-
 	return (
-		<div>
-			<form action="" method="post">
-				<Combobox defaultValue={list[0]}>
-					<Combobox.Input onChange={(event) => setQuery(event.target.value)} />
-					<Combobox.Options>
-						{filter.map((x, index) => (
-							<Combobox.Option key={index} value={x}>
-								{x}
-							</Combobox.Option>
-						))}
-					</Combobox.Options>
-				</Combobox>
-				<button>Submit</button>
-			</form>
+		<div className="absolute left-[40%] top-4 border border-black outline-none">
+			<Combobox value={query}>
+				<Combobox.Input onChange={(event) => setQuery(event.target.value)} />
+				<Combobox.Options>
+					{Object.entries(exampleJSON).reduce((acc, value) => {
+						const [isoCode, langNames] = value;
+						langNames.forEach((langName) => {
+							if (langName !== "") {
+								// @ts-ignore
+								acc.push(
+									<Combobox.Option key={isoCode} value={isoCode}>
+										{langNames}
+									</Combobox.Option>
+								);
+							}
+						});
+						return acc;
+					}, [])}
+				</Combobox.Options>
+			</Combobox>
 		</div>
 	);
 }
-
-export default Placeholder;
