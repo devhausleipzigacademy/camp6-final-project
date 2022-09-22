@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-h1 {
-	@apply text-green-600;
+@layer base {
+}
+
+@layer components {
+}
+
+@layer utilities {
+	/*  TODO: fit in css for toggle switch  */
+	.toggle-bg:after {
+		content: "";
+		@apply absolute top-0.5 left-0.5 h-5 w-5 rounded-full border border-gray-300 bg-white shadow-sm transition;
+	}
+	input:checked + .toggle-bg:after {
+		transform: translateX(100%);
+		@apply border-white;
+	}
+
+	input:checked + .toggle-bg {
+		@apply border-black bg-green-700;
+	}
 }
