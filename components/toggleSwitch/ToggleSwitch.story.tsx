@@ -8,9 +8,7 @@ export default {
 	title: "Book Share/Components/ToggleSwitch",
 	component: ToggleSwitch,
 	// More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-	argTypes: {
-		backgroundColor: { control: "color" },
-	},
+	argTypes: {},
 } as ComponentMeta<typeof ToggleSwitch>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
@@ -21,12 +19,14 @@ const Template: ComponentStory<typeof ToggleSwitch> = (args) => (
 export const Primary = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Primary.args = {
-	label: "Button",
+	pinDesign: 0,
+	switchDesign: 1,
 };
 
-export const Secondary = Template.bind({});
-Secondary.args = {
-	label: "Button",
+export const alternatePinDesign = Template.bind({});
+alternatePinDesign.args = {
+	pinDesign: 1,
+	switchDesign: 2,
 };
 
 export const Large = Template.bind({});

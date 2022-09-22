@@ -1,8 +1,26 @@
+const toggleSwitchColors = {
+	0: "bg-customGreen",
+	1: "bg-customGrey border-customGrey",
+	2: "bg-buttonGrey border-buttonGrey",
+};
+
+const toggleSwitchPin = {
+	1: "bg-toggleGradient",
+	2: "bg-toggleGradient dropShadow-customPin",
+};
 interface CustomSwitchProps {
 	/**
 	 * optional text to be displayed to screen readers only
 	 */
 	text?: string;
+	/**
+	 * Design of pin element
+	 */
+	pinDesign: number;
+	/**
+	 * Design of switch background element
+	 */
+	switchDesign: number;
 	/**
 	 * value of button (should that be undefined?)
 	 */
@@ -13,11 +31,18 @@ interface CustomSwitchProps {
 	clickHandler: any;
 }
 
-export function ToggleSwitch({ text, value, clickHandler }: CustomSwitchProps) {
+export function ToggleSwitch({
+	text,
+	pinDesign = 0,
+	switchDesign = 0,
+	value,
+	clickHandler,
+}: CustomSwitchProps) {
 	return (
 		<label
 			htmlFor="priority-switch"
-			className="relative mb-4 flex h-6 w-11 cursor-pointer items-center"
+			className="relative mb-4 flex h-4 w-9   
+			cursor-pointer items-center"
 		>
 			<input
 				id="priority-switch"
@@ -27,7 +52,10 @@ export function ToggleSwitch({ text, value, clickHandler }: CustomSwitchProps) {
 				checked={value}
 				onChange={clickHandler}
 			/>
-			<div className="toggle-bg h-full w-full rounded-full border-2 border-slate-300 bg-slate-300"></div>
+			<div
+				className="toggle-bg h-full w-full rounded-full bg-buttonGrey shadow-toggleSwitch  
+			"
+			></div>
 			<span className="sr-only ml-3 text-sm font-medium">{text}</span>
 		</label>
 	);
