@@ -4,7 +4,6 @@ import { prisma } from "../../../prisma/db";
 import { z, ZodError } from "zod";
 
 const postUser = z.object({
-	identifier: z.string(),
 	username: z.string(),
 	telegramId: z.string(),
 	image: z.string().optional(),
@@ -15,14 +14,18 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
+	if (req.method === "GET") {
+		const users = await prisma.user.findMany();
+		res.status(200).json(users);
+	}
 	try {
 		if (req.method === "POST") {
-			const data = postUser.parse(req.body);
+			postUser.parse(req.body);
 			// const data = PrismaClient.parse(req.body);
 
 			const user = await prisma.user.create({
 				data: {
-					...data,
+					...req.body,
 				},
 			});
 

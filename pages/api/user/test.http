@@ -1,0 +1,27 @@
+GET http://localhost:3000/api/user
+
+###
+
+POST http://localhost:3000/api/user
+content-type: application/json
+
+{
+    "username": "testUser",
+    "telegramId": "@hwat"
+}
+
+###
+
+GET http://localhost:3000/api/user/d3f37e58-5051-4093-97f2-1d8e61965f22
+
+###
+
+PUT http://localhost:3000/api/user/d3f37e58-5051-4093-97f2-1d8e61965f22
+content-type: application/json
+
+{
+    "username": "testUser2"
+}
+###
+
+DELETE http://localhost:3000/api/user/d3f37e58-5051-4093-97f2-1d8e61965f22

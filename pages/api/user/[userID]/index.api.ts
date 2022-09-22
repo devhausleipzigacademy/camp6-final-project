@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { User, Prisma } from "@prisma/client";
-import { prisma } from "../../../../prisma/db";
 import { z, ZodError } from "zod";
+import { prisma } from "../../../../prisma/db";
 
 const putUser = z.object({
 	image: z.string().optional(),
@@ -11,30 +10,30 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
+	const userId = req.query.userId as string;
 	try {
-		if (req.method === "PUT ") {
-			const data = putUser.parse(req.body);
-			const userId = req.query.userId as string;
+		if (req.method === "PUT") {
+			putUser.parse(req.body);
+
 			const user = await prisma.user.update({
 				where: {
-					id: userId,
+					identifier: userId,
 				},
-				data: { image: req.body.image, name: req.body.name },
+				data: { ...req.body },
 			});
+			console.log(user);
 			res.status(201).json(user);
 		}
 		if (req.method === "GET") {
-			const userId = req.query.userId as string;
 			const user = await prisma.user.findFirst({
-				where: { id: userId },
+				where: { identifier: userId },
 			});
 			res.status(200).json(user);
 		}
 		if (req.method === "DELETE") {
-			const userId = req.query.userId as string;
 			const deleteUser = await prisma.user.delete({
 				where: {
-					id: userId,
+					identifier: userId,
 				},
 			});
 			res.status(200).json(deleteUser);
