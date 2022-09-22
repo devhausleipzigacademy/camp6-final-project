@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import { GoLocation } from "react-icons/go";
-import languagesJSON from "../../languages/ISO-languages.json";
+
 import { Button } from "../button/Button";
-import { SearchBar } from "../SearchBar/example";
+import { LanguageSearchBar } from "../SearchBars/LanguageSearchBar";
+
 function InputForm() {
 	const [selectedLang, setSelectedLang] = useState(null);
 	const [queryy, setQuerry] = useState("");
@@ -45,7 +45,7 @@ function InputForm() {
 						/>
 
 						<form className="my-2 rounded-md border-b-2 border-yellow-300 py-4 pl-2 placeholder-slate-400 shadow shadow-slate-300 outline-none">
-							<SearchBar />
+							<LanguageSearchBar />
 						</form>
 					</div>
 				</form>

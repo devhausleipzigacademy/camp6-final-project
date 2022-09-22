@@ -1,14 +1,13 @@
-import { GoLocation } from "react-icons/go";
-import { FaTelegram } from "react-icons/fa";
-import { HiChevronLeft } from "react-icons/hi";
-import { AiOutlineHeart } from "react-icons/ai";
 import Image from "next/image";
-import { type } from "os";
 import { ReactNode } from "react";
 import { CSSProperties } from "react";
-import { ExampleTags } from "./BookDescribtion.story";
+import { AiOutlineHeart } from "react-icons/ai";
+import { FaTelegram } from "react-icons/fa";
+import { GoLocation } from "react-icons/go";
+import { HiChevronLeft } from "react-icons/hi";
+
 import { Button } from "../button/Button";
-import { External } from "../button/Button.story";
+import { ExampleTags } from "./BookDescribtion.story";
 
 function event() {
 	return console.log("event triggered");

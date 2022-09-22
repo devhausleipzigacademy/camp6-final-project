@@ -1,12 +1,11 @@
-import { Menu, Transition } from "@headlessui/react";
-import { Fragment, SVGProps, useEffect, useRef, useState } from "react";
-import { HiChevronLeft } from "react-icons/hi";
-import { TiThMenu } from "react-icons/ti";
-import { GiHorseHead } from "react-icons/gi";
+import { Menu, Transition } from '@headlessui/react';
+import { Fragment, SVGProps, useEffect, useRef, useState } from 'react';
+import { GiHorseHead } from 'react-icons/gi';
+import { TiThMenu } from 'react-icons/ti';
 
 export default function DropDownMenu() {
 	return (
-		<div className="fixed top-10 w-56 right-[50%] text-right">
+		<div className="fixed top-10 right-[50%] w-56 text-right">
 			<Menu as="div" className="relative inline-block text-left">
 				<div>
 					<Menu.Button>

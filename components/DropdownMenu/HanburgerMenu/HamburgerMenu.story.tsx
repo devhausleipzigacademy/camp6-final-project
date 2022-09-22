@@ -1,5 +1,6 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { HamburgerMenu } from "./HambuergerMenu";
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+
+import { HamburgerMenu } from './HambuergerMenu';
 
 const ex = () => console.log("s");
 export default {

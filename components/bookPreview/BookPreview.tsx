@@ -1,5 +1,6 @@
 import Image, { StaticImageData } from "next/future/image";
 import Link from "next/link";
+
 import Thraxas from "../../public/thraxas_and_the_dance_of_death.jpg";
 
 interface BookPreviewProps {

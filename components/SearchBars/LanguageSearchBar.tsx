@@ -1,12 +1,11 @@
 import { Combobox } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import { FaAdn } from "react-icons/fa";
-import exampleJSON from "../../languages/ISO-languages.json";
+
 import languagesJSON from "../../languages/ISO-languages.json";
-import { Button } from "../button/Button";
+
 // import languagesJSON from "../languages/ISO-languages.json";
 
-export function SearchBar() {
+export function LanguageSearchBar() {
 	const [selectedLang, setSelectedLang] = useState("");
 	const [selectedLangCode, setSelectedLangCode] = useState("");
 	const [query, setQuery] = useState("");

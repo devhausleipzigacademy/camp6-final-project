@@ -1,6 +1,5 @@
-import { ReactNode } from "react";
-
 import clsx from "clsx";
+import { ReactNode } from "react";
 
 const FUNCTIONS = {
 	Genre: "font-serif text-gray-500",

@@ -1,13 +1,11 @@
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 import React, { Children } from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
-
-import { FaTelegram } from "react-icons/fa";
-import { GrLocation } from "react-icons/gr";
-
 import { ReactNode } from "react";
-import BookDescription from "./BookDescription";
-import { Button } from "../button/Button";
+import { FaTelegram } from "react-icons/fa";
 import { GoLocation } from "react-icons/go";
+
+import { Button } from "../button/Button";
+import BookDescription from "./BookDescription";
 
 const tagslist = [
 	"Fiction",

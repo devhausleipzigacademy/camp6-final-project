@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { TiThMenu } from "react-icons/ti";
-import clsx from "clsx";
+import clsx from 'clsx';
+import { useState } from 'react';
+import { TiThMenu } from 'react-icons/ti';
 
 export interface HamburgerMenuProps {
 	active?: boolean;
