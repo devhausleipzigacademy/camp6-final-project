@@ -14,13 +14,29 @@ module.exports = {
 				// needed for book thumbnails/previews
 				"6/9": "6 / 9",
 			},
+			backgroundImage: {
+				//needed for toggle switch
+				toggleGradient: "linear-gradient(180deg, #FFFFFF 0%, #E8EAEA 100%)",
+			},
+			boxShadow: {
+				//needed for toggle switch
+				toggleSwitch: "inset 0px 6px 8px 3px rgba(0, 0, 0, 0.1)",
+			},
 			colors: {
+				// primary colors to use
+				customGreen: "#B5C285",
+				customYellow: "#F3DE8A",
+				customGrey: "#C4C3C2",
 				// needed for book thumbnails/previews
 				linen: "#F8F3ED",
+				//needed for toggle switch
+				buttonGrey: "#D4D3D3",
 			},
 			dropShadow: {
 				// needed for book thumbnails/previews
 				book: "2px 6px 20px rgba(0, 0, 0, 0.25)",
+				//needed for toggle switch
+				togglePin: "2px 1px 6px rgba(0, 0, 0, 0.25)",
 			},
 			fontFamily: {
 				sora: [],
