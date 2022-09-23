@@ -27,6 +27,12 @@ module.exports = {
 				customGreen: "#B5C285",
 				customYellow: "#F3DE8A",
 				customGrey: "#C4C3C2",
+				customCream: "#FEF1E0",
+				CustomSalmon: "#F4A298",
+				CustomDustyRose: "#E5BABA",
+				CustomBlue: "#A4C5C6",
+				CustomBrown: "#A69F95",
+				CustomBlack: "#2E312F",
 				// needed for book thumbnails/previews
 				linen: "#F8F3ED",
 				//needed for toggle switch

@@ -83,7 +83,7 @@ export default async function handler(
 		}
 		res.status(400).send({
 			message: "Looks like something went wrong. Please try again.",
-			error: err,
+			error: process.env.NODE_ENV == "development" ? err : undefined,
 		});
 	}
 }

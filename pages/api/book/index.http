@@ -1,0 +1,14 @@
+GET  http://localhost:3001/api/books/
+
+###
+
+GET  http://localhost:3001/api/book/1
+
+POST GET  http://localhost:3001/api/users/
+
+{
+    "title": "doar",
+    "author": "tua",
+    "language": "aa",
+    "ownerId": "sdoijsdoivmw"
+}

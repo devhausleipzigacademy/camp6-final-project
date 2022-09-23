@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { prisma } from "../../../../prisma/db";
 import { z, ZodError } from "zod";
-import { LANGUAGES, GENRES } from "../index.api";
+import GENRES from "../../../../enums/genres";
+import LANGUAGES from "../../../../enums/languages";
+import { prisma } from "../../../../prisma/db";
 
 // Zod Model for Updating Book
 const putBook = z.object({
@@ -79,12 +80,12 @@ export default async function handler(
 		if (err instanceof ZodError) {
 			res.status(422).send({
 				message: "Invalid book.",
-				error: err,
+				error: process.env.NODE_ENV == "development" ? err : undefined,
 			});
 		}
 		res.status(404).send({
 			message: "Looks like something went wrong. Please try again.",
-			error: err,
+			error: process.env.NODE_ENV == "development" ? err : undefined,
 		});
 	}
 }
