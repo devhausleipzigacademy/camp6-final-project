@@ -30,12 +30,11 @@ export function HomeSearchBar() {
 						placeholder="#in 04179"
 					/>
 				</div>
-				<div className="relative">
+				<div className="">
 					<button
 						onClick={() => setIsActive((prev) => !prev)}
-						data-bs-toggle="dropdown"
 						type="button"
-						className="dropdown-toggle relative self-center rounded-lg border-2  border-slate-200  bg-white p-2 text-slate-400 outline-none"
+						className="    rounded-lg border-2  border-slate-200  bg-white p-2 text-slate-400 outline-none"
 					>
 						<IoMdOptions className="h-4 w-5 " />
 					</button>
@@ -43,7 +42,7 @@ export function HomeSearchBar() {
 						className={clsx(
 							isActive ? "opacity-100" : "invisible opacity-0 ",
 
-							"absolute flex transform flex-col gap-y-2 rounded-lg bg-orange-200  py-2 px-4 text-start text-sm font-medium text-black  duration-500"
+							"absolute  flex transform flex-col gap-y-2 rounded-lg bg-orange-200  py-2 px-4 text-start text-sm font-medium text-black  duration-500"
 						)}
 					>
 						{placeHolderLang.map((language, idx) => (
