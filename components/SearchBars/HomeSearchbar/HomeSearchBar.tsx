@@ -1,5 +1,6 @@
+import { match } from "assert";
 import clsx from "clsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { IoMdOptions } from "react-icons/io";
 
@@ -12,6 +13,24 @@ export function HomeSearchBar() {
 			return acc;
 		}, {})
 	);
+	function handler(event) {
+		console.log(event.target);
+		const isButton = event.target.matches("#search-form-button *");
+		const isMenu = event.target.matches("#search-form *");
+		console.log(isActive);
+		console.log(isButton, isMenu);
+		if (isButton || (!(isButton || isMenu) && isActive)) {
+			setIsActive((prev) => !prev);
+		}
+	}
+	// #search - form,
+	useEffect(() => {
+		document.addEventListener("click", handler);
+		return () => {
+			document.removeEventListener("click", handler);
+		};
+	}, [isActive]);
+
 	return (
 		<div>
 			<div className="min-w-mobile mt-4 flex w-mobile justify-center gap-6 bg-green-300 py-2">
@@ -30,40 +49,42 @@ export function HomeSearchBar() {
 						placeholder="#in 04179"
 					/>
 				</div>
-				<div className="">
-					<button
-						onClick={() => setIsActive((prev) => !prev)}
-						type="button"
-						className="    rounded-lg border-2  border-slate-200  bg-white p-2 text-slate-400 outline-none"
-					>
-						<IoMdOptions className="h-4 w-5 " />
-					</button>
-					<form
-						className={clsx(
-							isActive ? "opacity-100" : "invisible opacity-0 ",
-
-							"absolute  flex transform flex-col gap-y-2 rounded-lg bg-orange-200  py-2 px-4 text-start text-sm font-medium text-black  duration-500"
-						)}
-					>
-						{placeHolderLang.map((language, idx) => (
-							<label key={language} className="flex gap-1">
-								<input
-									type="checkbox"
-									name=""
-									id=""
-									checked={isChecked[language]}
-									onChange={(event) =>
-										setIsChecked({
-											...isChecked,
-											[language]: event.target.checked,
-										})
-									}
-									className=" mr-1 outline-none"
-								/>
-								{language}
-							</label>
-						))}
-					</form>
+				<div>
+					<div id="search-form-button" className="">
+						<button
+							// onClick={() => setIsActive((prev) => !prev)}
+							type="button"
+							className="    rounded-lg border-2  border-slate-200  bg-white p-2 text-slate-400 outline-none"
+						>
+							<IoMdOptions className="h-4 w-5 " />
+						</button>
+					</div>
+					<div id="search-form">
+						<form
+							className={clsx(
+								isActive ? "opacity-100" : "invisible opacity-0 ",
+								"absolute  flex transform flex-col gap-y-2 rounded-lg bg-orange-200  py-2 px-4 text-start text-sm font-medium text-black  duration-500"
+							)}
+						>
+							{placeHolderLang.map((language, idx) => (
+								<label key={language} className="flex gap-1">
+									<input
+										type="checkbox"
+										name=""
+										checked={isChecked[language]}
+										onChange={(event) =>
+											setIsChecked({
+												...isChecked,
+												[language]: event.target.checked,
+											})
+										}
+										className=" mr-1 outline-none"
+									/>
+									{language}
+								</label>
+							))}
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>
