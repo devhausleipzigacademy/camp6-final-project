@@ -5,17 +5,15 @@ import { LanguageSearchBar } from "../components/SearchBars/LanguageSearchBar";
 import type { NextPage } from "next";
 import { HomeSearchBar } from "../components/SearchBars/HomeSearchbar/HomeSearchBar";
 const Home: NextPage = (props) => {
-  console.log(generateBook());
+	return (
+		<>
+			{/* <PlaceHolder /> */}
+			<HomeSearchBar />
 
-  return (
-    <>
-      {/* <PlaceHolder /> */}
-      <HomeSearchBar />
-
-      <InputForm />
-      {/* <LanguageSearchBar /> */}
-    </>
-  );
+			<InputForm />
+			{/* <LanguageSearchBar /> */}
+		</>
+	);
 };
 
 export default Home;

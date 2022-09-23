@@ -11,40 +11,41 @@ function InputForm() {
 	return (
 		<>
 			<div className="flex w-mobile flex-col p-10 outline-none  ">
-				<div className=" grid grid-flow-col      ">
+				<div className=" mb-10 grid    grid-flow-col  border-b-2   ">
 					<button className="">
 						<AiOutlineClose className="self-center text-center text-slate-400" />
 					</button>
-					<p className=" my-4  text-2xl text-pink-300">###Book Info</p>
+					<p className=" mb-4 text-2xl text-pink-400">New Book Information</p>
 				</div>
-				<form className="">
+				<form className="px-4">
 					<div className="flex  flex-col">
-						<p className="text-start">###Title</p>
+						<p className=" text-start text-slate-400">Title</p>
 						<input
 							type="text"
 							placeholder=""
-							className="my-2 rounded-md border-b-2 border-yellow-300 py-2 pl-2 placeholder-slate-400 shadow shadow-slate-300 outline-none"
+							className="mb-2 border-b-2 outline-none"
 						/>
-						<p className="text-start">###Author</p>
+						<p className=" text-start text-slate-400">Author</p>
 						<input
 							type="text"
 							placeholder=""
-							className="my-2 rounded-md border-b-2 border-yellow-300 py-2 pl-2 placeholder-slate-400 shadow shadow-slate-300 outline-none"
+							className="mb-2 border-b-2 outline-none"
 						/>
-						<p className="text-start">###PostalCode</p>
-						<input
-							type="number"
-							placeholder=""
-							className="my-2 rounded-md border-b-2 border-yellow-300 py-2 pl-2 placeholder-slate-400 shadow shadow-slate-300 outline-none"
-						/>
-						<p className="text-start">###TelegramHandle</p>
+						<p className=" text-start text-slate-400">Postal Code</p>
 						<input
 							type="text"
 							placeholder=""
-							className="my-2 rounded-md border-b-2 border-yellow-300 py-2 pl-2 placeholder-slate-400 shadow shadow-slate-300 outline-none"
+							className="mb-2 border-b-2 outline-none"
+						/>
+						<p className=" text-start text-slate-400">Telegram</p>
+						<input
+							type="text"
+							placeholder=""
+							className="mb-2 border-b-2 outline-none"
 						/>
 
-						<form className="my-2 rounded-md border-b-2 border-yellow-300 py-4 pl-2 placeholder-slate-400 shadow shadow-slate-300 outline-none">
+						<form className="mb-2 border-b-2 outline-none">
+							<p className="text-slate-400">Language</p>
 							<LanguageSearchBar />
 						</form>
 					</div>
@@ -52,10 +53,8 @@ function InputForm() {
 				<button className="text-end text-xs text-slate-400 underline">
 					###additional info
 				</button>
-				<button className="mt-10 rounded-md border bg-[#b5c285] py-3 font-semibold  text-white">
-					###Submit Book
-				</button>
-				<Button functionality="FormSubmit">###Submit Book</Button>
+
+				<Button functionality="FormSubmit">Submit Book</Button>
 			</div>
 		</>
 	);
