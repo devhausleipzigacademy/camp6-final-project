@@ -1,54 +1,44 @@
 import { Combobox } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { useMemo, useState } from "react";
 
-import languagesJSON from "../../languages/ISO-languages.json";
-
-// import languagesJSON from "../languages/ISO-languages.json";
+import languagesJSON from "../../enums/ISO-languages.json";
+const languageList: { code: string; name: string }[] = Object.entries(
+  languagesJSON
+).map(([key, value]) => ({
+  code: key,
+  name: value[0],
+}));
 
 export function LanguageSearchBar() {
-	const [selectedLang, setSelectedLang] = useState("");
-	const [selectedLangCode, setSelectedLangCode] = useState("");
-	const [query, setQuery] = useState("");
-	function setUseStates(a, b): any {
-		setSelectedLang(a), setSelectedLangCode(b);
-	}
-	const languageList = Object.entries(languagesJSON).reduce((acc, value) => {
-		const [isoCode, langNames] = value;
-		langNames.forEach((langName) => {
-			if (langName.toLowerCase().includes(query.toLowerCase())) {
-				acc.push(
-					<Combobox.Options>
-						<Combobox.Option
-							onSelect={(langName) => setSelectedLang(langName)}
-							onClick={(langName) => setSelectedLang(langName)}
-							key={isoCode}
-							value={langName}
-						>
-							<button
-								onClick={(e) => setSelectedLang()}
-								key={isoCode}
-								value={langName}
-							>
-								{langName}
-							</button>
-						</Combobox.Option>
-					</Combobox.Options>
-				);
-			}
-		});
-		return acc;
-	}, []);
+  const [selectedLangCode, setSelectedLangCode] = useState("");
+  const [query, setQuery] = useState("");
 
-	console.log("lang", selectedLang, "code", selectedLangCode, "query", query);
+  const filteredLanguages = useMemo(
+    () =>
+      languageList.filter((language) =>
+        language.name.toLowerCase().includes(query.toLowerCase())
+      ),
+    [query]
+  );
 
-	return (
-		<div>
-			<Combobox value={selectedLangCode} onChange={setSelectedLangCode}>
-				<Combobox.Input onChange={(event) => setQuery(event.target.value)} />
-				<div className="flex max-h-52  w-mobile  flex-col overflow-auto bg-green-300 ">
-					{languageList}
-				</div>
-			</Combobox>
-		</div>
-	);
+  return (
+    <div>
+      <Combobox value={selectedLangCode} onChange={setSelectedLangCode}>
+        <Combobox.Input onChange={(event) => setQuery(event.target.value)} />
+        <div className="flex max-h-52  w-mobile  flex-col overflow-auto bg-green-300 ">
+          <Combobox.Options>
+            {filteredLanguages.map((language) => (
+              <Combobox.Option
+                onSelect={(language) => setSelectedLangCode(language.code)}
+                key={language.code}
+                value={language.code}
+              >
+                <span>{language.name}</span>
+              </Combobox.Option>
+            ))}
+          </Combobox.Options>
+        </div>
+      </Combobox>
+    </div>
+  );
 }
