@@ -63,7 +63,7 @@ export function HomeSearchBar() {
 						<form
 							className={clsx(
 								isActive ? "opacity-100" : "invisible opacity-0 ",
-								"absolute  flex transform flex-col gap-y-2 rounded-lg bg-orange-200  py-2 px-4 text-start text-sm font-medium text-black  duration-500"
+								"absolute  flex transform flex-col  rounded-lg border-2 border-gray-400 bg-white py-2 px-4 text-start text-sm font-medium text-black  duration-500"
 							)}
 						>
 							{placeHolderLang.map((language, idx) => (
@@ -78,7 +78,7 @@ export function HomeSearchBar() {
 												[language]: event.target.checked,
 											})
 										}
-										className=" mr-1 outline-none"
+										className="mr-1 rounded outline-none focus:ring-0"
 									/>
 									{language}
 								</label>
