@@ -47,9 +47,7 @@ module.exports = {
 			width: {
 				mobile: "640px",
 			},
-			height: {
-				mobile: "600px",
-			},
+			height: {},
 		},
 	},
 	plugins: [],
