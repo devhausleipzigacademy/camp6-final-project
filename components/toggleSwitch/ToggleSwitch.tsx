@@ -1,42 +1,25 @@
-const toggleSwitchColors = {
-	0: "bg-customGreen",
-	1: "bg-customGrey border-customGrey",
-	2: "bg-buttonGrey border-buttonGrey",
-};
-
-const toggleSwitchPin = {
-	1: "bg-toggleGradient",
-	2: "bg-toggleGradient dropShadow-customPin",
-};
 interface CustomSwitchProps {
 	/**
 	 * optional text to be displayed to screen readers only
 	 */
 	text?: string;
 	/**
-	 * Design of pin element
-	 */
-	pinDesign: number;
-	/**
-	 * Design of switch background element
-	 */
-	switchDesign: number;
-	/**
-	 * value of button (should that be undefined?)
+	 * value of button
 	 */
 	value: boolean | undefined;
 	/**
 	 * clickhandler for button event
 	 */
-	clickHandler: any;
+	toggleHandler: () => void;
 }
 
+/**
+ * Toggle Switch to be used on library page. Do we need variants?
+ */
 export function ToggleSwitch({
 	text,
-	pinDesign = 0,
-	switchDesign = 0,
 	value,
-	clickHandler,
+	toggleHandler,
 }: CustomSwitchProps) {
 	return (
 		<label
@@ -50,7 +33,7 @@ export function ToggleSwitch({
 				name="priority"
 				className="peer sr-only"
 				checked={value}
-				onChange={clickHandler}
+				onChange={toggleHandler}
 			/>
 			<div
 				className="toggle-bg h-full w-full rounded-full bg-buttonGrey shadow-toggleSwitch  

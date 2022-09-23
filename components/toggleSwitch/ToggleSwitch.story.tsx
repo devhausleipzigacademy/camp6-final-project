@@ -18,25 +18,4 @@ const Template: ComponentStory<typeof ToggleSwitch> = (args) => (
 
 export const Primary = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-Primary.args = {
-	pinDesign: 0,
-	switchDesign: 1,
-};
-
-export const alternatePinDesign = Template.bind({});
-alternatePinDesign.args = {
-	pinDesign: 1,
-	switchDesign: 2,
-};
-
-export const Large = Template.bind({});
-Large.args = {
-	size: "large",
-	label: "Button",
-};
-
-export const Small = Template.bind({});
-Small.args = {
-	size: "small",
-	label: "Button",
-};
+Primary.args = {};

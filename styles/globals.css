@@ -12,30 +12,14 @@
 	/*  TODO: fit in css for toggle switch  */
 	.toggle-bg:after {
 		content: "";
-		@apply /*toggle
-		the dropshadow to switch between  
-		variants*/drop-shadow-togglePin absolute
-		top-0.5  left-0.5 h-3 w-3 rounded-full bg-toggleGradient transition;
+		@apply absolute top-0.5
+		left-0.5  h-3 w-3 rounded-full bg-toggleGradient drop-shadow-togglePin transition;
 	}
 	input:checked + .toggle-bg:after {
 		transform: translateX(20px);
-		/*I do not know what the white border is meant to do*/
 	}
 
 	input:checked + .toggle-bg {
 		@apply border-customGreen bg-customGreen;
 	}
 }
-
-/* 
-const toggleSwitchColors = {
-	0: "bg-customGreen",
-	1: "bg-customGrey border-customGrey",
-	2: "bg-buttonGrey border-buttonGrey",
-};
-
-const toggleSwitchPin = {
-	1: "bg-toggleGradient",
-	2: "bg-toggleGradient dropShadow-togglePin",
-}; 
-*/
