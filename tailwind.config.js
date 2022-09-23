@@ -1,9 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-	content: [
-		"./pages/**/*.{js,ts,jsx,tsx}",
-		"./components/**/*.{js,ts,jsx,tsx}",
-	],
+	content: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
 	theme: {
 		screens: {
 			// iphone 6/7/8
@@ -49,6 +46,9 @@ module.exports = {
 			},
 			width: {
 				mobile: "640px",
+			},
+			height: {
+				mobile: "600px",
 			},
 		},
 	},
