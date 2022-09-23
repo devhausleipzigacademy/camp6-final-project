@@ -35,7 +35,7 @@ export function Header() {
 				<div
 					className={clsx(
 						!isActive
-							? " invisible absolute w-0 opacity-0 "
+							? " opacity-1 invisible absolute w-0 "
 							: "  absolute  flex h-[600px] w-mobile  flex-col gap-2 bg-customGreen  opacity-100  duration-500"
 					)}
 				>
