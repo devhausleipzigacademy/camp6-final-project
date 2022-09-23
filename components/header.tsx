@@ -31,7 +31,10 @@ function Header() {
 				</button>
 			</div>
 			<div className="mt-2 flex w-mobile border-y-[1px] border-t-[1px] border-slate-300">
-				<button onClick={clickHandler} className="self-center pl-2 outline-none">
+				<button
+					onClick={() => clickHandler}
+					className="self-center pl-2 outline-none"
+				>
 					<HiOutlineMenuAlt4 className="h-8 w-8  text-slate-300 " />
 				</button>
 				<div

@@ -14,7 +14,7 @@ export function HomeSearchBar() {
 	);
 	return (
 		<div>
-			<div className="min-w-mobile mt-4 flex w-mobile justify-center gap-6 bg-green-300 py-2">
+			<div className="min-w-mobile  flex w-mobile justify-center gap-6  py-2">
 				<div className="flex flex-wrap rounded-xl border-2 border-slate-300">
 					<button className="rounded-l-lg bg-white pl-2 outline-none">
 						<BsSearch className=" text-slate-300" />
@@ -43,7 +43,7 @@ export function HomeSearchBar() {
 						className={clsx(
 							isActive ? "opacity-100" : "invisible opacity-0 ",
 
-							"absolute flex transform flex-col gap-y-2 rounded-lg bg-orange-200  py-2 px-4 text-start text-sm font-medium text-black  duration-500"
+							"absolute  flex transform flex-col gap-y-2 rounded-lg border border-slate-200 bg-white  py-2 px-4 text-start text-sm font-medium text-black  duration-500"
 						)}
 					>
 						{placeHolderLang.map((language, idx) => (
