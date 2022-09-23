@@ -8,11 +8,12 @@ function InputForm() {
 	const [selectedLang, setSelectedLang] = useState(null);
 	const [queryy, setQuerry] = useState("");
 	// const filter=querty===''?
+
 	return (
 		<>
 			<div className="flex w-mobile flex-col p-10 outline-none  ">
 				<div className=" mb-10 grid    grid-flow-col  border-b-2   ">
-					<button className="outline-none">
+					<button onClick={() => console.log("triggered")} className="outline-none">
 						<AiOutlineClose className="self-center text-center text-slate-400" />
 					</button>
 					<p className=" mb-4 text-2xl text-pink-400">New Book Information</p>
