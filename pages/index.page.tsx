@@ -6,12 +6,7 @@ import Header from "../components/Header/Header";
 const Home: NextPage = (props) => {
 	return (
 		<>
-			{/* <PlaceHolder /> */}
 			<Header />
-			<HomeSearchBar />
-
-			<InputForm />
-			{/* <LanguageSearchBar /> */}
 		</>
 	);
 };

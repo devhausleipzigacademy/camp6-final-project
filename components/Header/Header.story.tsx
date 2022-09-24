@@ -3,8 +3,8 @@ import Header from "./Header";
 
 export default {
 	title: "Header/Component",
-	component: "Header",
-} as unknown as ComponentMeta<typeof Header>;
+	component: Header,
+} as ComponentMeta<typeof Header>;
 
 const Template: ComponentStory<typeof Header> = (args) => <Header />;
 

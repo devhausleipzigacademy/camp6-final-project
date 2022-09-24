@@ -8,6 +8,8 @@ const postUser = z.object({
 	telegramId: z.string(),
 	image: z.string().optional(),
 	name: z.string().optional(),
+	createdAt: z.date(),
+	uptadedAt: z.date(),
 });
 
 export default async function handler(
