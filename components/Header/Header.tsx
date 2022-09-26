@@ -1,13 +1,13 @@
 import { AiOutlineClose } from "react-icons/ai";
+import { BiUser } from "react-icons/bi";
 
 import { HiOutlineMenu, HiOutlineMenuAlt4 } from "react-icons/hi";
 import clsx from "clsx";
 import { useState } from "react";
-import { avatarList, Avatars } from "../Avatars/Avatars";
 import { randomInt } from "crypto";
+import { IconType } from "react-icons";
 
 export function Header() {
-	const avatar = "https://avatars.dicebear.com/api/bottts/5.svg?size=40";
 	const [isActive, setIsActive] = useState(false);
 	const [isActive2, setIsActive2] = useState(false);
 	function clickHandler() {
@@ -32,7 +32,7 @@ export function Header() {
 				>
 					<HiOutlineMenuAlt4
 						className={clsx(
-							isActive
+							isActive2
 								? " invisible absolute w-0 opacity-0 "
 								: "absolute  mb-2 flex h-6  w-7 text-slate-400  opacity-100  duration-500"
 						)}
@@ -49,7 +49,7 @@ export function Header() {
 					className={clsx(
 						!isActive
 							? " invisible absolute flex h-[600px] w-0 flex-col opacity-0 duration-500"
-							: "  absolute  flex h-[600px] w-mobile  flex-col gap-2 bg-customGreen  opacity-100  duration-500"
+							: "  absolute   flex h-[600px]  w-mobile flex-col gap-2  bg-customGreen opacity-100  duration-500"
 					)}
 				>
 					<button className="= mt-36 ml-10 flex  flex-col font-[sora] text-[36px]  font-extrabold tracking-wider text-customYellow outline-none ">
@@ -71,17 +71,17 @@ export function Header() {
 					className="absolute right-2 mr-2  outline-none "
 				>
 					{isActive2 ? (
-						<AiOutlineClose className=" absolute top-3 right-2  z-50 mb-2  h-7 w-7 text-slate-400  outline-none  duration-500" />
+						<AiOutlineClose className=" absolute top-3 right-2 z-50 mb-2  h-7 w-7 text-slate-400  outline-none  duration-500" />
 					) : (
-						<img
-							src={avatar}
-							alt=""
-							className={
-								isActive
-									? "invisible mt-2 opacity-0 outline-none duration-500"
-									: "mt-2 opacity-100 outline-none duration-500"
-							}
-						/>
+						<button>
+							<BiUser
+								className={
+									isActive
+										? "invisible absolute top-3 right-2 z-50 mb-2  h-7 w-7 text-slate-400  opacity-0 outline-none duration-500"
+										: "absolute top-3 right-2 z-50 mb-2  h-7 w-7 text-slate-400  outline-none  duration-500"
+								}
+							/>
+						</button>
 					)}
 				</button>
 				<div

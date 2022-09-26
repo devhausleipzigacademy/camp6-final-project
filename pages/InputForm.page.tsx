@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
-import { Button } from "../button/Button";
-import { LanguageSearchBar } from "../SearchBars/LanguageSearchBar";
+import { Button } from "../components/button/Button";
+import { LanguageSearchBar } from "../components/SearchBars/LanguageSearchBar";
 
 function InputForm() {
 	const [selectedLang, setSelectedLang] = useState(null);
 	const [queryy, setQuerry] = useState("");
+
 	// const filter=querty===''?
 
 	return (
@@ -52,7 +53,7 @@ function InputForm() {
 					</div>
 				</form>
 				<button className="text-end text-xs text-slate-400 underline">
-					###additional info
+					additional info
 				</button>
 
 				<Button functionality="FormSubmit">Submit Book</Button>
