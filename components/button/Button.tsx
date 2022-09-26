@@ -1,88 +1,100 @@
 import clsx from "clsx";
 import { ReactNode } from "react";
+import { FaTelegram } from "react-icons/fa";
+import { FiPlus } from "react-icons/fi";
+import BookArrowUpSvg from "../bookarrowupsvg/BookArrowUpSvg";
 
-const FUNCTIONS = {
-	Genre: "font-serif text-gray-500",
-	External: "text-white font-semibold fill-white",
-	FormSubmit: "font-sans font-bold text-white",
-};
-
-const SIZES = {
-	Small: "h-10 w-fit",
-	Medium: "h-12 w-fit px-4",
-	Large: "h-12 w-5/6",
+const customDesigns = {
+	AddBook:
+		"h-10 w-10 rounded-full bg-yellow fill-black p-2 text-black drop-shadow-plusButton",
+	ConfirmationPrimary:
+		"h-12 min-h-fit w-48 min-w-fit rounded-2xl bg-green fill-white p-2 font-serif text-base font-semibold text-white drop-shadow",
+	ConfirmationSecondary:
+		"bg-transparent h-12 min-h-fit w-48 min-w-fit rounded-2xl fill-grey p-2 font-serif text-base font-semibold text-grey",
+	ExternalApp:
+		"min-w-40 min-h-12 max-h-fit max-w-fit rounded-2xl bg-green fill-white p-2 font-serif text-base font-semibold text-white drop-shadow",
+	Genre: "",
+	// "font-serif text-gray-500",
+	LibraryMessage:
+		"h-5 min-h-fit w-25 min-w-fit rounded-2xl border border-brown p-1 font-serif text-2xs font-semibold text-brown",
+	LibraryReturned:
+		"h-5 min-h-fit w-25 min-w-fit rounded-2xl border border-green p-1 font-serif text-2xs font-semibold text-green",
 };
 
 type ButtonType = "button" | "submit" | "reset" | undefined;
 
 interface ButtonProps {
 	/**
-	 * Choose from three functions
+	 * Choose from seven functions
 	 */
-	functionality: keyof typeof FUNCTIONS;
-	/**
-	 * What background color to use (only accepts CSS presets for now)
-	 */
-	backgroundColor?: string;
-	/**
-	 * How large should the button be (default is small)?
-	 */
-	size?: keyof typeof SIZES;
+	functionality: keyof typeof customDesigns;
 	/**
 	 * Button contents (can be icon and/or string)
 	 */
-	children: ReactNode;
+	children?: ReactNode;
 	/**
 	 * Is the button disabled (optional)?
 	 */
 	disabled?: boolean;
 	/**
-	 * Optional click handler
+	 * Click handler
 	 */
-	onClick?: () => void;
+	onClick: () => void;
 }
 
 /**
  * Primary UI component for user interaction
  */
-export const Button = ({
+export const CustomButton = ({
 	children,
-	size = "Small",
-	functionality = "Genre",
-	backgroundColor = "aquamarine",
+	functionality,
 	disabled = false,
 
 	...props
 }: ButtonProps) => {
 	// default button props
-	let type = "button" as ButtonType;
-	let classes = FUNCTIONS.FormSubmit;
-	let dimension = SIZES.Small;
+	let type: ButtonType;
+	let classes;
 
 	switch (functionality) {
-		case "Genre":
-			classes = FUNCTIONS.Genre;
-			backgroundColor = "Aquamarine";
-			break;
-		case "FormSubmit":
-			type = "submit";
-			backgroundColor = "OliveDrab";
-			break;
-		case "External":
-			classes = FUNCTIONS.External;
-			backgroundColor = "OliveDrab";
-			break;
-	}
+		case "AddBook":
+			type = "button";
+			classes = customDesigns.AddBook;
+			children = <FiPlus className="h-5" />;
 
-	switch (size) {
-		case "Small":
-			dimension = SIZES.Small;
 			break;
-		case "Medium":
-			dimension = SIZES.Medium;
+		case "ConfirmationPrimary":
+			type = "submit";
+			classes = customDesigns.ConfirmationPrimary;
+
 			break;
-		case "Large":
-			dimension = SIZES.Large;
+		case "ConfirmationSecondary":
+			type = "button";
+			classes = customDesigns.ConfirmationSecondary;
+			break;
+		case "ExternalApp":
+			type = "button";
+			classes = customDesigns.ExternalApp;
+
+			break;
+		case "Genre":
+			type = "button";
+			classes = customDesigns.Genre;
+
+			break;
+		case "LibraryMessage":
+			type = "button";
+			classes = customDesigns.LibraryMessage;
+			children = [<FaTelegram />, "Send message"];
+
+			break;
+		case "LibraryReturned":
+			type = "button";
+			classes = customDesigns.LibraryReturned;
+			children = [
+				<BookArrowUpSvg className="h-2.5 w-2.5" />,
+				"Mark as returned",
+			];
 			break;
 	}
 
@@ -91,16 +103,17 @@ export const Button = ({
 			<button
 				type={type}
 				className={clsx(
-					"rounded-md py-1 px-2 text-sm shadow-md",
-					disabled ? "bg-slate-600" : "bg-current",
-					classes,
-					dimension
+					"h-5 min-h-fit w-25 min-w-fit rounded-2xl border border-brown p-1 font-serif text-2xs font-semibold text-brown ",
+					disabled ? "bg-grey" : "bg-current",
+					classes
 				)}
-				style={{ backgroundColor }}
 				{...props}
 				disabled={disabled}
 			>
-				<div className="flex items-center gap-2">{children}</div>
+				<div className="flex h-full w-full items-center justify-center gap-1.5">
+					{/* {children} */}
+					<FaTelegram /> Send message
+				</div>
 			</button>
 		</>
 	);

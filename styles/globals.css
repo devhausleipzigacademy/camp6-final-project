@@ -20,6 +20,6 @@
 	}
 
 	input:checked + .toggle-bg {
-		@apply border-customGreen bg-customGreen;
+		@apply border-green bg-green;
 	}
 }
