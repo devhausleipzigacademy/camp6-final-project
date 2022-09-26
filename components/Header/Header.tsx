@@ -25,7 +25,7 @@ export function Header() {
 
 	return (
 		<>
-			<div className="  relative mt-2 flex w-mobile border-y-[1px] border-t-[1px] border-slate-300">
+			<div className="  min-w-mobile relative flex border-y-[1px] border-t-[1px] border-slate-300">
 				<button
 					onClick={clickHandler}
 					className="mb-5 self-center pl-2 outline-none"

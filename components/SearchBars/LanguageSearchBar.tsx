@@ -1,4 +1,4 @@
-]import { Combobox } from "@headlessui/react";
+import { Combobox } from "@headlessui/react";
 import { useMemo, useState } from "react";
 
 import languagesJSON from "../../enums/ISO-languages.json";
