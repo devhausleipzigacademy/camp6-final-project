@@ -20,24 +20,43 @@ const Template: ComponentStory<typeof CustomButton> = (args) => (
 export const Genre = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Genre.args = {
-	customDesigns: "Genre",
+	functionality: "Genre",
+	genreColorCode: 5,
 	children: ["Fine Dining"],
 };
 
-export const External = Template.bind({});
-External.args = {
-	customDesigns: "ExternalApp",
+export const ExternalApp = Template.bind({});
+ExternalApp.args = {
+	functionality: "ExternalApp",
 	children: [<FaTelegram />, "message user"],
 };
 
-export const FormSubmit = Template.bind({});
-FormSubmit.args = {
-	customDesigns: "ConfirmationPrimary",
+export const ConfirmationPrimary = Template.bind({});
+ConfirmationPrimary.args = {
+	functionality: "ConfirmationPrimary",
 	children: ["Submit a book"],
 };
 
-export const Disabled = Template.bind({});
-Disabled.args = {
-	customDesigns: "ConfirmationSecondary",
+export const ConfirmationSecondary = Template.bind({});
+ConfirmationSecondary.args = {
+	functionality: "ConfirmationSecondary",
 	children: ["no, not this one"],
+};
+
+export const AddBook = Template.bind({});
+AddBook.args = {
+	functionality: "AddBook",
+	children: ["This button does not work properly"],
+};
+
+export const LibraryMessage = Template.bind({});
+LibraryMessage.args = {
+	functionality: "LibraryMessage",
+	children: ["This button does not work properly"],
+};
+
+export const LibraryReturned = Template.bind({});
+LibraryReturned.args = {
+	functionality: "LibraryReturned",
+	children: ["This button does not work properly"],
 };
