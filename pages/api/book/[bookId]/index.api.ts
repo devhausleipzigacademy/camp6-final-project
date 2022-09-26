@@ -1,3 +1,4 @@
+import { Book } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { z, ZodError } from "zod";
 import GENRES from "../../../../enums/genres";
@@ -24,12 +25,12 @@ const putBook = z.object({
 });
 
 const getBook = putBook.extend({
-	genres: z.string().refine((arg) => JSON.parse(arg)),
-	tags: z.string().refine((arg) => JSON.parse(arg)),
+	// genres: z.string().refine((arg) => JSON.parse(arg)),
+	// tags: z.string().refine((arg) => JSON.parse(arg)),
 	identifier: z.string(),
 	createdAt: z.date(),
 	updatedAt: z.date(),
-	borrowerId: z.string(),
+	borrowerId: z.union([z.string(), z.null()]),
 });
 
 type PostBook = z.infer<typeof putBook>;
@@ -39,7 +40,7 @@ type GetBook = z.infer<typeof getBook>;
 export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse<
-		GetBook | { id: string } | { message: string; error: any }
+		Book | GetBook | { id: string } | { message: string; error: any }
 	>
 ) {
 	try {
@@ -73,8 +74,8 @@ export default async function handler(
 					identifier: bookId,
 				},
 			});
-			const parsedBook = getBook.parse(deletedBook);
-			res.status(200).json(parsedBook);
+
+			res.status(200).json(deletedBook);
 		}
 	} catch (err) {
 		if (err instanceof ZodError) {

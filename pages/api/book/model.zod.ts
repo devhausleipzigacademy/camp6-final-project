@@ -8,6 +8,7 @@ export const postBook = z.object({
 	author: z.string(),
 	language: z.enum(LANGUAGES),
 	ownerId: z.string(),
+	image: z.string().optional(),
 	description: z.string().optional(),
 	isbn: z.string().optional(),
 	publishYear: z.date().optional(),
@@ -23,12 +24,13 @@ export const postBook = z.object({
 });
 
 export const getBook = postBook.extend({
-	genres: z.string().refine((arg) => JSON.parse(arg)),
-	tags: z.string().refine((arg) => JSON.parse(arg)),
+	// models genres and tags not working for get method
+	// genres: z.string().refine((arg) => JSON.parse(arg)),
+	// tags: z.string().refine((arg) => JSON.parse(arg)),
 	identifier: z.string(),
 	createdAt: z.date(),
 	updatedAt: z.date(),
-	borrowerId: z.string(),
+	borrowerId: z.union([z.string(), z.null()]),
 });
 
 export type PostBook = z.infer<typeof postBook>;
