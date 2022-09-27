@@ -1,7 +1,7 @@
-function randomInt(number) {
-    return Math.floor(Math.random() * (number + 1));
+export function randomNumb(number) {
+	return Math.floor(Math.random() * number);
 }
 
 export function pickOne(array: Array<any>) {
-    return array[randomInt(array.length)];
+	return array[randomNumb(array.length)];
 }
