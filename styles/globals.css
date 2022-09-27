@@ -3,5 +3,10 @@
 @tailwind utilities;
 
 h1 {
-	@apply text-green-600;
+  @apply text-green-600;
+}
+
+.map-container {
+  width: 100%;
+  height: 100vh;
 }

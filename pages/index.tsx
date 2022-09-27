@@ -1,9 +1,12 @@
 import type { NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
+import MapContainer from "../components/map/Map";
 
 const Home: NextPage = () => {
-	return <div> well well well</div>;
+  return (
+    <>
+      <MapContainer />;
+    </>
+  );
 };
 
 export default Home;
