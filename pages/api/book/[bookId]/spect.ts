@@ -1,11 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { createBook, retrieveBooks } from "./interaction";
+import { createBook, retrieveBooks } from "../interaction";
 
 import httpMocks from "node-mocks-http";
 import handler from "./index.api";
-import { generateBook } from "./generator";
+import { generateBook } from "../generator";
 import { cloneDeep, isArray, isEqual } from "lodash";
-import { prisma } from "../../../prisma/db";
 
 // create a book to use for testing
 const book = generateBook("b2791652-7a83-4a16-a18d-9943a3e16823");
@@ -13,15 +12,9 @@ const books = [];
 books.push(book);
 
 describe("Test Book DB Interactions", () => {
-	// 1 Test
-	it("test for successful connection", async () => {
-		try {
-			await prisma.$queryRaw`SELECT 1`;
-			return true;
-		} catch (e) {
-			throw new Error("Prisma connection check failed", e);
-		}
-	});
+	// 1. Test
+	// replace first test with explicit test checking succesful connection
+	// look for prisma method
 	// 2 Test
 	it("createBook returns bookModel", async () => {
 		const bookModel = await createBook(book);
@@ -47,14 +40,6 @@ describe("Test Book Endpoints", () => {
 		const request = httpMocks.createRequest({
 			method: "POST",
 			url: "/book/",
-			body: {
-				title: "doar",
-				author: "tua",
-				language: "en",
-				ownerId: "b2791652-7a83-4a16-a18d-9943a3e16823",
-				genres: [],
-				tags: [],
-			},
 		});
 
 		const response = httpMocks.createResponse();
@@ -65,15 +50,10 @@ describe("Test Book Endpoints", () => {
 		// call handler with Post request
 		await handler(request, response);
 
-		const data = JSON.parse(response._getData());
-		const dataCopy = JSON.parse(responseCopy._getData());
-
-		expect(data.identifier).toBeDefined();
-
 		//check if response has non-empty ID (if so, rip out ID and put it into manually created response)
-		dataCopy.identifier = data.identifier;
+		if (Object.hasOwn(response, "id")) responseCopy.id = response.id;
 		// use lodash is equal to compare and expect result to be true
-		const doesIdMatch = isEqual(data, dataCopy);
+		const doesIdMatch = isEqual(response, responseCopy);
 
 		expect(doesIdMatch).toEqual(true);
 	});
@@ -86,11 +66,11 @@ describe("Test Book Endpoints", () => {
 		const response = httpMocks.createResponse();
 
 		await handler(request, response);
-		console.log(response._getData());
-		const data = JSON.parse(response._getData());
 
 		// response should contain books array
-		expect(isArray(data)).toEqual(true);
+		const booksArray = response.parsedBooks;
+
+		expect(isArray(booksArray)).toEqual(true);
 	});
 });
 

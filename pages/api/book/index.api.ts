@@ -7,11 +7,14 @@ import { ZodError } from "zod";
 import { postBook, getBook, GetBook } from "./model.zod";
 import { createBook, retrieveBooks } from "./interaction";
 
+export type ErrorResponse = {
+	message: string;
+	error?: any;
+};
+
 export default async function handler(
 	req: NextApiRequest,
-	res: NextApiResponse<
-		GetBook[] | { id: string } | { message: string; error: any }
-	>
+	res: NextApiResponse<GetBook[] | { identifier: string } | ErrorResponse>
 ) {
 	try {
 		if (req.method === "GET") {
@@ -26,18 +29,24 @@ export default async function handler(
 			const data = postBook.parse(req.body);
 			const book = await createBook(data);
 
-			res.status(201).json({ id: book.identifier });
+			res.status(201).json({ identifier: book.identifier });
 		}
 	} catch (err) {
 		if (err instanceof ZodError) {
-			res.status(422).send({
+			const errorResponse: ErrorResponse = {
 				message: "Invalid book.",
-				error: process.env.NODE_ENV == "development" ? err : undefined,
-			});
+			};
+			if (["development", "test"].includes(process.env.NODE_ENV)) {
+				errorResponse.error = err;
+			}
+			res.status(422).send(errorResponse);
 		}
-		res.status(400).send({
+		const errorResponse: ErrorResponse = {
 			message: "Looks like something went wrong. Please try again.",
-			error: process.env.NODE_ENV == "development" ? err : undefined,
-		});
+		};
+		if (["development", "test"].includes(process.env.NODE_ENV)) {
+			errorResponse.error = err;
+		}
+		res.status(400).send(errorResponse);
 	}
 }

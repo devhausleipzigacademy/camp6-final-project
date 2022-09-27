@@ -30,7 +30,13 @@ export const getBook = postBook.extend({
 	identifier: z.string(),
 	createdAt: z.date(),
 	updatedAt: z.date(),
+
+	// optional values are returned as null from prisma hence getBook model needs to account for that
 	borrowerId: z.union([z.string(), z.null()]),
+	image: z.union([z.string(), z.null()]),
+	description: z.union([z.string(), z.null()]),
+	isbn: z.union([z.string(), z.null()]),
+	publishYear: z.union([z.date(), z.null()]),
 });
 
 export type PostBook = z.infer<typeof postBook>;
