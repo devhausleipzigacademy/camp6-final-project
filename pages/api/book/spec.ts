@@ -1,10 +1,12 @@
-import { describe, expect, it } from "vitest";
-import { createBook, retrieveBooks } from "./interaction";
-
-import httpMocks from "node-mocks-http";
-import handler from "./index.api";
-import { generateBook } from "./generator";
+// package imports
 import { cloneDeep, isArray, isEqual } from "lodash";
+import { describe, expect, it } from "vitest";
+import httpMocks from "node-mocks-http";
+
+// local imports
+import { createBook, retrieveBooks } from "./interaction";
+import { generateBook } from "./generator";
+import handler from "./index.api";
 import { prisma } from "../../../prisma/db";
 
 // create a book to use for testing
@@ -86,12 +88,9 @@ describe("Test Book Endpoints", () => {
 		const response = httpMocks.createResponse();
 
 		await handler(request, response);
-		console.log(response._getData());
 		const data = JSON.parse(response._getData());
 
 		// response should contain books array
 		expect(isArray(data)).toEqual(true);
 	});
 });
-
-// Test lending

@@ -1,4 +1,5 @@
 import { prisma } from "../../../../prisma/db";
+import { PutBook } from "../model.zod";
 
 export async function retrieveBook(bookId) {
 	const bookModel = await prisma.book.findFirstOrThrow({
@@ -7,7 +8,7 @@ export async function retrieveBook(bookId) {
 	return bookModel;
 }
 
-export async function updateBook(bookId, data) {
+export async function updateBook(bookId: string, data: PutBook) {
 	const updatedBook = await prisma.book.update({
 		where: {
 			identifier: bookId,

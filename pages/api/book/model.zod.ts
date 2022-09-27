@@ -2,12 +2,11 @@ import { z } from "zod";
 import GENRES from "../../../enums/genres";
 import LANGUAGES from "../../../enums/languages";
 
-// Zod Model for Posting Book
-export const postBook = z.object({
-	title: z.string(),
-	author: z.string(),
-	language: z.enum(LANGUAGES),
-	ownerId: z.string(),
+// Zod Model for updating books
+export const putBook = z.object({
+	title: z.string().optional(),
+	author: z.string().optional(),
+	language: z.enum(LANGUAGES).optional(),
 	image: z.string().optional(),
 	description: z.string().optional(),
 	isbn: z.string().optional(),
@@ -23,10 +22,15 @@ export const postBook = z.object({
 	isReserved: z.boolean().optional(),
 });
 
+// Zod Model for Posting Book
+export const postBook = putBook.extend({
+	title: z.string(),
+	author: z.string(),
+	language: z.enum(LANGUAGES),
+	ownerId: z.string(),
+});
+
 export const getBook = postBook.extend({
-	// models genres and tags not working for get method
-	// genres: z.string().refine((arg) => JSON.parse(arg)),
-	// tags: z.string().refine((arg) => JSON.parse(arg)),
 	identifier: z.string(),
 	createdAt: z.date(),
 	updatedAt: z.date(),
@@ -38,6 +42,8 @@ export const getBook = postBook.extend({
 	isbn: z.union([z.string(), z.null()]),
 	publishYear: z.union([z.date(), z.null()]),
 });
+
+export type PutBook = z.infer<typeof putBook>;
 
 export type PostBook = z.infer<typeof postBook>;
 

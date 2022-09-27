@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "../../../../prisma/db";
 import { z, ZodError } from "zod";
+import { ErrorResponse } from "../index.api";
 
 const ACTIONS = ["borrow", "return"] as const;
 
@@ -76,14 +77,23 @@ export default async function handler(
 		}
 	} catch (err) {
 		if (err instanceof ZodError) {
-			res.status(422).send({
+			const errorResponse: ErrorResponse = {
 				message: "Invalid book.",
-				error: err,
-			});
+			};
+			if (["development", "test"].includes(process.env.NODE_ENV)) {
+				errorResponse.error = err;
+			}
+
+			res.status(422).send(errorResponse);
 		}
-		res.status(400).send({
+
+		const errorResponse: ErrorResponse = {
 			message: "Looks like something went wrong. Please try again.",
-			error: process.env.NODE_ENV == "development" ? err : undefined,
-		});
+		};
+		if (["development", "test"].includes(process.env.NODE_ENV)) {
+			errorResponse.error = err;
+		}
+
+		res.status(400).send(errorResponse);
 	}
 }

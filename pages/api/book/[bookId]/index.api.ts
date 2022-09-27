@@ -1,11 +1,13 @@
+// package imports
 import { Book } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { ZodError } from "zod";
-import { prisma } from "../../../../prisma/db";
+
+// local imports
 import { ErrorResponse } from "../index.api";
-import { GetBook, getBook } from "../model.zod";
 import { deleteBook, retrieveBook, updateBook } from "./interaction";
-import { putBook } from "./model.zod";
+import { GetBook, getBook } from "../model.zod";
+import { putBook } from "../model.zod";
 
 export default async function handler(
 	req: NextApiRequest,
@@ -24,20 +26,9 @@ export default async function handler(
 			const data = putBook.parse(req.body);
 			const bookId = req.query.bookId as string;
 
-			// old
-			const updatedBook = await prisma.book.update({
-				where: {
-					identifier: bookId,
-				},
-				data: { ...data },
-			});
-			// // // // // // // //
-
-			//new
 			await updateBook(bookId, data);
-			// // // // // // // //
 
-			res.status(202).json({ identifier: bookId });
+			res.status(204).end();
 		}
 		if (req.method === "DELETE") {
 			const bookId = req.query.bookId as string;
