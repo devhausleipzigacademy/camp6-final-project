@@ -5,12 +5,12 @@ import httpMocks from "node-mocks-http";
 
 // local imports
 import { createBook, retrieveBooks } from "./interaction";
-import { generateBook } from "./generator";
+import { generateFakeBook } from "./generator";
 import handler from "./index.api";
 import { prisma } from "../../../prisma/db";
 
 // create a book to use for testing
-const book = generateBook("b2791652-7a83-4a16-a18d-9943a3e16823");
+const book = generateFakeBook("b2791652-7a83-4a16-a18d-9943a3e16823");
 const books = [];
 books.push(book);
 

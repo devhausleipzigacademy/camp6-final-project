@@ -1,7 +1,7 @@
-import { PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "../../../prisma/db";
 import { z, ZodError } from "zod";
+import { createUser } from "./interactions";
 
 const postUser = z.object({
 	username: z.string(),
@@ -9,6 +9,8 @@ const postUser = z.object({
 	image: z.string().optional(),
 	name: z.string().optional(),
 });
+
+export type PostUser = z.infer<typeof postUser>;
 
 export default async function handler(
 	req: NextApiRequest,
@@ -23,11 +25,7 @@ export default async function handler(
 			postUser.parse(req.body);
 			// const data = PrismaClient.parse(req.body);
 
-			const user = await prisma.user.create({
-				data: {
-					...req.body,
-				},
-			});
+			const user = await createUser(req.body);
 
 			res.status(201).json({ id: user.identifier });
 		}

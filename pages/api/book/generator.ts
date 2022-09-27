@@ -5,7 +5,7 @@ import { pickOne } from "../../../utils/random";
 
 import { faker } from "@faker-js/faker";
 
-export function generateUser() {
+export function generateFakeUser() {
 	return {
 		name: faker.name.fullName(),
 		image: faker.image.avatar(),
@@ -14,7 +14,7 @@ export function generateUser() {
 	};
 }
 
-export function generateBook(
+export function generateFakeBook(
 	ownerId?: string | undefined,
 	carry: Record<string, string> = {}
 ) {
