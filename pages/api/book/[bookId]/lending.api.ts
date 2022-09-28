@@ -1,32 +1,37 @@
+// package imports
 import { NextApiRequest, NextApiResponse } from "next";
-import { prisma } from "../../../../prisma/db";
 import { z, ZodError } from "zod";
 
+//local imports
+import { ErrorResponse } from "../index.api";
+import { prisma } from "../../../../prisma/db";
+import { retrieveBook } from "./interaction";
+
+// Borrow Actions
 const ACTIONS = ["borrow", "return"] as const;
 
-// Zod Model for Updating Book
-const putBook = z.object({
+// Zod Model for Borrowing Book
+const borrowBook = z.object({
 	borrowerId: z.string(),
 	bookId: z.string(),
 	action: z.enum(ACTIONS),
 });
 
-type PutBook = z.infer<typeof putBook>;
+type BorrowBook = z.infer<typeof borrowBook>;
 
-export default async function handler(
+export default async function borrowHandler(
 	req: NextApiRequest,
 	res: NextApiResponse<
-		{ id: string } | { message: string } | { message: string; error: any }
+		{ identifier: string } | { message: string } | ErrorResponse
 	>
 ) {
 	try {
 		if (req.method === "PUT") {
-			const { bookId, borrowerId, action } = putBook.parse(req.query);
+			const { bookId, borrowerId, action } = borrowBook.parse(req.query);
 
+			// TODO: update line 33 with custom function once Furkan has added user interactions
 			const users = await prisma.user.findMany();
-			const book = await prisma.book.findFirstOrThrow({
-				where: { identifier: bookId },
-			});
+			const book = await retrieveBook(bookId);
 
 			// check that borrower is valid user
 			if (!users.find((user) => user.identifier === borrowerId)) {
@@ -35,7 +40,7 @@ export default async function handler(
 
 			// check that action 'borrow' is valid, i.e. book not already on loan
 			if (action === "borrow") {
-				if (book.borrowerId !== undefined) {
+				if (book.borrowerId !== null) {
 					return res.status(404).send({ message: "Book already on loan." });
 				}
 
@@ -49,7 +54,7 @@ export default async function handler(
 					},
 				});
 
-				res.status(202).json({ id: bookId });
+				res.status(202).json({ identifier: bookId });
 			}
 
 			// check that action 'return' is valid, i.e. book has borrowerId that matches borrower
@@ -71,19 +76,28 @@ export default async function handler(
 					},
 				});
 
-				res.status(202).json({ id: bookId });
+				res.status(202).json({ identifier: bookId });
 			}
 		}
 	} catch (err) {
 		if (err instanceof ZodError) {
-			res.status(422).send({
+			const errorResponse: ErrorResponse = {
 				message: "Invalid book.",
-				error: err,
-			});
+			};
+			if (["development", "test"].includes(process.env.NODE_ENV)) {
+				errorResponse.error = err;
+			}
+
+			res.status(422).send(errorResponse);
 		}
-		res.status(400).send({
+
+		const errorResponse: ErrorResponse = {
 			message: "Looks like something went wrong. Please try again.",
-			error: err,
-		});
+		};
+		if (["development", "test"].includes(process.env.NODE_ENV)) {
+			errorResponse.error = err;
+		}
+
+		res.status(400).send(errorResponse);
 	}
 }

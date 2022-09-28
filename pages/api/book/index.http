@@ -1,0 +1,25 @@
+# These tests are all working
+
+GET http://localhost:3000/api/book
+
+###
+
+GET  http://localhost:3000/api/book/1422380f-1c43-425b-af91-370756228e16
+
+###
+
+POST  http://localhost:3000/api/book/
+content-type: application/json
+
+{
+    "title": "doar",
+    "author": "tua",
+    "language": "en",
+    "ownerId": "b2791652-7a83-4a16-a18d-9943a3e16823",
+    "genres": [],
+    "tags": []
+}
+
+###
+
+DELETE http://localhost:3000/api/book/65bedd93-910f-4b33-996e-4c7c03ae515d

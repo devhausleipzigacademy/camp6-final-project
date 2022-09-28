@@ -38,6 +38,12 @@ module.exports = {
 				toggleSwitch: "inset 0px 6px 8px 3px rgba(0, 0, 0, 0.1)",
 			},
 			colors: {
+				customCream: "#FEF1E0",
+				CustomSalmon: "#F4A298",
+				CustomDustyRose: "#E5BABA",
+				CustomBlue: "#A4C5C6",
+				CustomBrown: "#A69F95",
+				CustomBlack: "#2E312F",
 				// needed for book thumbnails/previews
 				linen: "#F8F3ED",
 				//needed for toggle switch
@@ -46,6 +52,8 @@ module.exports = {
 
 			fontFamily: {
 				sora: [],
+				montserrat: [],
+				arnoPro: [],
 			},
 			height: {
 				// needed for book thumbnails/previews
@@ -61,7 +69,6 @@ module.exports = {
 				// needed for library buttons
 				25: "6.25rem /* 98 pixel*/",
 			},
-			height: {},
 		},
 	},
 	plugins: [],
