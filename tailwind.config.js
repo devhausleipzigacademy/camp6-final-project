@@ -1,6 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-	content: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
+	content: [
+		"./pages/**/*.{js,ts,jsx,tsx}",
+		"./components/**/*.{js,ts,jsx,tsx}",
+	],
 	theme: {
 		colors: {
 			// primary colors to use
@@ -11,6 +14,7 @@ module.exports = {
 			dustyRose: "#E5BABA",
 			green: "#B5C285",
 			grey: "#C4C3C2",
+			textGrey: "#A39C94",
 			salmon: "#F4A298",
 			yellow: "#F3DE8A",
 			white: "#FFFFFF",
@@ -49,7 +53,6 @@ module.exports = {
 				//needed for toggle switch
 				buttonGrey: "#D4D3D3",
 			},
-
 			fontFamily: {
 				sora: [],
 				montserrat: [],

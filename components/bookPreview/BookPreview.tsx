@@ -129,8 +129,10 @@ export const BookPreview = ({
 				<div className="text-gray-400 absolute bottom-0 right-0 flex aspect-square w-1/5   items-center justify-center  bg-white opacity-90 ">
 					<button onClick={toggleFavorite}>
 						<FiHeart
-							className="h-full w-full p-1"
-							fill={faved ? "darkred" : "none"}
+							className={clsx(
+								"h-full w-full p-1",
+								faved ? "fill-salmon text-salmon" : "text-black"
+							)}
 						/>
 					</button>
 				</div>
@@ -142,7 +144,7 @@ export const BookPreview = ({
 		<div
 			className={clsx(
 				bookSizes[bookSize],
-				"drop-shadow-book relative aspect-6/9 w-fit  bg-linen"
+				"relative aspect-6/9 w-fit bg-linen  drop-shadow"
 			)}
 		>
 			{imageLink}

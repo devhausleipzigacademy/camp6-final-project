@@ -5,11 +5,19 @@ import { HomeSearchBar } from "../components/SearchBars/HomeSearchbar/HomeSearch
 import Header from "../components/Header/Header";
 import { Settings } from "../components/Settings/Settings";
 import Head from "next/head";
+import { BookPreview } from "../components/bookPreview/BookPreview";
 const Home: NextPage = (props) => {
 	return (
 		<>
-			<Header />
-			<HomeSearchBar />
+			{/* <Header />
+			<HomeSearchBar /> */}
+			<p>home page</p>
+			<BookPreview
+				bookTitle={undefined}
+				bookAuthor={undefined}
+				linkHref={""}
+				bookSize={"previewGrid"}
+			/>
 		</>
 	);
 };
