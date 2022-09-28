@@ -10,13 +10,22 @@ import borrowHandler from "./lending.api";
 import { createBook } from "../interaction";
 import { createUser } from "../../user/interactions";
 
-// create a book to use for testing
-const book = generateFakeBook("b2791652-7a83-4a16-a18d-9943a3e16823");
+// bindings to store Ids for different tests
 var bookId = "";
+var testUserId = "";
 
 describe("Test Book DB Interactions", () => {
 	// 1st Test
 	it("retrieveBook returns a single book model", async () => {
+		// // // // // // // // // // //
+		// // // // Preparation // // //
+		// // // // // // // // // // //
+		const testUser = generateFakeUser();
+		const lenderModel = await createUser(testUser);
+		testUserId = lenderModel.identifier;
+		const book = generateFakeBook(testUserId);
+		// // // // // // // // // // //
+
 		// post book to compare
 		const bookModel = await createBook(book);
 		bookId = bookModel.identifier;
@@ -43,16 +52,10 @@ describe("Test Book DB Interactions", () => {
 	});
 });
 
-// 	it("retrieveBooks returns array, if array not empty check for book key author", async () => {
-// 		const booksdb = await retrieveBooks();
-
-// 		if (booksdb.length > 1) expect(booksdb[0].author).toBeDefined();
-// 	});
-// });
-
 describe("Test Book Endpoints", () => {
 	// GET
 	it("GET HANDLER should retrieve single book", async () => {
+		const book = generateFakeBook(testUserId);
 		// recreate book entry for get handler to retrieve
 		const bookModel = await createBook(book);
 		bookId = bookModel.identifier;

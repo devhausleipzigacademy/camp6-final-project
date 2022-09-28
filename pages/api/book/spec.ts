@@ -5,14 +5,14 @@ import httpMocks from "node-mocks-http";
 
 // local imports
 import { createBook, retrieveBooks } from "./interaction";
-import { generateFakeBook } from "./generator";
+import { generateFakeBook, generateFakeUser } from "./generator";
 import handler from "./index.api";
 import { prisma } from "../../../prisma/db";
+import { createUser } from "../user/interactions";
 
-// create a book to use for testing
-const book = generateFakeBook("b2791652-7a83-4a16-a18d-9943a3e16823");
-const books = [];
-books.push(book);
+// bindings to store Ids for different tests
+var bookId = "";
+var testUserId = "";
 
 describe("Test Book DB Interactions", () => {
 	// 1 Test
@@ -26,7 +26,17 @@ describe("Test Book DB Interactions", () => {
 	});
 	// 2 Test
 	it("createBook returns bookModel", async () => {
+		// // // // // // // // // // //
+		// // // // Preparation // // //
+		// // // // // // // // // // //
+		const testUser = generateFakeUser();
+		const lenderModel = await createUser(testUser);
+		testUserId = lenderModel.identifier;
+		// // // // // // // // // // //
+
+		const book = generateFakeBook(testUserId);
 		const bookModel = await createBook(book);
+		bookId = bookModel.identifier;
 
 		await expect(Object.hasOwn(bookModel, "identifier")).toEqual(true);
 	});
@@ -53,7 +63,7 @@ describe("Test Book Endpoints", () => {
 				title: "doar",
 				author: "tua",
 				language: "en",
-				ownerId: "b2791652-7a83-4a16-a18d-9943a3e16823",
+				ownerId: testUserId,
 				genres: [],
 				tags: [],
 			},

@@ -46,6 +46,8 @@ module.exports = {
 			},
 			fontFamily: {
 				sora: [],
+				montserrat: [],
+				arnoPro: [],
 			},
 			height: {
 				// needed for book thumbnails/previews
