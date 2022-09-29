@@ -27,7 +27,7 @@ export function BookGrid({ books, booksLoading }: BookGridProps) {
 		);
 
 	return (
-		<div className="grid grid-cols-2 justify-items-center gap-3 px-8 pt-4">
+		<div className="grid grid-cols-1 justify-items-center gap-3 px-8 pt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
 			{books.map((book) => (
 				<div>
 					<BookPreview

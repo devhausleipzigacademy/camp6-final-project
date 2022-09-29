@@ -29,6 +29,9 @@ module.exports = {
 		},
 
 		extend: {
+			screens: {
+				sm: "414px",
+			},
 			aspectRatio: {
 				// needed for book thumbnails/previews
 				"6/9": "6 / 9",
