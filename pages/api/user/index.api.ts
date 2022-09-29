@@ -27,7 +27,7 @@ export default async function handler(
 
 			const user = await createUser(req.body);
 
-			res.status(201).json({ id: user.identifier });
+			res.status(201).json({ identifier: user.identifier });
 		}
 	} catch (err) {
 		if (err instanceof ZodError) {

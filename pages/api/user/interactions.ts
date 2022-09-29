@@ -8,3 +8,12 @@ export async function createUser(data) {
 	});
 	return user;
 }
+
+// export async function getUsers(data) {
+// 	const userId = req.query.userId as string;
+// 	const singleUser = await prisma.user.findFirst({
+// 		where: {
+// 			identifier: data.id,
+// 		},
+// 	});
+// }

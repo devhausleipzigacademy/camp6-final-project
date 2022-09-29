@@ -18,17 +18,13 @@ export function generateFakeBook(
 	ownerId?: string | undefined,
 	carry: Record<string, string> = {}
 ) {
-	if (!ownerId) {
-		ownerId = faker.datatype.uuid();
-	}
-
 	const exampleBook = pickOne(exampleBooks100);
 
 	return {
+		ownerId: ownerId ? ownerId : undefined,
 		title: exampleBook.title,
 		author: exampleBook.author,
 		language: pickOne(languages as unknown as string[]),
-		ownerId: ownerId,
 		image: faker.image.cats(),
 		description: faker.lorem.paragraph(4),
 		isbn: faker.datatype.uuid(),
