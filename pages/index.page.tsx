@@ -1,23 +1,18 @@
-import { generateFakeBook } from "./api/book/generator";
-import { LanguageSearchBar } from "../components/SearchBars/LanguageSearchBar";
-
 import type { NextPage } from "next";
-import { HomeSearchBar } from "../components/SearchBars/HomeSearchbar/HomeSearchBar";
-import Header from "../components/Header/Header";
-import { Settings } from "../components/Settings/Settings";
-import Head from "next/head";
 
 const Home: NextPage = (props) => {
 	return (
 		<>
-			{/* <PlaceHolder /> */}
-
-			{/* <LanguageSearchBar /> */}
-
-			<p className="font-arno font-extrabold ">book share</p>
-			<p className="font-arnobold font-extrabold  ">book share</p>
-			<p className="font-montserrat font-normal  ">book share</p>
-			<p className="font-sora font-normal  ">book share</p>
+			<p className="font-arno">This is arno pro</p>
+			<p className="font-arnobold font-extrabold  ">
+				This is arno pro extra bold
+			</p>
+			<p className="font-montserrat font-normal  ">This is montserrat</p>
+			<p className="font-sora font-normal  ">This is sora</p>
+			<p className="pageTitle">
+				This is a page title, e.g. <br />
+				Favorites
+			</p>
 		</>
 	);
 };
