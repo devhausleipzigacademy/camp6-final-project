@@ -41,7 +41,7 @@ export default function Carousel({ books, category }: CarouselProps) {
                   bookTitle={book.title}
                   bookAuthor={book.author}
                   linkHref={`/book/${book.identifier}`}
-                  bookSize={"homepage"}
+                  bookSize={"carouselItem"}
                 />
               </SplideSlide>
             ))}

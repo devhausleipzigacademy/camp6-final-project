@@ -3,13 +3,14 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { FiHeart } from "react-icons/fi";
 import clsx from "clsx";
-import { randomNumb } from "../../utils/random";
+import { randomInt } from "../../utils/random";
 
 const bookSizes = {
   homepage: "h-54",
   previewGrid: "h-45",
   listItem: "h-20",
   confirmationScreen: "h-89",
+  carouselItem: "h-54",
 };
 
 const placeholderColors = ["bg-blue", "bg-salmon", "bg-dustyRose"];
@@ -69,6 +70,10 @@ export const BookPreview = ({
       var tinyText = true;
       sizes = "17vw";
       break;
+    case "carouselItem":
+      sizes = "28vw";
+      var modifiedShadow = true;
+      break;
     default:
       break;
   }
@@ -82,7 +87,7 @@ export const BookPreview = ({
       <div
         className={clsx(
           "flex h-full w-full flex-col items-center justify-between  p-4 text-center font-serif text-white",
-          placeholderColors[randomNumb(3)]
+          placeholderColors[randomInt(3)]
         )}
       >
         <p
@@ -144,7 +149,8 @@ export const BookPreview = ({
     <div
       className={clsx(
         bookSizes[bookSize],
-        "relative aspect-6/9 w-fit bg-linen drop-shadow"
+        "relative aspect-6/9 w-fit bg-linen",
+        modifiedShadow ? "drop-shadow-carouselItem" : "drop-shadow"
       )}
     >
       {imageLink}
