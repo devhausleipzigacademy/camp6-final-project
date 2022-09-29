@@ -6,6 +6,9 @@
 }
 
 @layer components {
+	.pageTitle {
+		@apply border-b-0.75 border-grey pb-4 pt-7 text-center font-arnoPro text-2xl font-bold text-dustyRose;
+	}
 }
 
 @layer utilities {

@@ -6,13 +6,11 @@ export default function Favorites() {
 
 	if (booksLoading) return <p>Loading...</p>;
 
-	if (!booksLoading && books === undefined) return <p>no books not found</p>;
-	console.log(books);
+	if (!booksLoading && books === undefined) return <p>no books found</p>;
+
 	return (
 		<>
-			<h2 className="border-b border-grey pb-4 pt-7 text-center font-arnoPro text-2xl font-bold text-dustyRose">
-				Favorites
-			</h2>
+			<h2 className="pageTitle">Favorites</h2>
 			<BookGrid books={books} booksLoading={booksLoading} />
 		</>
 	);

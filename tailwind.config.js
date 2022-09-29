@@ -29,6 +29,8 @@ module.exports = {
 		},
 
 		extend: {
+			borderWidth: { 0.75: "0.75px" },
+			// Iphone Screen width
 			screens: {
 				sm: "414px",
 			},
