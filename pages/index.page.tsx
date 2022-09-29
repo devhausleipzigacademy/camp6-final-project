@@ -18,6 +18,8 @@ const Home: NextPage = (props) => {
 
 			<InputForm />
 			{/* <LanguageSearchBar /> */}
+  
+      <p className="font-extrabold">book share</p>
 		</>
 	);
 };
