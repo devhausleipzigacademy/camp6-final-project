@@ -39,7 +39,10 @@ module.exports = {
 				togglePin: "2px 1px 6px rgba(0, 0, 0, 0.25)",
 			},
 			fontFamily: {
-				sora: [],
+				arno: ["arno", "sans-serif"],
+				arnobold: ["arno-bold", "sans-serif"],
+				montserrat: ["Montserrat"],
+				sora: ["Sora", "extra-bold"],
 			},
 			height: {
 				// needed for book thumbnails/previews
