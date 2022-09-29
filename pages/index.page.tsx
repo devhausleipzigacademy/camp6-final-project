@@ -1,20 +1,31 @@
+import "@splidejs/react-splide/css";
 import type { NextPage } from "next";
+import { HomeSearchBar } from "../components/SearchBars/HomeSearchbar/HomeSearchBar";
+import Header from "../components/Header/Header";
+import Carousel from "../components/carousel/Carousel";
+import { useBooks } from "../hooks/useBooks";
 
 const Home: NextPage = (props) => {
-	return (
-		<>
-			<p className="font-arno">This is arno pro</p>
-			<p className="font-arnobold font-extrabold  ">
-				This is arno pro extra bold
-			</p>
-			<p className="font-montserrat font-normal  ">This is montserrat</p>
-			<p className="font-sora font-normal  ">This is sora</p>
-			<p className="pageTitle">
-				This is a page title, e.g. <br />
-				Favorites
-			</p>
-		</>
-	);
+  const { data: books, isLoading: booksLoading } = useBooks();
+
+  if (booksLoading) return <p>Loading...</p>;
+
+  if (!booksLoading && books === undefined) return <p>no books not found</p>;
+
+  return (
+    <>
+      {/* <Header /> */}
+
+      <body className="pl-6">
+        {/* <HomeSearchBar /> */}
+
+        <section id="carousel">
+          <Carousel books={books} category="Recent Uploads" />
+          <Carousel books={books} category="Cookboks" />
+        </section>
+      </body>
+    </>
+  );
 };
 
 export default Home;

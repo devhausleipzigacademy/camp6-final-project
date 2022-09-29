@@ -76,5 +76,5 @@ module.exports = {
 		// used for storybook testing
 		"text-white",
 		"text-black",
-	],
+	]
 };

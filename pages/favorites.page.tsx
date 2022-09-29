@@ -1,3 +1,4 @@
+import { Book } from "@prisma/client";
 import { BookGrid } from "../components/bookGrid/BookGrid";
 import { useBooks } from "../hooks/useBooks";
 
