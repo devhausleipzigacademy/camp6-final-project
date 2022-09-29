@@ -3,78 +3,83 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { FiHeart } from "react-icons/fi";
 import clsx from "clsx";
-import { randomNumb } from "../../utils/random";
+import { randomInt } from "../../utils/random";
 
 const bookSizes = {
-	homepage: "h-54",
-	previewGrid: "h-45",
-	listItem: "h-20",
-	confirmationScreen: "h-89",
+  homepage: "h-54",
+  previewGrid: "h-45",
+  listItem: "h-20",
+  confirmationScreen: "h-89",
+  carouselItem: "h-54",
 };
 
 const placeholderColors = ["bg-blue", "bg-salmon", "bg-dustyRose"];
 interface BookPreviewProps {
-	/**
-	 * Source of Image?
-	 */
-	imgSrc?: string | StaticImageData;
-	/**
-	 * Book title?
-	 */
-	bookTitle;
-	/**
-	 * Book author?
-	 */
-	bookAuthor;
-	/**
-	 * Link target of where preview takes you
-	 */
-	linkHref: string;
-	/**
-	 * Determine context and and size of component
-	 */
-	bookSize: keyof typeof bookSizes;
+  /**
+   * Source of Image?
+   */
+  imgSrc?: string | StaticImageData;
+  /**
+   * Book title?
+   */
+  bookTitle;
+  /**
+   * Book author?
+   */
+  bookAuthor;
+  /**
+   * Link target of where preview takes you
+   */
+  linkHref: string;
+  /**
+   * Determine context and and size of component
+   */
+  bookSize: keyof typeof bookSizes;
 }
 
 /**
  * Book thumbnail that can be used in lists and overviews. Aspet ratio fixed to prevent distorted images.
  */
 export const BookPreview = ({
-	bookSize,
-	imgSrc,
-	bookTitle,
-	bookAuthor,
-	linkHref,
+  bookSize,
+  imgSrc,
+  bookTitle,
+  bookAuthor,
+  linkHref,
 }: BookPreviewProps) => {
-	const [faved, setFaved] = useState(false);
+  const [faved, setFaved] = useState(false);
 
-	function toggleFavorite() {
-		console.log(faved);
-		setFaved(!faved);
-	}
+  function toggleFavorite() {
+    console.log(faved);
+    setFaved(!faved);
+  }
 
-	// TODO: if we change design for larger screen we need to modify the sizes below.
-	let sizes = "100vw";
-	switch (bookSize) {
-		case "previewGrid":
-			sizes = "40vw";
-			break;
-		case "homepage":
-			sizes = "28vw";
-			break;
-		case "confirmationScreen":
-			sizes = "62vw";
-			break;
-		case "listItem":
-			var tinyText = true;
-			sizes = "17vw";
-			break;
-		default:
-			break;
-	}
+  // TODO: if we change design for larger screen we need to modify the sizes below.
+  let sizes = "100vw";
+  switch (bookSize) {
+    case "previewGrid":
+      sizes = "40vw";
+      break;
+    case "homepage":
+      sizes = "28vw";
+      break;
+    case "confirmationScreen":
+      sizes = "62vw";
+      break;
+    case "listItem":
+      var tinyText = true;
+      sizes = "17vw";
+      break;
+    case "carouselItem":
+      sizes = "28vw";
+      var modifiedShadow = true;
+      break;
+    default:
+      break;
+  }
 
-	// the actual image tag
-	let imageLink;
+  // the actual image tag
+  let imageLink;
 
 	// if no image provide we fill image tag with placeholder
 	if (!imgSrc) {
