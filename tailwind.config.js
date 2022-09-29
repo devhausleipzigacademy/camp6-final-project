@@ -18,6 +18,10 @@ module.exports = {
 			salmon: "#F4A298",
 			yellow: "#F3DE8A",
 			white: "#FFFFFF",
+			// needed for book thumbnails/previews
+			linen: "#F8F3ED",
+			//needed for toggle switch
+			buttonGrey: "#D4D3D3",
 		},
 		dropShadow: {
 			// needed for book thumbnails/previews
@@ -27,7 +31,6 @@ module.exports = {
 			// needed for add-book button
 			plusButton: "0px 4px 4px rgba(0, 0, 0, 0.25)",
 		},
-
 		extend: {
 			borderWidth: { 0.75: "0.75px" },
 			// Iphone Screen width
@@ -46,22 +49,11 @@ module.exports = {
 				//needed for toggle switch
 				toggleSwitch: "inset 0px 6px 8px 3px rgba(0, 0, 0, 0.1)",
 			},
-			colors: {
-				customCream: "#FEF1E0",
-				CustomSalmon: "#F4A298",
-				CustomDustyRose: "#E5BABA",
-				CustomBlue: "#A4C5C6",
-				CustomBrown: "#A69F95",
-				CustomBlack: "#2E312F",
-				// needed for book thumbnails/previews
-				linen: "#F8F3ED",
-				//needed for toggle switch
-				buttonGrey: "#D4D3D3",
-			},
 			fontFamily: {
-				sora: [],
-				montserrat: [],
-				arnoPro: [],
+				arno: ["arno", "sans-serif"],
+				arnobold: ["arno-bold", "sans-serif"],
+				montserrat: ["Montserrat"],
+				sora: ["Sora", "extra-bold"],
 			},
 			height: {
 				// needed for book thumbnails/previews

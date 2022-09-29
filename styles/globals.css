@@ -1,13 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Sora:wght@800&display=swap");
 
 @layer base {
+	@font-face {
+		font-family: "arno-bold";
+		src: url("../public/fonts/Arno-Bold.otf");
+	}
+	@font-face {
+		font-family: "arno";
+		src: url("../public/fonts/Arno-Reg.ttf");
+	}
 }
 
 @layer components {
 	.pageTitle {
-		@apply border-b-0.75 border-grey pb-4 pt-7 text-center font-arnoPro text-2xl font-bold text-dustyRose;
+		@apply border-b-0.75 border-grey pb-4 pt-7 text-center font-arnobold text-2xl font-semibold text-dustyRose;
 	}
 }
 

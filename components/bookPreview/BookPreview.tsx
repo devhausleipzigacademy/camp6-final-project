@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { FiHeart } from "react-icons/fi";
 import clsx from "clsx";
-import { randomNumb } from "../../utils/random";
+import { randomInt } from "../../utils/random";
 
 const bookSizes = {
 	homepage: "h-54",
@@ -82,7 +82,7 @@ export const BookPreview = ({
 			<div
 				className={clsx(
 					"flex h-full w-full flex-col items-center justify-between p-4 text-center font-serif text-white",
-					placeholderColors[randomNumb(3)]
+					placeholderColors[randomInt(3)]
 				)}
 			>
 				<p
