@@ -17,6 +17,7 @@ model Book {
     // This is a note saying that we might want to change the author from string to its own model
     author          String
     language        String
+    image           String?
     description     String?
     isbn            String?
     publishYear     DateTime?

@@ -1,12 +1,13 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { HomeSearchBar } from "./HomeSearchBar";
 
 export default {
 	title: "SearchBars/HomeSearchBar",
-	component: "HomeSearchBar",
-} as unknown as ComponentMeta<typeof HomeSearchBar>;
+	component: HomeSearchBar,
+} as ComponentMeta<typeof HomeSearchBar>;
 
 const Template: ComponentStory<typeof HomeSearchBar> = (args) => (
 	<HomeSearchBar {...args} />
 );
 
-export const HomeSearchBar = Template.bind({});
+export const SearchBar = Template.bind({});

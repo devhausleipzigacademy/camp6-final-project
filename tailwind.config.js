@@ -1,14 +1,29 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-	content: [
-		"./pages/**/*.{js,ts,jsx,tsx}",
-		"./components/**/*.{js,ts,jsx,tsx}",
-	],
+	content: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
 	theme: {
-		screens: {
-			// iphone 6/7/8
-			// mobile: "640px",
+		colors: {
+			// primary colors to use
+			black: "#2E312F",
+			blue: "#A4C5C6",
+			brown: "#A69F95",
+			cream: "#FEF1E0",
+			dustyRose: "#E5BABA",
+			green: "#B5C285",
+			grey: "#C4C3C2",
+			salmon: "#F4A298",
+			yellow: "#F3DE8A",
+			white: "#FFFFFF",
 		},
+		dropShadow: {
+			// needed for book thumbnails/previews
+			DEFAULT: "2px 6px 20px rgba(0, 0, 0, 0.25)",
+			//needed for toggle switch
+			togglePin: "2px 1px 6px rgba(0, 0, 0, 0.25)",
+			// needed for add-book button
+			plusButton: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+		},
+
 		extend: {
 			aspectRatio: {
 				// needed for book thumbnails/previews
@@ -27,17 +42,18 @@ module.exports = {
 				customGreen: "#B5C285",
 				customYellow: "#F3DE8A",
 				customGrey: "#C4C3C2",
+				customCream: "#FEF1E0",
+				CustomSalmon: "#F4A298",
+				CustomDustyRose: "#E5BABA",
+				CustomBlue: "#A4C5C6",
+				CustomBrown: "#A69F95",
+				CustomBlack: "#2E312F",
 				// needed for book thumbnails/previews
 				linen: "#F8F3ED",
 				//needed for toggle switch
 				buttonGrey: "#D4D3D3",
 			},
-			dropShadow: {
-				// needed for book thumbnails/previews
-				book: "2px 6px 20px rgba(0, 0, 0, 0.25)",
-				//needed for toggle switch
-				togglePin: "2px 1px 6px rgba(0, 0, 0, 0.25)",
-			},
+
 			fontFamily: {
 				arno: ["arno", "sans-serif"],
 				arnobold: ["arno-bold", "sans-serif"],
@@ -50,9 +66,15 @@ module.exports = {
 				54: "13.5rem /* 216 pixel*/",
 				89: "22.25rem /* 356pixel*/",
 			},
+			fontSize: {
+				"2xs": "10px",
+			},
 			width: {
 				mobile: "640px",
+				// needed for library buttons
+				25: "6.25rem /* 98 pixel*/",
 			},
+			height: {},
 		},
 	},
 	plugins: [],
