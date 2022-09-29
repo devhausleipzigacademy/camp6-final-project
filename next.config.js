@@ -2,6 +2,9 @@
 const nextConfig = {
 	pageExtensions: ["page.tsx", "api.ts"],
 	reactStrictMode: true,
+	images: {
+		domains: ["loremflickr.com"],
+	},
 	swcMinify: true,
 };
 

@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { FiHeart } from "react-icons/fi";
 import clsx from "clsx";
-import { randomNumb } from "../../utils/random";
+import { randomInt } from "../../utils/random";
 
 const bookSizes = {
 	homepage: "h-54",
@@ -81,8 +81,8 @@ export const BookPreview = ({
 		imageLink = (
 			<div
 				className={clsx(
-					"flex h-full w-full flex-col items-center justify-between  p-4 text-center font-serif text-white",
-					placeholderColors[randomNumb(3)]
+					"flex h-full w-full flex-col items-center justify-between p-4 text-center font-serif text-white",
+					placeholderColors[randomInt(3)]
 				)}
 			>
 				<p
@@ -122,15 +122,22 @@ export const BookPreview = ({
 			<div
 				className={clsx(
 					bookSizes[bookSize],
-					"relative flex aspect-6/9 w-fit items-center justify-center bg-linen"
+					"relative flex h-44 w-40 items-center justify-center bg-linen"
 				)}
 			>
-				<div className="relative h-5/6 w-5/6  bg-linen">{imageLink}</div>
-				<div className="text-gray-400 absolute bottom-0 right-0 flex aspect-square w-1/5   items-center justify-center  bg-white opacity-90 ">
-					<button onClick={toggleFavorite}>
+				<div className="relative aspect-6/9 h-5/6 bg-linen drop-shadow">
+					{imageLink}
+				</div>
+				<div className="text-gray-400 absolute bottom-0 right-0 flex aspect-square w-1/4 items-center justify-center bg-white opacity-90 ">
+					<button
+						className="flex h-full w-full items-center justify-center"
+						onClick={toggleFavorite}
+					>
 						<FiHeart
-							className="h-full w-full p-1"
-							fill={faved ? "darkred" : "none"}
+							className={clsx(
+								"h-5/6 w-5/6 stroke-1",
+								faved ? "fill-salmon text-salmon" : "text-grey"
+							)}
 						/>
 					</button>
 				</div>
@@ -142,7 +149,7 @@ export const BookPreview = ({
 		<div
 			className={clsx(
 				bookSizes[bookSize],
-				"drop-shadow-book relative aspect-6/9 w-fit  bg-linen"
+				"relative aspect-6/9 w-fit bg-linen drop-shadow"
 			)}
 		>
 			{imageLink}

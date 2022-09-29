@@ -5,16 +5,19 @@
 
 @layer base {
 	@font-face {
-		font-family: "Arno-bold";
+		font-family: "arno-bold";
 		src: url("../public/fonts/Arno-Bold.otf");
 	}
 	@font-face {
-		font-family: "Arno";
+		font-family: "arno";
 		src: url("../public/fonts/Arno-Reg.ttf");
 	}
 }
 
 @layer components {
+	.pageTitle {
+		@apply border-b-0.75 border-grey pb-4 pt-7 text-center font-arnobold text-2xl font-semibold text-dustyRose;
+	}
 }
 
 @layer utilities {
@@ -29,6 +32,6 @@
 	}
 
 	input:checked + .toggle-bg {
-		@apply border-customGreen bg-customGreen;
+		@apply border-green bg-green;
 	}
 }
