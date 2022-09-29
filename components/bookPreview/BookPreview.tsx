@@ -81,79 +81,83 @@ export const BookPreview = ({
   // the actual image tag
   let imageLink;
 
-  // if no image provide we fill image tag with placeholder
-  if (!imgSrc) {
-    imageLink = (
-      <div
-        className={clsx(
-          "flex h-full w-full flex-col items-center justify-between  p-4 text-center font-serif text-white",
-          placeholderColors[randomInt(3)]
-        )}
-      >
-        <p
-          className={clsx(tinyText ? "w-full truncate text-[11px]" : "text-sm")}
-        >
-          {bookTitle}
-        </p>
-        <p
-          className={clsx(
-            "w-full truncate",
-            tinyText ? "text-[9px]" : "text-xs"
-          )}
-        >
-          {bookAuthor}
-        </p>
-      </div>
-    );
-  } else {
-    imageLink = (
-      <Link href={linkHref}>
-        <a>
-          <Image
-            src={imgSrc}
-            fill
-            alt={bookAuthor + ": " + bookTitle}
-            sizes={sizes}
-            title={bookTitle}
-            style={{ objectFit: "contain" }}
-          />
-        </a>
-      </Link>
-    );
-  }
+	// if no image provide we fill image tag with placeholder
+	if (!imgSrc) {
+		imageLink = (
+			<div
+				className={clsx(
+					"flex h-full w-full flex-col items-center justify-between p-4 text-center font-serif text-white",
+					placeholderColors[randomNumb(3)]
+				)}
+			>
+				<p
+					className={clsx(tinyText ? "w-full truncate text-[11px]" : "text-sm")}
+				>
+					{bookTitle}
+				</p>
+				<p
+					className={clsx(
+						"w-full truncate",
+						tinyText ? "text-[9px]" : "text-xs"
+					)}
+				>
+					{bookAuthor}
+				</p>
+			</div>
+		);
+	} else {
+		imageLink = (
+			<Link href={linkHref}>
+				<a>
+					<Image
+						src={imgSrc}
+						fill
+						alt={bookAuthor + ": " + bookTitle}
+						sizes={sizes}
+						title={bookTitle}
+						style={{ objectFit: "contain" }}
+					/>
+				</a>
+			</Link>
+		);
+	}
 
-  if (bookSize === "previewGrid") {
-    return (
-      <div
-        className={clsx(
-          bookSizes[bookSize],
-          "relative flex aspect-6/9 w-fit items-center justify-center bg-linen"
-        )}
-      >
-        <div className="relative h-5/6 w-5/6  bg-linen">{imageLink}</div>
-        <div className="text-gray-400 absolute bottom-0 right-0 flex aspect-square w-1/5   items-center justify-center  bg-white opacity-90 ">
-          <button onClick={toggleFavorite}>
-            <FiHeart
-              className={clsx(
-                "h-full w-full p-1",
-                faved ? "fill-salmon text-salmon" : "text-black"
-              )}
-            />
-          </button>
-        </div>
-      </div>
-    );
-  }
+	if (bookSize === "previewGrid") {
+		return (
+			<div
+				className={clsx(
+					bookSizes[bookSize],
+					"relative flex h-44 w-40 items-center justify-center bg-linen"
+				)}
+			>
+				<div className="relative aspect-6/9 h-5/6 bg-linen drop-shadow">
+					{imageLink}
+				</div>
+				<div className="text-gray-400 absolute bottom-0 right-0 flex aspect-square w-1/4 items-center justify-center bg-white opacity-90 ">
+					<button
+						className="flex h-full w-full items-center justify-center"
+						onClick={toggleFavorite}
+					>
+						<FiHeart
+							className={clsx(
+								"h-5/6 w-5/6 stroke-1",
+								faved ? "fill-salmon text-salmon" : "text-grey"
+							)}
+						/>
+					</button>
+				</div>
+			</div>
+		);
+	}
 
-  return (
-    <div
-      className={clsx(
-        bookSizes[bookSize],
-        "relative aspect-6/9 w-fit bg-linen",
-        modifiedShadow ? "drop-shadow-carouselItem" : "drop-shadow"
-      )}
-    >
-      {imageLink}
-    </div>
-  );
+	return (
+		<div
+			className={clsx(
+				bookSizes[bookSize],
+				"relative aspect-6/9 w-fit bg-linen drop-shadow"
+			)}
+		>
+			{imageLink}
+		</div>
+	);
 };

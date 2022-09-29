@@ -2,6 +2,7 @@ import "@splidejs/react-splide/css";
 import type { NextPage } from "next";
 import { HomeSearchBar } from "../components/SearchBars/HomeSearchbar/HomeSearchBar";
 import Header from "../components/Header/Header";
+
 import Carousel from "../components/carousel/Carousel";
 import { useBooks } from "../hooks/useBooks";
 
