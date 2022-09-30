@@ -1,5 +1,6 @@
 import { Book } from "@prisma/client";
 import { FiBookOpen } from "react-icons/fi";
+import { boolean } from "zod";
 import { BookPreview } from "../bookPreview/BookPreview";
 
 interface BookGridProps {
@@ -31,13 +32,14 @@ export function BookGrid({ books, booksLoading }: BookGridProps) {
 			{books.map((book) => (
 				<div>
 					<BookPreview
+						isAvailable={book.isAvailable}
 						bookTitle={book.title}
 						imgSrc={book.image}
 						bookAuthor={book.author}
 						linkHref={`/book/${book.identifier}`}
 						bookSize={"previewGrid"}
 					/>
-					<p className="w-full truncate font-arnoPro text-xs font-bold text-textGrey">
+					<p className="font-arnoPro w-full truncate text-xs font-bold text-textGrey">
 						{book.author}
 					</p>
 					<p className="w-full truncate font-montserrat text-xs font-normal text-textGrey">
