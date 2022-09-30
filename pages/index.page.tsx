@@ -1,11 +1,8 @@
 import "@splidejs/react-splide/css";
 import type { NextPage } from "next";
-import { HomeSearchBar } from "../components/SearchBars/HomeSearchbar/HomeSearchBar";
 import SubHeading2 from "../components/Subheading/Subheading";
-import Header from "../components/Header/Header";
 import useBook from "../hooks/useGetBooks";
 import Carousel from "../components/carousel/Carousel";
-import { useEffect } from "react";
 
 const Home: NextPage = (props) => {
     const categories = ["Cookbooks", "Fantasy"];

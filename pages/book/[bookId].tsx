@@ -8,15 +8,28 @@ import { ExampleTags } from "../../components/bookDescription/BookDescribtion.st
 import { CustomButton } from "../../components/button/Button";
 import Thraxas from "../public/testingImages/thraxas_and_the_dance_of_death.jpg";
 import languagesJSON from "../../enums/ISO-languages.json";
-import useBook from "../../hooks/useGetBooks";
 import useGetBook from "../../hooks/useGetBook";
+import { StringIterator } from "lodash";
+import { Book } from "@prisma/client";
 
-export default function BookDescription({}) {
-    // console.log(obj);
-    const router = useRouter();
-    const { bookId } = router.query;
+export async function getServerSideProps({ params, query, req, res }) {
+    const { bookId } = params;
 
     const { data: book } = useGetBook(String(bookId));
+
+    return {
+        props: {
+            book,
+        },
+    };
+}
+
+type BookDescriptionProps = {
+    book: Book;
+};
+
+export default function BookDescription({ book }: BookDescriptionProps) {
+    const router = useRouter();
 
     return (
         <div className="flex w-mobile flex-col items-stretch py-5 px-10">
