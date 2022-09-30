@@ -14,6 +14,7 @@ module.exports = {
 			dustyRose: "#E5BABA",
 			green: "#B5C285",
 			grey: "#C4C3C2",
+			textBlack: "#444846",
 			textGrey: "#A39C94",
 			salmon: "#F4A298",
 			yellow: "#F3DE8A",
@@ -50,10 +51,10 @@ module.exports = {
 				toggleSwitch: "inset 0px 6px 8px 3px rgba(0, 0, 0, 0.1)",
 			},
 			fontFamily: {
+				sora: ["Sora", "sans-serif"],
 				arno: ["arno", "sans-serif"],
 				arnobold: ["arno-bold", "sans-serif"],
-				montserrat: ["Montserrat"],
-				sora: ["Sora", "extra-bold"],
+				montserrat: ["Montserrat", "sans-serif"],
 			},
 			height: {
 				// needed for book thumbnails/previews
