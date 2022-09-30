@@ -2,7 +2,7 @@ import { Splide, SplideSlide, SplideTrack } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 import { Book } from "@prisma/client";
 import { BookPreview } from "../bookPreview/BookPreview";
-import { BiChevronRight, BiChevronLeft } from "react-icons/bi";
+import { BiChevronRight } from "react-icons/bi";
 
 interface CarouselProps {
   books: Book[];
@@ -24,7 +24,7 @@ export default function Carousel({ books, category }: CarouselProps) {
           hasTrack={false}
           aria-label="..."
           options={{
-            perPage: 3,
+            perPage: 3, // TODO: add variants for different viewports
             perMove: 1,
             focus: 0,
             gap: "100px",

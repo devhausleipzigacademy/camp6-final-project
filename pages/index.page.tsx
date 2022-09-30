@@ -2,6 +2,7 @@ import "@splidejs/react-splide/css";
 import type { NextPage } from "next";
 import { HomeSearchBar } from "../components/SearchBars/HomeSearchbar/HomeSearchBar";
 import Header from "../components/Header/Header";
+
 import Carousel from "../components/carousel/Carousel";
 import { useBooks } from "../hooks/useBooks";
 
@@ -21,7 +22,7 @@ const Home: NextPage = (props) => {
 
         <section id="carousel">
           <Carousel books={books} category="Recent Uploads" />
-          <Carousel books={books} category="Cookboks" />
+          <Carousel books={books} category="Cookbooks" />
         </section>
       </body>
     </>

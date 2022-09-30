@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 import { FaTelegram } from "react-icons/fa";
 import { GoLocation } from "react-icons/go";
 
-import { Button } from "../button/Button";
+import { CustomButton } from "../button/Button";
 import BookDescription from "./BookDescription";
 
 const tagslist = [
@@ -39,7 +39,7 @@ export function ExampleTags() {
       {tagslist.map((x, idx) => (
         <>
           <button
-            className={`${colors[idx]} w-fit rounded-lg   px-2  py-1 text-gray-400`}
+            className={`${colors[idx]} text-gray-400 w-fit   rounded-lg  px-2 py-1`}
           >
             <p>{x}</p>
           </button>
@@ -73,13 +73,23 @@ ExampleBook.args = {
     "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.getap.com.tr%2Fwp-content%2Fuploads%2F2018%2F09%2Fkitap.jpg&f=1&nofb=1",
   children: [
     <ExampleTags />,
-    <Button functionality="External">
+    <CustomButton
+      functionality="ExternalApp"
+      onClick={function (): void {
+        throw new Error("Function not implemented.");
+      }}
+    >
       <FaTelegram />
       Message user
-    </Button>,
-    <Button functionality="External">
+    </CustomButton>,
+    <CustomButton
+      functionality="ExternalApp"
+      onClick={function (): void {
+        throw new Error("Function not implemented.");
+      }}
+    >
       <GoLocation className="text-white" />
       Open in maps
-    </Button>,
+    </CustomButton>,
   ],
 };

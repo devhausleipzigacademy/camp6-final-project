@@ -86,7 +86,7 @@ export const BookPreview = ({
     imageLink = (
       <div
         className={clsx(
-          "flex h-full w-full flex-col items-center justify-between  p-4 text-center font-serif text-white",
+          "font-serif flex h-full w-full flex-col items-center  justify-between p-4 text-center text-white",
           placeholderColors[randomInt(3)]
         )}
       >
@@ -127,16 +127,21 @@ export const BookPreview = ({
       <div
         className={clsx(
           bookSizes[bookSize],
-          "relative flex aspect-6/9 w-fit items-center justify-center bg-linen"
+          "relative flex h-44 w-40 items-center justify-center bg-linen"
         )}
       >
-        <div className="relative h-5/6 w-5/6  bg-linen">{imageLink}</div>
-        <div className="text-gray-400 absolute bottom-0 right-0 flex aspect-square w-1/5   items-center justify-center  bg-white opacity-90 ">
-          <button onClick={toggleFavorite}>
+        <div className="relative aspect-6/9 h-5/6 bg-linen drop-shadow">
+          {imageLink}
+        </div>
+        <div className="text-gray-400 absolute bottom-0 right-0 flex aspect-square w-1/4 items-center justify-center bg-white opacity-90 ">
+          <button
+            className="flex h-full w-full items-center justify-center"
+            onClick={toggleFavorite}
+          >
             <FiHeart
               className={clsx(
-                "h-full w-full p-1",
-                faved ? "fill-salmon text-salmon" : "text-black"
+                "h-5/6 w-5/6 stroke-1",
+                faved ? "fill-salmon text-salmon" : "text-grey"
               )}
             />
           </button>
