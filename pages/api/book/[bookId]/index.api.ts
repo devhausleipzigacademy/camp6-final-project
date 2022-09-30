@@ -1,53 +1,24 @@
+// package imports
+import { Book } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
-import { prisma } from "../../../../prisma/db";
-import { z, ZodError } from "zod";
-import { LANGUAGES, GENRES } from "../index.api";
+import { ZodError } from "zod";
 
-// Zod Model for Updating Book
-const putBook = z.object({
-	title: z.string().optional(),
-	author: z.string().optional(),
-	language: z.enum(LANGUAGES).optional(),
-	description: z.string().optional(),
-	isbn: z.string().optional(),
-	publishYear: z.date().optional(),
-	genres: z
-		.enum(GENRES)
-		.array()
-		.refine((arg) => JSON.stringify(arg)),
-	tags: z
-		.string()
-		.array()
-		.refine((arg) => JSON.stringify(arg)),
-	isReserved: z.boolean().optional(),
-});
-
-const getBook = putBook.extend({
-	genres: z.string().refine((arg) => JSON.parse(arg)),
-	tags: z.string().refine((arg) => JSON.parse(arg)),
-	identifier: z.string(),
-	createdAt: z.date(),
-	updatedAt: z.date(),
-	borrowerId: z.string(),
-});
-
-type PostBook = z.infer<typeof putBook>;
-
-type GetBook = z.infer<typeof getBook>;
+// local imports
+import { ErrorResponse } from "../index.api";
+import { deleteBook, retrieveBook, updateBook } from "./interaction";
+import { GetBook, getBook } from "../model.zod";
+import { putBook } from "../model.zod";
 
 export default async function handler(
 	req: NextApiRequest,
-	res: NextApiResponse<
-		GetBook | { id: string } | { message: string; error: any }
-	>
+	res: NextApiResponse<Book | GetBook | { id: string } | ErrorResponse>
 ) {
 	try {
 		if (req.method === "GET") {
 			const bookId = req.query.bookId as string;
 
-			const book = await prisma.book.findFirstOrThrow({
-				where: { identifier: bookId },
-			});
+			const book = await retrieveBook(bookId);
+
 			const parsedBook = getBook.parse(book);
 			res.status(200).json(parsedBook);
 		}
@@ -55,36 +26,36 @@ export default async function handler(
 			const data = putBook.parse(req.body);
 			const bookId = req.query.bookId as string;
 
-			const updatedBook = await prisma.book.update({
-				where: {
-					identifier: bookId,
-				},
-				data: { ...data },
-			});
+			await updateBook(bookId, data);
 
-			res.status(202).json({ id: bookId });
+			res.status(204).end();
 		}
 		if (req.method === "DELETE") {
 			const bookId = req.query.bookId as string;
 
-			const deletedBook = await prisma.book.delete({
-				where: {
-					identifier: bookId,
-				},
-			});
-			const parsedBook = getBook.parse(deletedBook);
-			res.status(200).json(parsedBook);
+			const deletedBook = await deleteBook(bookId);
+
+			res.status(200).json(deletedBook);
 		}
 	} catch (err) {
 		if (err instanceof ZodError) {
-			res.status(422).send({
+			const errorResponse: ErrorResponse = {
 				message: "Invalid book.",
-				error: err,
-			});
+			};
+			if (["development", "test"].includes(process.env.NODE_ENV)) {
+				errorResponse.error = err;
+			}
+
+			res.status(422).send(errorResponse);
 		}
-		res.status(404).send({
+
+		const errorResponse: ErrorResponse = {
 			message: "Looks like something went wrong. Please try again.",
-			error: err,
-		});
+		};
+		if (["development", "test"].includes(process.env.NODE_ENV)) {
+			errorResponse.error = err;
+		}
+
+		res.status(404).send(errorResponse);
 	}
 }

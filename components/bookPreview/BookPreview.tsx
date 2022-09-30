@@ -1,115 +1,165 @@
 import Image, { StaticImageData } from "next/future/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import Thraxas from "../../public/testingImages/thraxas_and_the_dance_of_death.jpg";
 import { FiHeart } from "react-icons/fi";
 import clsx from "clsx";
+import { randomInt } from "../../utils/random";
 
 const bookSizes = {
-  homepage: "h-54",
-  previewGrid: "h-45",
-  listItem: "h-20",
-  confirmationScreen: "h-89",
+    homepage: "h-54",
+    previewGrid: "h-45",
+    listItem: "h-20",
+    confirmationScreen: "h-89",
+    carouselItem: "h-54",
 };
+
+const placeholderColors = ["bg-blue", "bg-salmon", "bg-dustyRose"];
 interface BookPreviewProps {
-  /**
-   * Source of Image?
-   */
-  imgSrc: string | StaticImageData;
-  /**
-   * Alt text of image?
-   */
-  imgAlt: string;
-  /**
-   * Link target of where preview takes you to
-   */
-  linkHref: string;
-  /**
-   * Determine context and and size of component
-   */
-  bookSize: keyof typeof bookSizes;
+    /**
+     * Source of Image?
+     */
+    imgSrc?: string | StaticImageData;
+    /**
+     * Book title?
+     */
+    bookTitle;
+    /**
+     * Book author?
+     */
+    bookAuthor;
+    /**
+     * Link target of where preview takes you
+     */
+    linkHref: string;
+    /**
+     * Determine context and and size of component
+     */
+    bookSize: keyof typeof bookSizes;
 }
 
 /**
  * Book thumbnail that can be used in lists and overviews. Aspet ratio fixed to prevent distorted images.
  */
 export const BookPreview = ({
-  bookSize,
-  imgSrc = Thraxas,
-  imgAlt = "School of Athens",
-  linkHref,
-  ...props
+    bookSize,
+    imgSrc,
+    bookTitle,
+    bookAuthor,
+    linkHref,
 }: BookPreviewProps) => {
-  const [faved, setFaved] = useState(false);
+    const [faved, setFaved] = useState(false);
 
-  // TODO: if we change design for larger screen we need to modify the sizes below.
-  let sizes = "100vw";
-  switch (bookSize) {
-    case "previewGrid":
-      sizes = "40vw";
-      break;
-    case "homepage":
-      sizes = "28vw";
-      break;
-    case "confirmationScreen":
-      sizes = "62vw";
-      break;
-    case "listItem":
-      sizes = "17vw";
-      break;
-    default:
-      break;
-  }
+    function toggleFavorite() {
+        console.log(faved);
+        setFaved(!faved);
+    }
 
-  function toggleFavorite() {
-    console.log(faved);
-    setFaved(!faved);
-  }
+    // TODO: if we change design for larger screen we need to modify the sizes below.
+    let sizes = "100vw";
+    switch (bookSize) {
+        case "previewGrid":
+            sizes = "40vw";
+            break;
+        case "homepage":
+            sizes = "28vw";
+            break;
+        case "confirmationScreen":
+            sizes = "62vw";
+            break;
+        case "listItem":
+            var tinyText = true;
+            sizes = "17vw";
+            break;
+        case "carouselItem":
+            sizes = "28vw";
+            var modifiedShadow = true;
+            break;
+        default:
+            break;
+    }
 
-  const imageLink = (
-    <Link href={linkHref}>
-      <a>
-        <Image
-          src={imgSrc}
-          fill
-          alt={imgAlt}
-          sizes={sizes}
-          title={imgAlt}
-          style={{ objectFit: "contain" }}
-        />
-      </a>
-    </Link>
-  );
+    // the actual image tag
+    let imageLink;
 
-  if (bookSize === "previewGrid") {
+    // if no image provide we fill image tag with placeholder
+    if (!imgSrc) {
+        imageLink = (
+            <div
+                className={clsx(
+                    "font-serif flex h-full w-full flex-col items-center justify-between p-4 text-center text-white",
+                    placeholderColors[randomInt(3)]
+                )}
+            >
+                <p
+                    className={clsx(
+                        tinyText ? "w-full truncate text-[11px]" : "text-sm"
+                    )}
+                >
+                    {bookTitle}
+                </p>
+                <p
+                    className={clsx(
+                        "w-full truncate",
+                        tinyText ? "text-[9px]" : "text-xs"
+                    )}
+                >
+                    {bookAuthor}
+                </p>
+            </div>
+        );
+    } else {
+        imageLink = (
+            <Link href={linkHref}>
+                <a>
+                    <Image
+                        src={imgSrc}
+                        fill
+                        alt={bookAuthor + ": " + bookTitle}
+                        sizes={sizes}
+                        title={bookTitle}
+                        style={{ objectFit: "contain" }}
+                    />
+                </a>
+            </Link>
+        );
+    }
+
+    if (bookSize === "previewGrid") {
+        return (
+            <div
+                className={clsx(
+                    bookSizes[bookSize],
+                    "relative flex h-44 w-40 items-center justify-center bg-linen"
+                )}
+            >
+                <div className="relative aspect-6/9 h-5/6 bg-linen drop-shadow">
+                    {imageLink}
+                </div>
+                <div className="text-gray-400 absolute bottom-0 right-0 flex aspect-square w-1/4 items-center justify-center bg-white opacity-90 ">
+                    <button
+                        className="flex h-full w-full items-center justify-center"
+                        onClick={toggleFavorite}
+                    >
+                        <FiHeart
+                            className={clsx(
+                                "h-5/6 w-5/6 stroke-1",
+                                faved ? "fill-salmon text-salmon" : "text-grey"
+                            )}
+                        />
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
     return (
-      <div
-        className={clsx(
-          bookSizes[bookSize],
-          "relative flex aspect-6/9 w-fit items-center justify-center bg-linen"
-        )}
-      >
-        <div className="relative h-5/6 w-5/6  bg-linen">{imageLink}</div>
-        <div className="absolute bottom-0 right-0 flex aspect-square w-1/5 items-center   justify-center bg-white  text-gray-400 opacity-90 ">
-          <button onClick={toggleFavorite}>
-            <FiHeart
-              className="h-full w-full p-1"
-              fill={faved ? "darkred" : "none"}
-            />
-          </button>
+        <div
+            className={clsx(
+                bookSizes[bookSize],
+                "relative aspect-6/9 w-fit bg-linen drop-shadow"
+            )}
+        >
+            {imageLink}
         </div>
-      </div>
     );
-  }
-
-  return (
-    <div
-      className={clsx(
-        bookSizes[bookSize],
-        "relative aspect-6/9 w-fit bg-linen  drop-shadow-book"
-      )}
-    >
-      {imageLink}
-    </div>
-  );
 };

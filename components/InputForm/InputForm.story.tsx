@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import InputForm from "./InputForm";
+import InputForm from "../../pages/InputForm.page";
 
 export default {
 	title: "InputForm",

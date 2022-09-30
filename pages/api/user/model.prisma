@@ -1,11 +1,13 @@
 model User {
-  identifier    String  @id @default(uuid())
+  identifier    String   @id @default(uuid())
   name          String?
   image         String?
   username      String
   telegramId    String
-  booksBorrowed Book[]  @relation("borrowing")
-  booksOwned    Book[]  @relation("owning")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  booksBorrowed Book[]   @relation("borrowing")
+  booksOwned    Book[]   @relation("owning")
 }
 
 model Book {
