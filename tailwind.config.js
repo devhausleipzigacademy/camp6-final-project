@@ -52,8 +52,8 @@ module.exports = {
 			fontFamily: {
 				arno: ["arno", "sans-serif"],
 				arnobold: ["arno-bold", "sans-serif"],
-				montserrat: ["Montserrat"],
-				sora: ["Sora", "extra-bold"],
+				montserrat: ["montserrat"],
+				sora: "sora",
 			},
 			height: {
 				// needed for book thumbnails/previews
