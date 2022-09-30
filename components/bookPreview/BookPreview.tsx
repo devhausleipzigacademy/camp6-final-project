@@ -151,15 +151,13 @@ export const BookPreview = ({
     }
 
     return (
-        <Link href={linkHref}>
-            <div
-                className={clsx(
-                    bookSizes[bookSize],
-                    "aspecct-6/9 relative w-fit bg-linen drop-shadow"
-                )}
-            >
-                {image}
-            </div>
-        </Link>
+        <div
+            className={clsx(
+                bookSizes[bookSize],
+                "aspecct-6/9 relative w-fit bg-linen drop-shadow"
+            )}
+        >
+            <Link href={linkHref}>{image}</Link>
+        </div>
     );
 };
