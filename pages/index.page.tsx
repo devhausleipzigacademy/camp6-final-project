@@ -7,7 +7,7 @@ import { HomeSearchBar } from "../components/SearchBars/HomeSearchbar/HomeSearch
 const Home: NextPage = (props) => {
 	return (
 		<>
-			<p className="font-extrabold">book share</p>
+			<p className="font-extrabold">book share lazy</p>
 		</>
 	);
 };
