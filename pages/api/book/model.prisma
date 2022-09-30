@@ -23,6 +23,7 @@ model Book {
     publishYear     DateTime?
     genres          Json
     tags            Json
+    isAvailable     Boolean @default(false)
     isReserved      Boolean @default(false)
     ownerId  String
     owner           User? @relation("owning", fields: [ownerId], references: [identifier])
