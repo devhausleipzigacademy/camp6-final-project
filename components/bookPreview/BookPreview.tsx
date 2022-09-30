@@ -10,6 +10,7 @@ const bookSizes = {
 	previewGrid: "h-45",
 	listItem: "h-20",
 	confirmationScreen: "h-89",
+	carouselItem: "h-54",
 };
 
 const placeholderColors = ["bg-blue", "bg-salmon", "bg-dustyRose"];
@@ -69,6 +70,10 @@ export const BookPreview = ({
 			var tinyText = true;
 			sizes = "17vw";
 			break;
+		case "carouselItem":
+			sizes = "28vw";
+			var modifiedShadow = true;
+			break;
 		default:
 			break;
 	}
@@ -81,7 +86,7 @@ export const BookPreview = ({
 		imageLink = (
 			<div
 				className={clsx(
-					"flex h-full w-full flex-col items-center justify-between p-4 text-center font-serif text-white",
+					"font-serif flex h-full w-full flex-col items-center justify-between p-4 text-center text-white",
 					placeholderColors[randomInt(3)]
 				)}
 			>

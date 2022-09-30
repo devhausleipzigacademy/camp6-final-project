@@ -24,6 +24,12 @@ module.exports = {
 			//needed for toggle switch
 			buttonGrey: "#D4D3D3",
 		},
+    fontFamily: {
+				arno: ["arno", "sans-serif"],
+				arnobold: ["arno-bold", "sans-serif"],
+				montserrat: ["Montserrat"],
+				sora: ["Sora", "extra-bold"],
+			},
 		dropShadow: {
 			// needed for book thumbnails/previews
 			DEFAULT: "2px 6px 20px rgba(0, 0, 0, 0.25)",
@@ -50,12 +56,6 @@ module.exports = {
 				//needed for toggle switch
 				toggleSwitch: "inset 0px 6px 8px 3px rgba(0, 0, 0, 0.1)",
 			},
-			fontFamily: {
-				sora: ["Sora", "sans-serif"],
-				arno: ["arno", "sans-serif"],
-				arnobold: ["arno-bold", "sans-serif"],
-				montserrat: ["Montserrat", "sans-serif"],
-			},
 			height: {
 				// needed for book thumbnails/previews
 				45: "11.25rem /* 180 pixel*/",
@@ -77,5 +77,5 @@ module.exports = {
 		// used for storybook testing
 		"text-white",
 		"text-black",
-	],
+	]
 };
