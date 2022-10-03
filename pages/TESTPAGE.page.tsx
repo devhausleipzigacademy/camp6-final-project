@@ -70,29 +70,7 @@ export function HomeSearchBar() {
 					<button className="rounded-l-lg bg-white pl-2 outline-none">
 						<BsSearch className=" text-grey" />
 					</button>
-					<Combobox value={book} onChange={setBook}>
-						<Combobox.Input
-							className=" outline-none"
-							onChange={(event) => setQuery(event.target.value)}
-						/>
-						<Combobox.Options
-							className={
-								' text-xl" absolute bottom-0 mt-8  flex max-h-20 w-2/5 flex-wrap gap-1 overflow-y-scroll  bg-white px-6 font-sora'
-							}
-							value={book}
-							onChange={setBook}
-						>
-							{filteredBooks.map((searchedBook) => (
-								<Combobox.Option
-									onSelect={(searchedBook) => setBook(searchedBook)}
-									key={searchedBook}
-									value={searchedBook}
-								>
-									{searchedBook}
-								</Combobox.Option>
-							))}
-						</Combobox.Options>
-					</Combobox>
+
 					<Combobox value={zipCode} onChange={setZipCode}>
 						<div className="relative border-l-2 border-grey  sm:border-t">
 							<Combobox.Input
@@ -157,3 +135,5 @@ export function HomeSearchBar() {
 		</div>
 	);
 }
+
+export default HomeSearchBar;

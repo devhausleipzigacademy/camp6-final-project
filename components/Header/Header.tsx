@@ -22,7 +22,7 @@ export function Header(props) {
 	];
 
 	return (
-		<div className="  h-header relative flex w-screen flex-row items-center justify-center border-y border-grey py-2   ">
+		<div className="  h-header relative flex w-screen min-w-full flex-row items-center justify-center border-y border-grey py-2   ">
 			<Menu>
 				{({ open }) => (
 					<>
@@ -66,8 +66,8 @@ export function Header(props) {
 											href={hrefLink}
 											key={hrefLink}
 											className={clsx(
-												"w-fit",
-												router.pathname == hrefLink ? "underline" : ""
+												"w-fit ",
+												router.pathname == hrefLink ? "underline underline-offset-4  " : ""
 											)}
 										>
 											{pageName}
@@ -116,10 +116,11 @@ export function Header(props) {
 						>
 							{" "}
 							<Menu.Items>
-								<div className="duration-400  flex   translate-x-10  flex-col gap-4	text-start text-4xl text-yellow outline-none">
+								<div className="duration-400  flex   translate-x-10  flex-col gap-4	text-end text-4xl text-yellow outline-none">
 									{[
 										{ name: "settings", href: "/settings" },
 										{ name: "sing out", href: "/sign out" },
+										{ name: "TESTPAGE", href: "/TESTPAGE" },
 									].map(({ name: pageName, href: hrefLink }, index) => (
 										<Menu.Item as="a" href={hrefLink} key={hrefLink} className={" w-fit"}>
 											{pageName}
