@@ -4,20 +4,19 @@ import { useState } from "react";
 import { ImRadioChecked2, ImRadioUnchecked } from "react-icons/im";
 import { CustomButton } from "../components/button/Button";
 
-export default function Settings() {
-	const languages = ["English - EN", "Deutsch - DE", "اَلْعَرَبِيَّةُ"];
+export default function Settings(props) {
+	const languages = [
+		{ lang: "English - EN", selected: false },
+		{ lang: "Deutsch - DE", selected: false },
+		{ lang: "اَلْعَرَبِيَّةُ", selected: false },
+	];
 	const router = useRouter();
 	const [language, setLangauge] = useState(null);
-	const [selectedZipCode, setSelectedZipCode] = useState("");
+	const [selectedZipCode, setSelectedZipCode] = useState("04107");
 
 	const [isActive, setIsActive] = useState(false);
 	const [query, setQuery] = useState("04107");
-	const [isChecked, setIsChecked] = useState(
-		languages.reduce((acc, current) => {
-			acc[current] = false;
-			return acc;
-		}, {})
-	);
+
 	const zipCodes = [
 		"24107",
 		"04107",
@@ -51,7 +50,7 @@ export default function Settings() {
 			: zipCodes.filter((zip) => {
 					return zip.toLowerCase().includes(query.toLowerCase());
 			  });
-
+	console.log(languages.filter((x) => x));
 	return (
 		<div className="ml-10 flex  flex-col  px-5">
 			<p className="mt-10 mb-2 -ml-4  font-arnobold text-2xl  text-grey">
@@ -83,37 +82,32 @@ export default function Settings() {
 			<div>
 				<p className="mt-5 mb-1 font-arnobold text-xl text-green">Language</p>
 				<RadioGroup
-					value={"2000"}
+					value={language}
 					onChange={setLangauge}
 					className={
-						"flex w-10/12 flex-col items-start rounded-tl-lg rounded-tr-lg border border-b-0 border-grey text-lg  "
+						"flex w-10/12 flex-col items-start rounded-b-md  rounded-tl-lg rounded-tr-lg border border-b-0 border-grey text-lg  "
 					}
 				>
-					{languages.map((lang) => (
+					{languages.map(({ lang: langName, selected: bool }) => (
 						<RadioGroup.Option
-							as={"button"}
-							key={lang}
-							value={lang}
-							className={"w-full rounded-md border-b border-grey py-1  text-start "}
+							as="a"
+							key={langName}
+							onClick={() => setIsActive((prev) => !prev)}
+							value={langName}
+							className={
+								"flex w-full items-center gap-3   rounded-b-md border-b border-grey py-1 pl-2 text-start font-montserrat "
+							}
 						>
-							<button
-								className="mr-2 pl-2"
-								onClick={() => setIsActive((prev) => !prev)}
-							>
-								{isActive ? (
-									<ImRadioUnchecked className="h-4 w-4" />
-								) : (
-									<ImRadioChecked2 className="h-4 w-4 text-green" />
-								)}
-							</button>
-							{lang}
+							{isActive ? (
+								<ImRadioChecked2 className="text-green" />
+							) : (
+								<ImRadioUnchecked className="text-grey" />
+							)}
+							{langName}
 						</RadioGroup.Option>
 					))}
 				</RadioGroup>
-				<button
-					onClick={() => setIsChecked(true)}
-					className=" mt-7 font-arnobold text-lg text-green"
-				>
+				<button className=" mt-7 font-arnobold text-lg text-green">
 					Delete Account
 				</button>
 			</div>

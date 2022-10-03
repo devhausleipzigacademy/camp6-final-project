@@ -1,6 +1,7 @@
 import { Menu, Transition } from "@headlessui/react";
 import clsx from "clsx";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import { useState } from "react";
 import { AiFillAlert, AiOutlineClose } from "react-icons/ai";
@@ -10,13 +11,8 @@ export function Header(props) {
 	const [isShown, setIsShown] = useState("false");
 	const [menu, setMenu] = useState(false);
 	const [userMenu, setUserMenu] = useState(false);
-	function handler(setter, open) {
-		if (open) {
-			setter(true);
-		} else {
-			setter(false);
-		}
-	}
+	const router = useRouter();
+
 	const pages = [
 		{ name: "home", href: "/" },
 		{ name: "my library", href: "/mylibrary" },
@@ -65,7 +61,15 @@ export function Header(props) {
 							<Menu.Items>
 								<div className="duration-400  flex translate-x-10 flex-col  gap-4 	text-start text-4xl text-yellow outline-none">
 									{pages.map(({ name: pageName, href: hrefLink }, index) => (
-										<Menu.Item as="a" href={hrefLink} key={hrefLink} className={"w-fit "}>
+										<Menu.Item
+											as="a"
+											href={hrefLink}
+											key={hrefLink}
+											className={clsx(
+												"w-fit",
+												router.pathname == hrefLink ? "underline" : ""
+											)}
+										>
 											{pageName}
 										</Menu.Item>
 									))}
