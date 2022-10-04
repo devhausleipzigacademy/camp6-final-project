@@ -9,8 +9,7 @@ interface CarouselProps {
   category: string;
 }
 
-<<<<<<< HEAD
-export default function Carousel({ books, category }: CarouselProps) {
+export default function Carousel({ books }: CarouselProps) {
   if (!books || books.length === 0) {
     return (
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFgCFmiB0pQYHGDklq0EZX35hq-EuOP7N8Xg&usqp=CAU" />
@@ -18,25 +17,25 @@ export default function Carousel({ books, category }: CarouselProps) {
   } else
     return (
       <>
-        <h2 className="font-arnoPro text-2xl font-bold text-brown">
-          {category}
-        </h2>
         <Splide
           hasTrack={false}
           aria-label="..."
           options={{
-            perPage: 3, // TODO: add variants for different viewports
+            perPage: 3,
+            cloneStatus: true,
             perMove: 1,
-            focus: 0,
+            focus: "center",
             gap: "100px",
             pagination: false,
             trimSpace: false,
             type: "loop",
+            autoplay: true,
+            interval: 3000,
           }}
         >
           <SplideTrack className="py-4">
-            {books.map((book) => (
-              <SplideSlide>
+            {books.map((book, index) => (
+              <SplideSlide key={index}>
                 <BookPreview
                   imgSrc={book.image}
                   bookTitle={book.title}
@@ -47,45 +46,6 @@ export default function Carousel({ books, category }: CarouselProps) {
               </SplideSlide>
             ))}
           </SplideTrack>
-=======
-export default function Carousel({ books }: CarouselProps) {
-    if (!books || books.length === 0) {
-        return (
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFgCFmiB0pQYHGDklq0EZX35hq-EuOP7N8Xg&usqp=CAU" />
-        );
-    } else
-        return (
-            <>
-                <Splide
-                    hasTrack={false}
-                    aria-label="..."
-                    options={{
-                        perPage: 3,
-                        cloneStatus: true,
-                        perMove: 1,
-                        focus: "center",
-                        gap: "100px",
-                        pagination: false,
-                        trimSpace: false,
-                        type: "loop",
-                        autoplay: true,
-                        interval: 3000,
-                    }}
-                >
-                    <SplideTrack className="py-4">
-                        {books.map((book, index) => (
-                            <SplideSlide key={index}>
-                                <BookPreview
-                                    imgSrc={book.image}
-                                    bookTitle={book.title}
-                                    bookAuthor={book.author}
-                                    linkHref={`/book/${book.identifier}`}
-                                    bookSize={"carouselItem"}
-                                />
-                            </SplideSlide>
-                        ))}
-                    </SplideTrack>
->>>>>>> dev
 
           <div className="splide__arrows">
             <button className="splide__arrow splide__arrow--prev">
