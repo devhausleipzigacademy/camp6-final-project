@@ -21,19 +21,21 @@ export default function Carousel({ books }: CarouselProps) {
 					aria-label="..."
 					options={{
 						perPage: 3,
+						cloneStatus: true,
 						perMove: 1,
-						focus: 0,
+						focus: "center",
 						gap: "100px",
 						pagination: false,
 						trimSpace: false,
 						type: "loop",
+						autoplay: true,
+						interval: 3000,
 					}}
 				>
 					<SplideTrack className="py-4">
 						{books.map((book, index) => (
 							<SplideSlide key={index}>
 								<BookPreview
-									isAvailable={book.isAvailable}
 									imgSrc={book.image}
 									bookTitle={book.title}
 									bookAuthor={book.author}

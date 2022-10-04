@@ -84,14 +84,14 @@ export const BookPreview = ({
 	}
 
 	// the actual image tag
-	let imageLink;
+	let image;
 
 	// if no image provide we fill image tag with placeholder
 	if (!imgSrc) {
-		imageLink = (
+		image = (
 			<div
 				className={clsx(
-					"font-serif flex h-full w-full flex-col items-center justify-between p-4 text-center text-white grayscale",
+					"font-serif flex h-full w-full flex-col items-center justify-between p-4 text-center text-white",
 					placeholderColors[randomInt(3)]
 				)}
 			>
@@ -111,19 +111,15 @@ export const BookPreview = ({
 			</div>
 		);
 	} else {
-		imageLink = (
-			<Link href={linkHref}>
-				<a>
-					<Image
-						src={imgSrc}
-						fill
-						alt={bookAuthor + ": " + bookTitle}
-						sizes={sizes}
-						title={bookTitle}
-						style={{ objectFit: "contain" }}
-					/>
-				</a>
-			</Link>
+		image = (
+			<Image
+				src={imgSrc}
+				fill
+				alt={bookAuthor + ": " + bookTitle}
+				sizes={sizes}
+				title={bookTitle}
+				style={{ objectFit: "contain" }}
+			/>
 		);
 	}
 
