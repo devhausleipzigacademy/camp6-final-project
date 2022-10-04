@@ -1,32 +1,63 @@
+import "@splidejs/react-splide/css";
 import type { NextPage } from "next";
+import SubHeading2 from "../components/Subheading/Subheading";
+import Carousel from "../components/carousel/Carousel";
+import fetchBooks from "../utils/fetchBooks";
+import { useQuery } from "@tanstack/react-query";
+import { Book } from "@prisma/client";
+import { orderBy } from "lodash";
 
 const Home: NextPage = (props) => {
-	return (
-		<>
-			<p className="font-arno">
-				This is arno pro <br />
-				The quick brown fox jumps over the lazy dog
-			</p>
-			<p className="font-arnobold font-extrabold  ">
-				This is arno pro extra bold
-				<br />
-				The quick brown fox jumps over the lazy dog
-			</p>
-			<p className="font-montserrat font-normal  ">
-				This is montserrat
-				<br />
-				The quick brown fox jumps over the lazy dog
-			</p>
-			<p className="font-sora font-normal  ">
-				This is sora <br />
-				The quick brown fox jumps over the lazy dog
-			</p>
-			<p className="pageTitle">
-				This is a page title, e.g. <br />
-				Favorites
-			</p>
-		</>
-	);
+    const categories = ["Cookbooks", "Fantasy"];
+
+    const categoryData = Object.fromEntries(
+        categories.map((category) => [
+            category,
+            useQuery<Book[]>(["getBooks", category], () =>
+                fetchBooks({ category })
+            ),
+        ])
+    );
+
+    const recentUploadsQuery = useQuery<Book[]>(["getBooks", "createdAt"], () =>
+        fetchBooks({ orderBy: "createdAt" })
+    );
+
+    return (
+        <>
+            {/* <Header /> */}
+
+            <div className="pl-6">
+                <h1>Home</h1>
+                {/* <HomeSearchBar /> */}
+
+                <section id="carousel">
+                    <div key="0">
+                        <SubHeading2>Recent Uploads</SubHeading2>
+                        {recentUploadsQuery.isLoading ? (
+                            <p>Loading...</p>
+                        ) : (
+                            <Carousel books={recentUploadsQuery.data} />
+                        )}
+                    </div>
+                    {Object.entries(categoryData).map(
+                        ([category, query], index) => {
+                            return (
+                                <div key={index + 1}>
+                                    <SubHeading2>{category}</SubHeading2>
+                                    {query.isLoading ? (
+                                        <p>Loading...</p>
+                                    ) : (
+                                        <Carousel books={query.data} />
+                                    )}
+                                </div>
+                            );
+                        }
+                    )}
+                </section>
+            </div>
+        </>
+    );
 };
 
 export default Home;
