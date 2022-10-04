@@ -22,7 +22,24 @@ export function HomeSearchBar() {
 		"Answering the Titans",
 	];
 
-	const locations = ["84301", "64321", "04101", "12301"];
+	const locations = [
+		"84301",
+		"64321",
+		"04101",
+		"12301",
+		"64321",
+		"04101",
+		"12301",
+		"64321",
+		"04101",
+		"12301",
+		"64321",
+		"04101",
+		"12301",
+		"64321",
+		"04101",
+		"12301",
+	];
 	const placeHolderLang = ["English", "Turkish", "French", "Texas"];
 	const [isActive, setIsActive] = useState(false);
 	const [isChecked, setIsChecked] = useState(
@@ -65,19 +82,20 @@ export function HomeSearchBar() {
 
 	return (
 		<div>
-			<div className="relative mt-10 mb-20 flex  justify-center gap-6 sm:min-w-fit    ">
-				<div className="flex flex-wrap rounded-lg  border-2 border-grey">
+			<div className="relative mt-10 mb-20 flex  justify-center ">
+				<div className="flex  rounded-lg  border-2 border-grey">
 					<button className="rounded-l-lg bg-white pl-2 outline-none">
 						<BsSearch className=" text-grey" />
 					</button>
 					<Combobox value={book} onChange={setBook}>
 						<Combobox.Input
+							type="text"
 							className=" outline-none"
 							onChange={(event) => setQuery(event.target.value)}
 						/>
 						<Combobox.Options
 							className={
-								' text-xl" absolute bottom-0 mt-8  flex max-h-20 w-2/5 flex-wrap gap-1 overflow-y-scroll  bg-white px-6 font-sora'
+								" absolute mt-10 flex  max-h-32 flex-col  gap-1 overflow-y-scroll bg-white px-2   font-sora text-xl"
 							}
 							value={book}
 							onChange={setBook}
@@ -94,14 +112,14 @@ export function HomeSearchBar() {
 						</Combobox.Options>
 					</Combobox>
 					<Combobox value={zipCode} onChange={setZipCode}>
-						<div className="relative border-l-2 border-grey  sm:border-t">
+						<div className="relative border-l-2 border-t-0 border-grey ">
 							<Combobox.Input
 								type="number"
 								placeholder="in 04103"
-								className="  pt-1 pl-2 outline-none"
+								className="  pt-1 pl-4 outline-none"
 								onChange={(event) => setQuery(event.target.value)}
 							/>
-							<div className=" right absolute max-h-24  flex-col  overflow-auto border-l-2 bg-green ">
+							<div className=" absolute mt-2 flex  max-h-32 flex-col  gap-1 overflow-y-scroll bg-white px-10   font-sora text-xl">
 								<Combobox.Options>
 									{filteredZip.map((zip) => (
 										<Combobox.Option
@@ -126,15 +144,15 @@ export function HomeSearchBar() {
 							<IoMdOptions className="h-4 w-5 " />
 						</button>
 					</div>
-					<div id="search-form">
+					<div className="ml-2" id="search-form">
 						<form
 							className={clsx(
 								isActive ? "opacity-100" : "invisible opacity-0 ",
-								"absolute flex transform flex-col  rounded-lg border-2 border-grey bg-white py-2 px-4 text-start text-sm font-medium text-black  duration-500"
+								"absolute flex transform flex-col  rounded-lg border-2  border-grey bg-white py-2 px-4 text-start text-sm font-medium text-black  duration-500"
 							)}
 						>
 							{placeHolderLang.map((language, idx) => (
-								<label key={language} className="flex gap-1">
+								<label key={language} className="flex gap-1 self-center">
 									<input
 										type="checkbox"
 										name=""

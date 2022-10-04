@@ -64,15 +64,15 @@ export function HomeSearchBar() {
 	);
 
 	return (
-		<div className="mt-10 flex w-10/12 justify-center  border-grey ">
+		<div className="mt-10 flex justify-center  self-center border-grey">
 			<Combobox value={book} onChange={setBook}>
-				<div className="relative rounded-lg rounded-r-none border-2 border-r-0 border-grey   px-2 ">
+				<div className="relative rounded-lg  border-2 border-grey   px-2 ">
 					<Combobox.Input
 						className={"pl-7  outline-none"}
 						onChange={(event) => setQuery(event.target.value)}
 					/>
-					<BsSearch className="right- absolute top-1 left-2 text-grey" />
-					<Combobox.Options className={" border-r-2 border-grey"}>
+					<BsSearch className="text-ce absolute top-2 left-2 justify-center text-grey" />
+					<Combobox.Options className={"  border-grey"}>
 						{filteredBooks.map((bookName) => (
 							<Combobox.Option key={bookName} value={""}>
 								{bookName}
@@ -81,15 +81,19 @@ export function HomeSearchBar() {
 					</Combobox.Options>
 				</div>
 			</Combobox>
-			<form>
+			<div className="border-2 border-r-2 border-grey">
 				<Combobox value={zipCode} onChange={setZipCode}>
-					<div className="relative w-36 rounded-lg rounded-l-none border-2 border-grey  placeholder:text-grey ">
+					<div className="relative w-36  border-grey  placeholder:text-grey ">
 						<Combobox.Input
 							placeholder="04123"
-							className={"pl-7  outline-none"}
+							className={"pl-6  outline-none"}
 							onChange={(e) => setQuery(e.target.value)}
 						/>
-						<Combobox.Options className={"absolute border-r-2"}>
+						<Combobox.Options
+							className={
+								"absolute rounded-lg border border-grey bg-white px-10 text-start"
+							}
+						>
 							{filteredZip.map((zipps) => (
 								<Combobox.Option key={zipps} value={""}>
 									{zipps}
@@ -98,7 +102,43 @@ export function HomeSearchBar() {
 						</Combobox.Options>
 					</div>
 				</Combobox>
-			</form>
+			</div>
+			<div>
+				<div id="search-form-button" className="">
+					<button
+						type="button"
+						className="    rounded-lg border-2  border-grey  p-2 text-grey outline-none"
+					>
+						<IoMdOptions className="h-4 w-5 " />
+					</button>
+				</div>
+				<div id="search-form">
+					<form
+						className={clsx(
+							isActive ? "opacity-100" : "invisible opacity-0 ",
+							"absolute flex transform flex-col  rounded-lg border-2 border-grey bg-white py-2 px-4 text-start text-sm font-medium text-black  duration-500"
+						)}
+					>
+						{placeHolderLang.map((language, idx) => (
+							<label key={language} className="flex gap-1">
+								<input
+									type="checkbox"
+									name=""
+									checked={isChecked[language]}
+									onChange={(event) =>
+										setIsChecked({
+											...isChecked,
+											[language]: event.target.checked,
+										})
+									}
+									className="mr-1 rounded outline-none focus:ring-0"
+								/>
+								{language}
+							</label>
+						))}
+					</form>
+				</div>
+			</div>
 		</div>
 	);
 }
