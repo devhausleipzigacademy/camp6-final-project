@@ -22,7 +22,7 @@ export function Header(props) {
 	];
 
 	return (
-		<div className="  h-header relative flex w-screen min-w-full flex-row items-center justify-center border-y border-grey py-2   ">
+		<div className="  h-header relative flex w-screen flex-row items-center justify-center border-y border-grey py-2   ">
 			<Menu>
 				{({ open }) => (
 					<>

@@ -10,7 +10,7 @@ type HomeSearchBarProps = {
 };
 
 export function HomeSearchBar() {
-	const [book, setBook] = useState(undefined);
+	const [book, setBook] = useState("");
 	const [zipCode, setZipCode] = useState("");
 	const [query, setQuery] = useState("");
 	const books = [
@@ -82,7 +82,7 @@ export function HomeSearchBar() {
 
 	return (
 		<div>
-			<div className="relative mt-10 mb-20 flex  justify-center ">
+			<div className="relative mt-10 mb-10 flex justify-center gap-4 sm:gap-0 ">
 				<div className="flex  rounded-lg  border-2 border-grey">
 					<button className="rounded-l-lg bg-white pl-2 outline-none">
 						<BsSearch className=" text-grey" />
@@ -97,8 +97,6 @@ export function HomeSearchBar() {
 							className={
 								" absolute mt-10 flex  max-h-32 flex-col  gap-1 overflow-y-scroll bg-white px-2   font-sora text-xl"
 							}
-							value={book}
-							onChange={setBook}
 						>
 							{filteredBooks.map((searchedBook) => (
 								<Combobox.Option

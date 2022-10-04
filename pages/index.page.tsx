@@ -25,11 +25,8 @@ const Home: NextPage = (props) => {
 
 	return (
 		<>
-			{/* <Header /> */}
-
+			<HomeSearchBar />
 			<div className="pl-6">
-				<HomeSearchBar />
-
 				<section id="carousel">
 					<div key="0">
 						<SubHeading2>Recent Uploads</SubHeading2>
