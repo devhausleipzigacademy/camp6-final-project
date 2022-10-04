@@ -64,74 +64,41 @@ export function HomeSearchBar() {
 	);
 
 	return (
-		<div>
-			<div className="relative mt-10 mb-20 flex  justify-center gap-6 sm:min-w-fit    ">
-				<div className="flex flex-wrap rounded-lg  border-2 border-grey">
-					<button className="rounded-l-lg bg-white pl-2 outline-none">
-						<BsSearch className=" text-grey" />
-					</button>
-
-					<Combobox value={zipCode} onChange={setZipCode}>
-						<div className="relative border-l-2 border-grey  sm:border-t">
-							<Combobox.Input
-								type="number"
-								placeholder="in 04103"
-								className="  pt-1 pl-2 outline-none"
-								onChange={(event) => setQuery(event.target.value)}
-							/>
-							<div className=" right absolute max-h-24  flex-col  overflow-auto border-l-2 bg-green ">
-								<Combobox.Options>
-									{filteredZip.map((zip) => (
-										<Combobox.Option
-											onSelect={(zip) => setZipCode(zip)}
-											key={zip}
-											value={zip}
-										>
-											<span>in {zip}</span>
-										</Combobox.Option>
-									))}
-								</Combobox.Options>
-							</div>
-						</div>
-					</Combobox>
+		<div className="mt-10 flex w-10/12 justify-center  border-grey ">
+			<Combobox value={book} onChange={setBook}>
+				<div className="relative rounded-lg rounded-r-none border-2 border-r-0 border-grey   px-2 ">
+					<Combobox.Input
+						className={"pl-7  outline-none"}
+						onChange={(event) => setQuery(event.target.value)}
+					/>
+					<BsSearch className="right- absolute top-1 left-2 text-grey" />
+					<Combobox.Options className={" border-r-2 border-grey"}>
+						{filteredBooks.map((bookName) => (
+							<Combobox.Option key={bookName} value={""}>
+								{bookName}
+							</Combobox.Option>
+						))}
+					</Combobox.Options>
 				</div>
-				<div>
-					<div id="search-form-button" className="">
-						<button
-							type="button"
-							className="    rounded-lg border-2  border-grey  bg-white p-2 text-grey outline-none"
-						>
-							<IoMdOptions className="h-4 w-5 " />
-						</button>
-					</div>
-					<div id="search-form">
-						<form
-							className={clsx(
-								isActive ? "opacity-100" : "invisible opacity-0 ",
-								"absolute flex transform flex-col  rounded-lg border-2 border-grey bg-white py-2 px-4 text-start text-sm font-medium text-black  duration-500"
-							)}
-						>
-							{placeHolderLang.map((language, idx) => (
-								<label key={language} className="flex gap-1">
-									<input
-										type="checkbox"
-										name=""
-										checked={isChecked[language]}
-										onChange={(event) =>
-											setIsChecked({
-												...isChecked,
-												[language]: event.target.checked,
-											})
-										}
-										className="mr-1 rounded outline-none focus:ring-0"
-									/>
-									{language}
-								</label>
+			</Combobox>
+			<form>
+				<Combobox value={zipCode} onChange={setZipCode}>
+					<div className="relative w-36 rounded-lg rounded-l-none border-2 border-grey  placeholder:text-grey ">
+						<Combobox.Input
+							placeholder="04123"
+							className={"pl-7  outline-none"}
+							onChange={(e) => setQuery(e.target.value)}
+						/>
+						<Combobox.Options className={"absolute border-r-2"}>
+							{filteredZip.map((zipps) => (
+								<Combobox.Option key={zipps} value={""}>
+									{zipps}
+								</Combobox.Option>
 							))}
-						</form>
+						</Combobox.Options>
 					</div>
-				</div>
-			</div>
+				</Combobox>
+			</form>
 		</div>
 	);
 }
