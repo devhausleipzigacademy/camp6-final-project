@@ -40,7 +40,7 @@ export function HomeSearchBar() {
 		"04101",
 		"12301",
 	];
-	const placeHolderLang = ["English", "Turkish", "French", "Texas"];
+	const placeHolderLang = ["English", "Turkish", "French","Crotian"];
 	const [isActive, setIsActive] = useState(false);
 	const [isChecked, setIsChecked] = useState(
 		placeHolderLang.reduce((acc, current) => {
@@ -119,7 +119,7 @@ export function HomeSearchBar() {
 								className="  pt-1 pl-4 outline-none"
 								onChange={(event) => setQuery(event.target.value)}
 							/>
-							<div className=" absolute mt-2 flex  max-h-32 flex-col  gap-1 overflow-y-scroll bg-white px-10   font-sora text-xl">
+							<div className=" absolute mt-2 flex  max-h-36 flex-col  gap-1  bg-white px-10   font-sora text-xl">
 								<Combobox.Options>
 									{filteredZip.map((zip) => (
 										<Combobox.Option
