@@ -12,63 +12,66 @@ function InputForm() {
 
     return (
         <>
-            <div className="flex w-mobile flex-col p-10 outline-none  ">
-                <div className=" mb-10 grid    grid-flow-col  border-b-2   ">
+            <div className="flex  flex-col p-10 outline-none  ">
+                <div className=" mb-10 grid    grid-flow-col  border-b-2 border-grey  ">
                     <button
                         onClick={() => console.log("triggered")}
                         className="outline-none"
                     >
-                        <AiOutlineClose className="text-slate-400 self-center text-center" />
+                        <AiOutlineClose className="text-grey self-center text-center " />
                     </button>
-                    <p className=" text-pink-400 mb-4 text-2xl">
+                    <p className=" text-dustyRose mb-4 text-2xl">
                         New Book Information
                     </p>
                 </div>
                 <form className="px-4">
                     <div className="flex  flex-col">
-                        <p className=" text-slate-400 text-start">Title</p>
+                        <p className=" text-grey text-start border-grey">Title</p>
                         <input
                             type="text"
                             placeholder=""
-                            className="mb-2 border-b-2 outline-none"
+                            className="mb-2 border-b-2 border-grey outline-none"
                         />
-                        <p className=" text-slate-400 text-start">Author</p>
+                        <p className=" text-grey text-start">Author</p>
                         <input
                             type="text"
                             placeholder=""
-                            className="mb-2 border-b-2 outline-none"
+                            className="mb-2 border-b-2 outline-none border-grey"
                         />
-                        <p className=" text-slate-400 text-start">
+                        <p className=" text-grey text-start ">
                             Postal Code
                         </p>
                         <input
                             type="text"
                             placeholder=""
-                            className="mb-2 border-b-2 outline-none"
+                            className="mb-2 border-b-2 outline-none border-grey"
                         />
-                        <p className=" text-slate-400 text-start">Telegram</p>
+                        <p className=" text-grey text-start">Telegram</p>
                         <input
                             type="text"
                             placeholder=""
-                            className="mb-2 border-b-2 outline-none"
+                            className="mb-2 border-b-2 outline-none border-grey"
                         />
 
-                        <form className="mb-2 border-b-2 outline-none">
-                            <p className="text-slate-400">Language</p>
+                        <form className="mb-2 border-b-2 outline-none border-grey">
+                            <p className="text-grey">Language</p>
                             <LanguageSearchBar />
                         </form>
                     </div>
                 </form>
-                <button className="text-slate-400 text-end text-xs underline">
+                <button className="text-grey text-end text-xs underline">
                     additional info
                 </button>
 
-                <CustomButton
-                    functionality="ConfirmationPrimary"
-                    onClick={() => {}}
-                >
-                    Submit Book
-                </CustomButton>
+                <div className="self-center mt-10">
+                    <CustomButton
+                    
+                        functionality="ConfirmationPrimary"
+                        onClick={() => {}}
+                    >
+                        Submit Book
+                    </CustomButton>
+                </div>
             </div>
         </>
     );
