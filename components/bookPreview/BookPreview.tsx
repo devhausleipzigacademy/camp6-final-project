@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { FiHeart } from "react-icons/fi";
 import clsx from "clsx";
 import { randomInt } from "../../utils/random";
+import { link } from "fs";
 
 const bookSizes = {
 	homepage: "h-54",
@@ -84,11 +85,11 @@ export const BookPreview = ({
 	}
 
 	// the actual image tag
-	let image;
+	let imageTag;
 
 	// if no image provide we fill image tag with placeholder
 	if (!imgSrc) {
-		image = (
+		imageTag = (
 			<div
 				className={clsx(
 					"font-serif flex h-full w-full flex-col items-center justify-between p-4 text-center text-white",
@@ -111,7 +112,7 @@ export const BookPreview = ({
 			</div>
 		);
 	} else {
-		image = (
+		imageTag = (
 			<Image
 				src={imgSrc}
 				fill
@@ -125,10 +126,14 @@ export const BookPreview = ({
 
 	let unavailableOverlay = (
 		<div className=" flex h-full w-full items-center justify-center opacity-60 grayscale">
-			{imageLink}
-			<div className="bg-textBlack z-10 flex w-5/6 items-center justify-center rounded-3xl p-5">
-				<p className="absolute font-arno font-bold text-white opacity-100">
-					{" "}
+			{imageTag}
+			<div className="fixed z-10  flex w-5/6 items-center justify-center rounded-3xl bg-textBlack p-5">
+				<p
+					className={clsx(
+						tinyText ? "text-[9px] " : "text-inherit",
+						"fixed font-arno font-bold text-white opacity-100"
+					)}
+				>
 					unavailable
 				</p>
 			</div>
@@ -144,7 +149,7 @@ export const BookPreview = ({
 				)}
 			>
 				<div className="relative aspect-6/9 h-5/6 bg-linen drop-shadow">
-					{isAvailable ? imageLink : unavailableOverlay}
+					{isAvailable ? imageTag : unavailableOverlay}
 				</div>
 				<div className="text-gray-400 absolute bottom-0 right-0 flex aspect-square w-1/4 items-center justify-center bg-white opacity-90 ">
 					<button
@@ -167,10 +172,13 @@ export const BookPreview = ({
 		<div
 			className={clsx(
 				bookSizes[bookSize],
-				"relative aspect-6/9 w-fit bg-linen drop-shadow"
+				"relative aspect-6/9 w-fit bg-linen",
+				modifiedShadow ? "drop-shadow-carouselItem" : "drop-shadow"
 			)}
 		>
-			{isAvailable ? imageLink : unavailableOverlay}
+			<Link href={linkHref}>
+				<a>{isAvailable ? imageTag : unavailableOverlay}</a>
+			</Link>
 		</div>
 	);
 };
