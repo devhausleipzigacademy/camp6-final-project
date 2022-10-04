@@ -92,7 +92,7 @@ export const BookPreview = ({
 		imageTag = (
 			<div
 				className={clsx(
-					"font-serif flex h-full w-full flex-col items-center justify-between p-4 text-center text-white",
+					"flex h-full w-full flex-col items-center justify-between p-4 text-center font-arno text-white",
 					placeholderColors[randomInt(3)]
 				)}
 			>
@@ -125,7 +125,7 @@ export const BookPreview = ({
 	}
 
 	let unavailableOverlay = (
-		<div className=" flex h-full w-full items-center justify-center opacity-60 grayscale">
+		<div className="relative flex h-full w-full items-center justify-center opacity-60 grayscale">
 			{imageTag}
 			<div className="fixed z-10  flex w-5/6 items-center justify-center rounded-3xl bg-textBlack p-5">
 				<p

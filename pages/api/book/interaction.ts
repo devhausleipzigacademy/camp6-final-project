@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { prisma } from "../../../prisma/db";
 import { PutBook } from "./model.zod";
 
@@ -11,15 +12,15 @@ export async function createBook(data) {
 	return bookModel;
 }
 
+type Clauses = Array<Prisma.BookWhereInput>;
+
 // clauses can be availability or genres, ordering only works for newest books
-export async function retrieveBooks(clauses, order) {
+export async function retrieveBooks(clauses: Clauses) {
 	const bookModels = await prisma.book.findMany({
 		where: {
 			AND: clauses,
 		},
-		orderBy: {
-			createdAt: "desc",
-		},
+		// orderBy: {...}
 	});
 	return bookModels;
 }

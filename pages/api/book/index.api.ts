@@ -5,7 +5,7 @@ import { ZodError } from "zod";
 // local imports
 import { postBook, getBook, GetBook } from "./model.zod";
 import { createBook, retrieveBooks } from "./interaction";
-import { Prisma } from "@prisma/client";
+import { Book, Prisma } from "@prisma/client";
 
 export type ErrorResponse = {
 	message: string;
@@ -14,32 +14,33 @@ export type ErrorResponse = {
 
 export default async function handler(
 	req: NextApiRequest,
-	res: NextApiResponse<GetBook[] | { identifier: string } | ErrorResponse>
+	res: NextApiResponse<
+		Book[] | GetBook[] | { identifier: string } | ErrorResponse
+	>
 ) {
 	try {
 		if (req.method === "GET") {
 			// space to add more search filters at some later stage in time
-			const { availability, category, orderBy } = req.query as Record<
+			const { availability, genres, orderBy } = req.query as Record<
 				string,
 				string
 			>;
 
 			const clauses: Array<Prisma.BookWhereInput> = [];
-
 			//TODO: check that this is working, JSON will send string and string needs likely to be converted to boolean first
-			if (Boolean(availability)) {
-				const boolAvailability = JSON.parse(availability);
-				clauses.push({ isAvailable: Boolean(boolAvailability) });
+			if (availability !== "undefined") {
+				const boolAvailability = availability;
+				clauses.push({ isAvailable: JSON.parse(availability) });
 			}
 
-			if (category) {
-				clauses.push({ genres: JSON.parse(category) });
+			if (genres !== "undefined") {
+				clauses.push({ genres: JSON.parse(genres) });
 			}
 
-			const books = await retrieveBooks(clauses, orderBy);
+			const books = await retrieveBooks(clauses);
 			const parsedBooks = books.map((book) => getBook.parse(book));
 
-			res.status(200).json(parsedBooks);
+			res.status(200).json(books);
 		}
 		if (req.method === "POST") {
 			const data = postBook.parse(req.body);

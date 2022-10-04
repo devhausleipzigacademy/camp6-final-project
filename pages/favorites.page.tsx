@@ -4,7 +4,10 @@ import { BookGrid } from "../components/bookGrid/BookGrid";
 import fetchBooks from "../utils/fetchBooks";
 
 export default function Favorites() {
-	const query = useQuery<Book[]>(["getBooks"], () => fetchBooks({}));
+	const query = useQuery<Book[]>(["getBooks"], () =>
+		fetchBooks({ availability: true, genres: ["Dystopian", "Self-help"] })
+	);
+	console.log(query);
 
 	return (
 		<>

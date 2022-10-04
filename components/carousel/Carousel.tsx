@@ -36,6 +36,7 @@ export default function Carousel({ books }: CarouselProps) {
 						{books.map((book, index) => (
 							<SplideSlide key={index}>
 								<BookPreview
+									isAvailable={book.isAvailable}
 									imgSrc={book.image}
 									bookTitle={book.title}
 									bookAuthor={book.author}
