@@ -86,7 +86,7 @@ export const BookPreview = ({
     imageLink = (
       <div
         className={clsx(
-          "font-serif flex h-full w-full flex-col items-center  justify-between p-4 text-center text-white",
+          "font-serif flex h-full w-full flex-col items-center justify-between p-4 text-center text-white",
           placeholderColors[randomInt(3)]
         )}
       >

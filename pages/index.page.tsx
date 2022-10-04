@@ -1,30 +1,52 @@
 import "@splidejs/react-splide/css";
 import type { NextPage } from "next";
 import { HomeSearchBar } from "../components/SearchBars/HomeSearchbar/HomeSearchBar";
+import SubHeading2 from "../components/Subheading/Subheading";
 import Header from "../components/Header/Header";
-
+import useBook from "../hooks/useGetBooks";
 import Carousel from "../components/carousel/Carousel";
-import { useBooks } from "../hooks/useBooks";
+import { useEffect } from "react";
 
 const Home: NextPage = (props) => {
-  const { data: books, isLoading: booksLoading } = useBooks();
+  const categories = ["Cookbooks", "Fantasy"];
 
-  if (booksLoading) return <p>Loading...</p>;
+  const categoryData = Object.fromEntries(
+    categories.map((category) => [category, useBook({ category })])
+  );
 
-  if (!booksLoading && books === undefined) return <p>no books not found</p>;
+  const recentUploadsQuery = useBook({ orderBy: "createdAt" });
 
   return (
     <>
       {/* <Header /> */}
 
-      <body className="pl-6">
+      <div className="pl-6">
+        <h1>Home</h1>
         {/* <HomeSearchBar /> */}
 
         <section id="carousel">
-          <Carousel books={books} category="Recent Uploads" />
-          <Carousel books={books} category="Cookbooks" />
+          <div key="0">
+            <SubHeading2>Recent Uploads</SubHeading2>
+            {recentUploadsQuery.isLoading ? (
+              <p>Loading...</p>
+            ) : (
+              <Carousel books={recentUploadsQuery.data} />
+            )}
+          </div>
+          {Object.entries(categoryData).map(([category, query], index) => {
+            return (
+              <div key={index + 1}>
+                <SubHeading2>{category}</SubHeading2>
+                {query.isLoading ? (
+                  <p>Loading...</p>
+                ) : (
+                  <Carousel books={query.data} />
+                )}
+              </div>
+            );
+          })}
         </section>
-      </body>
+      </div>
     </>
   );
 };

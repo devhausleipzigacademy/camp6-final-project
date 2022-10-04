@@ -4,7 +4,7 @@ import React from "react";
 import { BookGrid } from "./BookGrid";
 
 // some fake book data to use in Book Grid story
-export const bookExamples = [
+const bookExamples = [
   {
     title: "The Divine Comedy",
     author: "Dante Alighieri",
