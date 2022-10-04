@@ -1,17 +1,13 @@
 import { Combobox, RadioGroup } from "@headlessui/react";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { ImRadioChecked2, ImRadioUnchecked } from "react-icons/im";
 import { CustomButton } from "../components/button/Button";
 
 export default function Settings(props) {
-	const languages = [
-		{ lang: "English - EN", selected: false },
-		{ lang: "Deutsch - DE", selected: false },
-		{ lang: "اَلْعَرَبِيَّةُ", selected: false },
-	];
+	const languages = ["English - EN", "Deutsch - DE", "اَلْعَرَبِيَّةُ"];
 	const router = useRouter();
-	const [language, setLangauge] = useState(null);
+	const [language, setLangauge] = useState(languages[0]);
 	const [selectedZipCode, setSelectedZipCode] = useState("04107");
 
 	const [isActive, setIsActive] = useState(false);
@@ -56,9 +52,10 @@ export default function Settings(props) {
 			<p className="mt-10 mb-2 -ml-4  font-arnobold text-2xl  text-grey">
 				Settings
 			</p>
-			<Combobox value={selectedZipCode} onChange={setSelectedZipCode}>
+			<Combobox value={undefined} onChange={setSelectedZipCode}>
 				<p className="mb-2 font-arnobold text-lg text-green">Location</p>
 				<Combobox.Input
+					placeholder="04107"
 					className={
 						"w-10/12 rounded-md border border-grey py-2 pl-2 text-lg text-grey outline-none"
 					}
@@ -79,38 +76,29 @@ export default function Settings(props) {
 					</Combobox.Options>
 				</div>
 			</Combobox>
-			<div>
-				<p className="mt-5 mb-1 font-arnobold text-xl text-green">Language</p>
-				<RadioGroup
-					value={language}
-					onChange={setLangauge}
-					className={
-						"flex w-10/12 flex-col items-start rounded-b-md  rounded-tl-lg rounded-tr-lg border border-b-0 border-grey text-lg  "
-					}
-				>
-					{languages.map(({ lang: langName, selected: bool }) => (
-						<RadioGroup.Option
-							as="a"
-							key={langName}
-							onClick={() => setIsActive((prev) => !prev)}
-							value={langName}
-							className={
-								"flex w-full items-center gap-3   rounded-b-md border-b border-grey py-1 pl-2 text-start font-montserrat "
-							}
-						>
-							{isActive ? (
-								<ImRadioChecked2 className="text-green" />
-							) : (
-								<ImRadioUnchecked className="text-grey" />
+			<RadioGroup value={language} onChange={setLangauge}>
+				<p className={" mb-1 mt-5 font-arnobold text-lg  text-green "}>Languages</p>
+				{languages.map((lang) => (
+					/* Use the `active` state to conditionally style the active option. */
+					/* Use the `checked` state to conditionally style the checked option. */
+					<div className="w-10/12 border-t border-b border-grey">
+						<RadioGroup.Option key={lang} value={lang} as={Fragment}>
+							{({ active, checked }) => (
+								<div className={`${active ? "  " : "  "}`}>
+									<div className=" flex items-center gap-2 border-x border-grey p-1 font-montserrat ">
+										{checked ? (
+											<ImRadioChecked2 className="text-green" />
+										) : (
+											<ImRadioUnchecked className="text-grey" />
+										)}
+										{lang}
+									</div>
+								</div>
 							)}
-							{langName}
 						</RadioGroup.Option>
-					))}
-				</RadioGroup>
-				<button className=" mt-7 font-arnobold text-lg text-green">
-					Delete Account
-				</button>
-			</div>
+					</div>
+				))}
+			</RadioGroup>
 			<div className="mt-12 flex flex-col self-center font-arno text-xl">
 				<CustomButton functionality={"ConfirmationPrimary"} onClick={() => {}}>
 					save changes

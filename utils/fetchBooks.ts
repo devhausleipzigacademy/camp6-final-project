@@ -10,7 +10,7 @@ export default function fetchBook({
 	availability = true,
 }: FetchBookProps) {
 	return fetch(
-		`http://localhost:3000/api/book?availability=${availability}&category=${category}&orderBy=${orderBy}`,
+		`http://localhost:3002/api/book?availability=${availability}&category=${category}&orderBy=${orderBy}`,
 		{
 			method: "GET",
 		}
