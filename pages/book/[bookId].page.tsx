@@ -4,23 +4,54 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { FaTelegram } from "react-icons/fa";
 import { GoLocation } from "react-icons/go";
 import { HiChevronLeft } from "react-icons/hi";
-import { ExampleTags } from "../../components/bookDescription/BookDescribtion.story";
+import { ExampleTags } from "../../components/bookDescription/BookDescription.story";
 import { CustomButton } from "../../components/button/Button";
-import Thraxas from "../public/testingImages/thraxas_and_the_dance_of_death.jpg";
-import languagesJSON from "../../enums/ISO-languages.json";
-import useBook from "../../hooks/useGetBooks";
-import useGetBook from "../../hooks/useGetBook";
+import { useQuery } from "@tanstack/react-query";
+import { Book } from "@prisma/client";
+import { dehydrate, QueryClient } from "@tanstack/react-query";
+import { fetchBook } from "../../utils/fetchBook";
 
-export default function BookDescription({}) {
-    // console.log(obj);
+export async function getStaticProps({ params }) {
+    const { bookId } = params;
+    const queryClient = new QueryClient();
+
+    await queryClient.prefetchQuery(
+        ["getBook", bookId],
+        () => fetchBook(bookId),
+        {
+            staleTime: 360000,
+        }
+    );
+
+    return {
+        props: {
+            dehydratedState: dehydrate(queryClient),
+        },
+    };
+}
+
+export async function getStaticPaths() {
+    return {
+        paths: [],
+        fallback: "blocking",
+    };
+}
+
+export default function BookDescription() {
     const router = useRouter();
     const { bookId } = router.query;
 
-    const { data: book } = useGetBook(String(bookId));
+    const { data: book } = useQuery<Book>(
+        ["getBook", bookId],
+        () => fetchBook(String(bookId)),
+        {
+            enabled: bookId.length > 0,
+        }
+    );
 
     return (
         <div className="flex w-mobile flex-col items-stretch py-5 px-10">
-            <div className="relative my-5 h-fit  rounded-3xl bg-[#fef1e0] px-36 py-20 ">
+            <div className="relative my-5 h-fit rounded-3xl bg-[#fef1e0] px-36 py-20 ">
                 <div>
                     <button
                         onClick={() => router.back()}
@@ -40,7 +71,13 @@ export default function BookDescription({}) {
                 <div className="flex flex-col items-center">
                     <Image
                         className="rounded-xl "
-                        src={book.image}
+                        src={
+                            book.image
+                                ? book.image
+                                : "https://picsum.photos/80/120"
+                        }
+                        width={80}
+                        height={120}
                         alt={book.title}
                     />
                     <div className="flex flex-col items-center">

@@ -7,7 +7,7 @@ import { GoLocation } from "react-icons/go";
 import { HiChevronLeft } from "react-icons/hi";
 
 import { CustomButton } from "../button/Button";
-import { ExampleTags } from "./BookDescribtion.story";
+import { ExampleTags } from "./BookDescription.story";
 
 function event() {
   return console.log("event triggered");

@@ -1,20 +1,17 @@
 import { Book } from "@prisma/client";
+import { useQuery } from "@tanstack/react-query";
 import { BookGrid } from "../components/bookGrid/BookGrid";
-import { useBooks } from "../hooks/useBooks";
+import fetchBooks from "../utils/fetchBooks";
 
 export default function Favorites() {
-  const { data: books, isLoading: booksLoading } = useBooks();
+  const query = useQuery<Book[]>(["getBooks"], () => fetchBooks({}));
 
-  if (booksLoading) return <p>Loading...</p>;
-
-  if (!booksLoading && books === undefined) return <p>no books not found</p>;
-  console.log(books);
   return (
     <>
       <h2 className="font-arnoPro border-b border-grey pb-4 pt-7 text-center text-2xl font-bold text-dustyRose">
         Favorites
       </h2>
-      <BookGrid books={books} booksLoading={booksLoading} />
+      {query.isLoading ? <p>Loading...</p> : <BookGrid books={query.data} />}
     </>
   );
 }

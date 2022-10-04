@@ -79,11 +79,11 @@ export const BookPreview = ({
   }
 
   // the actual image tag
-  let imageLink;
+  let image;
 
   // if no image provide we fill image tag with placeholder
   if (!imgSrc) {
-    imageLink = (
+    image = (
       <div
         className={clsx(
           "font-serif flex h-full w-full flex-col items-center justify-between p-4 text-center text-white",
@@ -106,47 +106,45 @@ export const BookPreview = ({
       </div>
     );
   } else {
-    imageLink = (
-      <Link href={linkHref}>
-        <a>
-          <Image
-            src={imgSrc}
-            fill
-            alt={bookAuthor + ": " + bookTitle}
-            sizes={sizes}
-            title={bookTitle}
-            style={{ objectFit: "contain" }}
-          />
-        </a>
-      </Link>
+    image = (
+      <Image
+        src={imgSrc}
+        fill
+        alt={bookAuthor + ": " + bookTitle}
+        sizes={sizes}
+        title={bookTitle}
+        style={{ objectFit: "contain" }}
+      />
     );
   }
 
   if (bookSize === "previewGrid") {
     return (
-      <div
-        className={clsx(
-          bookSizes[bookSize],
-          "relative flex h-44 w-40 items-center justify-center bg-linen"
-        )}
-      >
-        <div className="relative aspect-6/9 h-5/6 bg-linen drop-shadow">
-          {imageLink}
+      <Link href={linkHref}>
+        <div
+          className={clsx(
+            bookSizes[bookSize],
+            "relative flex h-44 w-40 items-center justify-center bg-linen"
+          )}
+        >
+          <div className="relative aspect-6/9 h-5/6 bg-linen drop-shadow">
+            {image}
+          </div>
+          <div className="text-gray-400 absolute bottom-0 right-0 flex aspect-square w-1/4 items-center justify-center bg-white opacity-90 ">
+            <button
+              className="flex h-full w-full items-center justify-center"
+              onClick={toggleFavorite}
+            >
+              <FiHeart
+                className={clsx(
+                  "h-5/6 w-5/6 stroke-1",
+                  faved ? "fill-salmon text-salmon" : "text-grey"
+                )}
+              />
+            </button>
+          </div>
         </div>
-        <div className="text-gray-400 absolute bottom-0 right-0 flex aspect-square w-1/4 items-center justify-center bg-white opacity-90 ">
-          <button
-            className="flex h-full w-full items-center justify-center"
-            onClick={toggleFavorite}
-          >
-            <FiHeart
-              className={clsx(
-                "h-5/6 w-5/6 stroke-1",
-                faved ? "fill-salmon text-salmon" : "text-grey"
-              )}
-            />
-          </button>
-        </div>
-      </div>
+      </Link>
     );
   }
 
@@ -158,7 +156,7 @@ export const BookPreview = ({
         modifiedShadow ? "drop-shadow-carouselItem" : "drop-shadow"
       )}
     >
-      {imageLink}
+      <Link href={linkHref}>{image}</Link>
     </div>
   );
 };

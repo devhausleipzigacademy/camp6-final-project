@@ -1,20 +1,25 @@
 import "@splidejs/react-splide/css";
 import type { NextPage } from "next";
-import { HomeSearchBar } from "../components/SearchBars/HomeSearchbar/HomeSearchBar";
 import SubHeading2 from "../components/Subheading/Subheading";
-import Header from "../components/Header/Header";
-import useBook from "../hooks/useGetBooks";
 import Carousel from "../components/carousel/Carousel";
-import { useEffect } from "react";
+import fetchBooks from "../utils/fetchBooks";
+import { useQuery } from "@tanstack/react-query";
+import { Book } from "@prisma/client";
+import { orderBy } from "lodash";
 
 const Home: NextPage = (props) => {
   const categories = ["Cookbooks", "Fantasy"];
 
   const categoryData = Object.fromEntries(
-    categories.map((category) => [category, useBook({ category })])
+    categories.map((category) => [
+      category,
+      useQuery<Book[]>(["getBooks", category], () => fetchBooks({ category })),
+    ])
   );
 
-  const recentUploadsQuery = useBook({ orderBy: "createdAt" });
+  const recentUploadsQuery = useQuery<Book[]>(["getBooks", "createdAt"], () =>
+    fetchBooks({ orderBy: "createdAt" })
+  );
 
   return (
     <>
