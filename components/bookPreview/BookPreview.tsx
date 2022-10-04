@@ -108,14 +108,16 @@ export const BookPreview = ({
             </div>
         );
     } else {
-        <Image
-            src={imgSrc}
-            fill
-            alt={bookAuthor + ": " + bookTitle}
-            sizes={sizes}
-            title={bookTitle}
-            style={{ objectFit: "contain" }}
-        />;
+        image = (
+            <Image
+                src={imgSrc}
+                fill
+                alt={bookAuthor + ": " + bookTitle}
+                sizes={sizes}
+                title={bookTitle}
+                style={{ objectFit: "contain" }}
+            />
+        );
     }
 
     if (bookSize === "previewGrid") {
@@ -154,7 +156,7 @@ export const BookPreview = ({
         <div
             className={clsx(
                 bookSizes[bookSize],
-                "aspecct-6/9 relative w-fit bg-linen drop-shadow"
+                "relative aspect-6/9 w-fit bg-linen drop-shadow"
             )}
         >
             <Link href={linkHref}>{image}</Link>
