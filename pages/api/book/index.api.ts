@@ -14,9 +14,7 @@ export type ErrorResponse = {
 
 export default async function handler(
 	req: NextApiRequest,
-	res: NextApiResponse<
-		Book[] | GetBook[] | { identifier: string } | ErrorResponse
-	>
+	res: NextApiResponse<GetBook[] | { identifier: string } | ErrorResponse>
 ) {
 	try {
 		if (req.method === "GET") {
@@ -49,7 +47,7 @@ export default async function handler(
 			const books = await retrieveBooks(clauses);
 			const parsedBooks = books.map((book) => getBook.parse(book));
 
-			res.status(200).json(books);
+			res.status(200).json(parsedBooks);
 		}
 		if (req.method === "POST") {
 			const data = postBook.parse(req.body);
