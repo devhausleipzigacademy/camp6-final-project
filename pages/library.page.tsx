@@ -1,13 +1,21 @@
-import { Book } from "@prisma/client";
+// package imports
 import Link from "next/link";
-import { useState } from "react";
 import { FiEdit } from "react-icons/fi";
+import { useState } from "react";
+
+// local imports
+import { Book } from "@prisma/client";
 import { BookPreview } from "../components/bookPreview/BookPreview";
+import fetchBooks from "../utils/fetchBooks";
 import { ToggleSwitch } from "../components/toggleSwitch/ToggleSwitch";
-import { useBooks } from "../hooks/useBooks";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Library() {
-	const { data: books, isLoading: booksLoading } = useBooks();
+	const { data: books, isLoading: booksLoading } = useQuery<Book[]>(
+		["getBooks"],
+		() => fetchBooks({})
+	);
+	//TODO: need to check that we can pull both available and unavailable books
 
 	if (booksLoading) return <p>Loading...</p>;
 

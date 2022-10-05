@@ -1,13 +1,19 @@
-import { Book } from "@prisma/client";
+// package imports
+import { FiEdit } from "react-icons/fi";
 import Link from "next/link";
 import { useState } from "react";
-import { FiEdit } from "react-icons/fi";
+import { useQuery } from "@tanstack/react-query";
+
+// local imports 
+import { Book } from "@prisma/client";
 import { BookPreview } from "../components/bookPreview/BookPreview";
+import fetchBooks from "../utils/fetchBooks";
 import { ToggleSwitch } from "../components/toggleSwitch/ToggleSwitch";
-import { useBooks } from "../hooks/useBooks";
 
 export default function Loans() {
-	const { data: books, isLoading: booksLoading } = useBooks();
+	const { data: books, isLoading: booksLoading } = useQuery<Book[]>(
+		["getBooks"],
+		() => fetchBooks({})
 
 	if (booksLoading) return <p>Loading...</p>;
 

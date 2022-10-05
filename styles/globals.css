@@ -4,34 +4,36 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Sora:wght@800&display=swap");
 
 @layer base {
-	@font-face {
-		font-family: "arno-bold";
-		src: url("../public/fonts/Arno-Bold.otf");
-	}
-	@font-face {
-		font-family: "arno";
-		src: url("../public/fonts/Arno-Reg.ttf");
-	}
+    @font-face {
+        font-family: "arno-bold";
+        src: url("../public/fonts/Arno-Bold.otf");
+    }
+    @font-face {
+        font-family: "arno";
+        src: url("../public/fonts/Arno-Reg.ttf");
+    }
 }
 
 @layer components {
-	.pageTitle {
-		@apply border-b-0.75 border-grey pb-4 pt-7 text-center font-arnobold text-2xl font-semibold text-dustyRose;
-	}
+    .pageTitle {
+        @apply border-b-0.75 border-grey pb-4 pt-7 text-center font-arnobold text-2xl font-semibold text-dustyRose;
+    }
 }
 
 @layer utilities {
-	/*  TODO: fit in css for toggle switch  */
-	.toggle-bg:after {
-		content: "";
-		@apply absolute top-0.5
-		left-0.5  h-3 w-3 rounded-full bg-toggleGradient drop-shadow-togglePin transition;
-	}
-	input:checked + .toggle-bg:after {
-		transform: translateX(20px);
-	}
+}
 
-	input:checked + .toggle-bg {
-		@apply border-green bg-green;
-	}
+/*  TODO: fit in css for toggle switch  */
+.toggle-bg:after {
+    content: "";
+    @apply absolute top-0.5
+	left-0.5  h-3 w-3 rounded-full bg-toggleGradient drop-shadow-togglePin transition;
+}
+
+input:checked + .toggle-bg:after {
+    transform: translateX(20px);
+}
+
+input:checked + .toggle-bg {
+    @apply border-green bg-green;
 }

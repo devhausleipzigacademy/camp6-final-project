@@ -11,8 +11,6 @@ export async function createBook(data) {
 }
 
 export async function retrieveBooks() {
-	const bookModels = await prisma.book.findMany({
-		where: { isAvailable: true },
-	});
+	const bookModels = await prisma.book.findMany();
 	return bookModels;
 }
