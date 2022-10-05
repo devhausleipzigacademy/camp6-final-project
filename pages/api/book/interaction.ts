@@ -14,7 +14,6 @@ export async function createBook(data) {
 
 type Clauses = Array<Prisma.BookWhereInput>;
 
-// clauses can be availability or genres, ordering only works for newest books
 export async function retrieveBooks(clauses: Clauses) {
 	const bookModels = await prisma.book.findMany({
 		where: {

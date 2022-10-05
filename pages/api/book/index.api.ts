@@ -20,21 +20,30 @@ export default async function handler(
 ) {
 	try {
 		if (req.method === "GET") {
-			// space to add more search filters at some later stage in time
-			const { availability, genres, orderBy } = req.query as Record<
-				string,
-				string
-			>;
+			// Search parameters (we could add more, e.g. orderBy)
+			const { availability, title, author, language, genres } =
+				req.query as Record<string, string>;
 
 			const clauses: Array<Prisma.BookWhereInput> = [];
-			//TODO: check that this is working, JSON will send string and string needs likely to be converted to boolean first
+
 			if (availability !== "undefined") {
-				const boolAvailability = availability;
 				clauses.push({ isAvailable: JSON.parse(availability) });
 			}
 
+			if (title !== "undefined") {
+				clauses.push({ title: { contains: title, mode: "insensitive" } });
+			}
+
+			if (author !== "undefined") {
+				clauses.push({ author: { contains: author, mode: "insensitive" } });
+			}
+
+			if (language !== "undefined") {
+				clauses.push({ language: { contains: language, mode: "insensitive" } });
+			}
+
 			if (genres !== "undefined") {
-				clauses.push({ genres: JSON.parse(genres) });
+				clauses.push({ genres: { array_contains: genres } });
 			}
 
 			const books = await retrieveBooks(clauses);

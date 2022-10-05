@@ -45,13 +45,13 @@ describe("Test Book DB Interactions", () => {
 	});
 	// 3 Test
 	it("retrieveBooks returns array of books objects (or empty)", async () => {
-		const booksdb = await retrieveBooks();
+		const booksdb = await retrieveBooks([]);
 
 		expect(isArray(booksdb)).toEqual(true);
 	});
 
 	it("retrieveBooks returns array, if array not empty check for book key author", async () => {
-		const booksdb = await retrieveBooks();
+		const booksdb = await retrieveBooks([]);
 
 		if (booksdb.length > 1) expect(booksdb[0].author).toBeDefined();
 	});
@@ -96,6 +96,8 @@ describe("Test Book Endpoints", () => {
 		const request = httpMocks.createRequest({
 			method: "GET",
 			url: "/book/",
+			// need to add query
+			query: { availability: true },
 		});
 
 		const response = httpMocks.createResponse();
