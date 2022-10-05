@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
@@ -5,7 +6,9 @@ import { CustomButton } from "../components/button/Button";
 import { LanguageSearchBar } from "../components/SearchBars/LanguageSearchBar";
 
 function InputForm() {
-    const [selectedLang, setSelectedLang] = useState(null);
+
+    const router = useRouter() 
+       const [selectedLang, setSelectedLang] = useState(null);
     const [queryy, setQuerry] = useState("");
 
     // const filter=querty===''?
@@ -14,61 +17,54 @@ function InputForm() {
         <>
             <div className="flex  flex-col p-10 outline-none  ">
                 <div className=" mb-10 grid    grid-flow-col  border-b-2 border-grey  ">
-                    <button
-                        onClick={() => console.log("triggered")}
-                        className="outline-none"
-                    >
-                        <AiOutlineClose className="text-grey self-center text-center " />
-                    </button>
-                    <p className=" text-dustyRose mb-4 text-2xl">
-                        New Book Information
-                    </p>
+                    {" "}
+                    <button className="outline-none"
+                    onClick={()=>router.back()}>
+                        <AiOutlineClose className="self-center text-center text-grey " />
+                    </button>{" "}
+
+                    <p className=" mb-4 text-2xl text-dustyRose">New Book Information</p>
                 </div>
+
                 <form className="px-4">
                     <div className="flex  flex-col">
-                        <p className=" text-grey text-start border-grey">Title</p>
+                        <p className=" border-grey text-start text-grey">Title</p>
                         <input
                             type="text"
                             placeholder=""
                             className="mb-2 border-b-2 border-grey outline-none"
                         />
-                        <p className=" text-grey text-start">Author</p>
+                        <p className=" text-start text-grey">Author</p>
                         <input
                             type="text"
                             placeholder=""
-                            className="mb-2 border-b-2 outline-none border-grey"
+                            className="mb-2 border-b-2 border-grey outline-none"
                         />
-                        <p className=" text-grey text-start ">
-                            Postal Code
-                        </p>
+                        <p className=" text-start text-grey ">Postal Code</p>
                         <input
                             type="text"
                             placeholder=""
-                            className="mb-2 border-b-2 outline-none border-grey"
+                            className="mb-2 border-b-2 border-grey outline-none"
                         />
-                        <p className=" text-grey text-start">Telegram</p>
+                        <p className=" text-start text-grey">Telegram</p>
                         <input
                             type="text"
                             placeholder=""
-                            className="mb-2 border-b-2 outline-none border-grey"
+                            className="mb-2 border-b-2 border-grey outline-none"
                         />
 
-                        <form className="mb-2 border-b-2 outline-none border-grey">
+                        <div className="mb-2 border-b-2 border-grey outline-none">
                             <p className="text-grey">Language</p>
                             <LanguageSearchBar />
-                        </form>
+                        </div>
                     </div>
                 </form>
-                <button className="text-grey text-end text-xs underline">
+                <button className="text-end text-xs text-grey underline">
                     additional info
                 </button>
 
-                <div className="self-center mt-10">
-                    <CustomButton
-                    
-                        functionality="ConfirmationPrimary"
-                        onClick={() => {}}
-                    >
+                <div className="mt-10 self-center">
+                    <CustomButton functionality="ConfirmationPrimary" onClick={() => { }}>
                         Submit Book
                     </CustomButton>
                 </div>
