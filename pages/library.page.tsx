@@ -1,21 +1,19 @@
 // package imports
 import Link from "next/link";
 import { FiEdit } from "react-icons/fi";
-import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 // local imports
 import { Book } from "@prisma/client";
 import { BookPreview } from "../components/bookPreview/BookPreview";
-import fetchBooks from "../utils/fetchBooks";
+import fetchBooks, { useUpdateBook } from "../utils/fetchBooks";
 import { ToggleSwitch } from "../components/toggleSwitch/ToggleSwitch";
-import { useQuery } from "@tanstack/react-query";
 
 export default function Library() {
 	const { data: books, isLoading: booksLoading } = useQuery<Book[]>(
-		["getBooks"],
+		["books"],
 		() => fetchBooks({})
 	);
-	//TODO: need to check that we can pull both available and unavailable books
 
 	if (booksLoading) return <p>Loading...</p>;
 
@@ -32,25 +30,17 @@ export default function Library() {
 			{books.map((book) => (
 				<LibraryItem key={book.identifier} book={book} />
 			))}
-			{/* const library item = book listitem - authors, title - edit button, toggle
-			switch overlay over book to make it unavailable
- border-b border-grey pb-4
-			pt-7 text-center font-arnoPro text-2xl font-bold text-dustyRose */}
 		</>
 	);
 }
 
 interface LibraryItemProps {
 	book: Book;
-	key: string;
 }
 
 function LibraryItem({ book }: LibraryItemProps) {
-	const [isAvailable, setIsAvailable] = useState<boolean>(true);
+	const { mutate } = useUpdateBook(book.identifier);
 
-	function toggleAvailablity(availability: boolean) {
-		return setIsAvailable(!availability);
-	}
 	return (
 		<div className="flex cursor-pointer justify-evenly border-b-0.75 border-grey p-5">
 			<BookPreview
@@ -68,11 +58,12 @@ function LibraryItem({ book }: LibraryItemProps) {
 				</a>
 			</Link>
 			<div className="flex items-center gap-3">
-				{/* TODO: add functionality to buttons */}
+				{/* TODO: add functionality to Edit Button */}
 				<FiEdit className="text-brown" />
+
 				<ToggleSwitch
 					value={book.isAvailable}
-					toggleHandler={() => toggleAvailablity(isAvailable)}
+					toggleHandler={() => mutate({ isAvailable: !book.isAvailable })}
 				></ToggleSwitch>
 			</div>
 		</div>

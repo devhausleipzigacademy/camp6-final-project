@@ -14,11 +14,13 @@ export const putBook = z.object({
 	genres: z
 		.enum(GENRES)
 		.array()
-		.refine((arg) => JSON.stringify(arg)),
+		.refine((arg) => JSON.stringify(arg))
+		.optional(),
 	tags: z
 		.string()
 		.array()
-		.refine((arg) => JSON.stringify(arg)),
+		.refine((arg) => JSON.stringify(arg))
+		.optional(),
 	isAvailable: z.boolean().optional(),
 	isReserved: z.boolean().optional(),
 });

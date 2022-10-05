@@ -1,11 +1,13 @@
-import "@splidejs/react-splide/css";
+// package imports
 import type { NextPage } from "next";
-import SubHeading2 from "../components/Subheading/Subheading";
+import { Book } from "@prisma/client";
+import { useQuery } from "@tanstack/react-query";
+import "@splidejs/react-splide/css";
+
+// local imports
 import Carousel from "../components/carousel/Carousel";
 import fetchBooks from "../utils/fetchBooks";
-import { useQuery } from "@tanstack/react-query";
-import { Book } from "@prisma/client";
-import { orderBy } from "lodash";
+import SubHeading2 from "../components/Subheading/Subheading";
 
 const Home: NextPage = (props) => {
 	const genres = ["Cookbooks", "Fantasy"];
@@ -13,13 +15,13 @@ const Home: NextPage = (props) => {
 	const categoryData = Object.fromEntries(
 		genres.map((genre) => [
 			genre,
-			useQuery<Book[]>(["getBooks", genre], () =>
+			useQuery<Book[]>(["books", genre], () =>
 				fetchBooks({ availability: true, genre })
 			),
 		])
 	);
 
-	const recentUploadsQuery = useQuery<Book[]>(["getBooks", "createdAt"], () =>
+	const recentUploadsQuery = useQuery<Book[]>(["books", "createdAt"], () =>
 		fetchBooks({ availability: true })
 	);
 
