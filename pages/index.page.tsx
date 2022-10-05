@@ -8,17 +8,19 @@ import { Book } from "@prisma/client";
 import { orderBy } from "lodash";
 
 const Home: NextPage = (props) => {
-	const categories = ["Cookbooks", "Fantasy"];
+	const genres = ["Cookbooks", "Fantasy"];
 
 	const categoryData = Object.fromEntries(
-		categories.map((category) => [
-			category,
-			useQuery<Book[]>(["getBooks", category], () => fetchBooks({ category })),
+		genres.map((genre) => [
+			genre,
+			useQuery<Book[]>(["getBooks", genre], () =>
+				fetchBooks({ availability: true, genre })
+			),
 		])
 	);
 
 	const recentUploadsQuery = useQuery<Book[]>(["getBooks", "createdAt"], () =>
-		fetchBooks({ orderBy: "createdAt" })
+		fetchBooks({ availability: true })
 	);
 
 	return (

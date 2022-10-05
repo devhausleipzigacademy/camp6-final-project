@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
-// local imports 
+// local imports
 import { Book } from "@prisma/client";
 import { BookPreview } from "../components/bookPreview/BookPreview";
 import fetchBooks from "../utils/fetchBooks";
@@ -14,6 +14,7 @@ export default function Loans() {
 	const { data: books, isLoading: booksLoading } = useQuery<Book[]>(
 		["getBooks"],
 		() => fetchBooks({})
+	);
 
 	if (booksLoading) return <p>Loading...</p>;
 

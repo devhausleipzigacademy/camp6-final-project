@@ -5,6 +5,7 @@ import { ZodError } from "zod";
 // local imports
 import { postBook, getBook, GetBook } from "./model.zod";
 import { createBook, retrieveBooks } from "./interaction";
+import { Book, Prisma } from "@prisma/client";
 
 export type ErrorResponse = {
     message: string;
@@ -17,9 +18,50 @@ export default async function handler(
 ) {
     try {
         if (req.method === "GET") {
-            // space to add search filters at some later stage in time
+            // Search parameters (we could add more, e.g. orderBy)
+            const { availability, title, author, language, genres } =
+                req.query as Record<string, string>;
 
-            const books = await retrieveBooks();
+            console.log(req.query);
+
+            const clauses: Array<Prisma.BookWhereInput> = [];
+
+            if (availability !== undefined) {
+                clauses.push({
+                    isAvailable:
+                        availability == "true"
+                            ? true
+                            : availability == "false"
+                            ? false
+                            : undefined,
+                });
+            }
+
+            if (title !== undefined) {
+                clauses.push({
+                    title: { contains: title, mode: "insensitive" },
+                });
+            }
+
+            if (author !== undefined) {
+                clauses.push({
+                    author: { contains: author, mode: "insensitive" },
+                });
+            }
+
+            if (language !== undefined) {
+                clauses.push({
+                    language: { contains: language, mode: "insensitive" },
+                });
+            }
+
+            if (genres !== undefined) {
+                clauses.push({ genres: { array_contains: genres } });
+            }
+
+            console.log(clauses);
+
+            const books = await retrieveBooks(clauses);
             const parsedBooks = books.map((book) => getBook.parse(book));
 
             res.status(200).json(parsedBooks);

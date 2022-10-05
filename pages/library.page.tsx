@@ -54,6 +54,7 @@ function LibraryItem({ book }: LibraryItemProps) {
 	return (
 		<div className="flex cursor-pointer justify-evenly border-b-0.75 border-grey p-5">
 			<BookPreview
+				isAvailable={book.isAvailable}
 				bookTitle={book.title}
 				bookAuthor={book.author}
 				imgSrc={book.image}
@@ -70,7 +71,7 @@ function LibraryItem({ book }: LibraryItemProps) {
 				{/* TODO: add functionality to buttons */}
 				<FiEdit className="text-brown" />
 				<ToggleSwitch
-					value={isAvailable}
+					value={book.isAvailable}
 					toggleHandler={() => toggleAvailablity(isAvailable)}
 				></ToggleSwitch>
 			</div>
