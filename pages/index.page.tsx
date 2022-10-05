@@ -10,75 +10,76 @@ import { HomeSearchBar } from "../components/SearchBars/HomeSearchbar/HomeSearch
 import { useEffect, useState } from "react";
 
 export interface SearchParams {
-	book: string;
-	zipCode: string;
-	languages: {
-		English: boolean;
-		German: Boolean;
-		French: boolean;
-	};
+    query: string;
+    zipCode: string;
+    languages: {
+        English: boolean;
+        German: Boolean;
+        French: boolean;
+    };
 }
 
 const initialSearchParams: SearchParams = {
-	book: "",
-	zipCode: "",
-	languages: {
-		English: false,
-		German: false,
-		French: false,
-	},
+    query: "",
+    zipCode: "",
+    languages: {
+        English: false,
+        German: false,
+        French: false,
+    },
 };
 
 const Home: NextPage = (props) => {
-	const [searchParams, setSearchParams] = useState(initialSearchParams);
-	const [book, setBook] = useState("");
-	// const [zipCode, setZipCode] = useState("");
-	// const [query, setQuery] = useState("");
-	const categories = ["Cookbooks", "Fantasy"];
+    const [searchParams, setSearchParams] = useState(initialSearchParams);
+    const categories = ["Cookbooks", "Fantasy"];
 
-	useEffect(() => {
-		console.log(searchParams);
-	}, [searchParams]);
-	const categoryData = Object.fromEntries(
-		categories.map((category) => [
-			category,
-			useQuery<Book[]>(["getBooks", category], () => fetchBooks({ category })),
-		])
-	);
+    const categoryData = Object.fromEntries(
+        categories.map((category) => [
+            category,
+            useQuery<Book[]>(["getBooks", category], () =>
+                fetchBooks({ category })
+            ),
+        ])
+    );
 
-	const recentUploadsQuery = useQuery<Book[]>(["getBooks", "createdAt"], () =>
-		fetchBooks({ orderBy: "createdAt" })
-	);
-	console.log(recentUploadsQuery.data);
+    const recentUploadsQuery = useQuery<Book[]>(["getBooks", "createdAt"], () =>
+        fetchBooks({ orderBy: "createdAt" })
+    );
 
-	return (
-		<>
-			<HomeSearchBar
-				searchParams={searchParams}
-				setSearchParams={setSearchParams}
-			/>
-			<div className="pl-6">
-				<section id="carousel">
-					<div key="0">
-						<SubHeading2>Recent Uploads</SubHeading2>
-						{recentUploadsQuery.isLoading ? (
-							<p>Loading...</p>
-						) : (
-							<Carousel books={recentUploadsQuery.data} />
-						)}
-					</div>
-					{Object.entries(categoryData).map(([category, query], index) => {
-						return (
-							<div key={index + 1}>
-								<SubHeading2>{category}</SubHeading2>
-								{query.isLoading ? <p>Loading...</p> : <Carousel books={query.data} />}
-							</div>
-						);
-					})}
-				</section>
-			</div>
-		</>
-	);
+    return (
+        <>
+            <HomeSearchBar
+                searchParams={searchParams}
+                setSearchParams={setSearchParams}
+            />
+            <div className="pl-6">
+                <section id="carousel">
+                    <div key="0">
+                        <SubHeading2>Recent Uploads</SubHeading2>
+                        {recentUploadsQuery.isLoading ? (
+                            <p>Loading...</p>
+                        ) : (
+                            <Carousel books={recentUploadsQuery.data} />
+                        )}
+                    </div>
+                    {Object.entries(categoryData).map(
+                        ([category, query], index) => {
+                            return (
+                                <div key={index + 1}>
+                                    <SubHeading2>{category}</SubHeading2>
+                                    {query.isLoading ? (
+                                        <p>Loading...</p>
+                                    ) : (
+                                        <Carousel books={query.data} />
+                                    )}
+                                </div>
+                            );
+                        }
+                    )}
+                </section>
+            </div>
+        </>
+    );
 };
 
 export default Home;
