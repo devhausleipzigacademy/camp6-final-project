@@ -1,7 +1,12 @@
 import { Book } from "@prisma/client";
 
 export function fetchBook(bookId: string): Promise<Book> {
-	return fetch(`http://localhost:3002/api/book/${bookId}`, {
+	const host =
+		process.env.NODE_ENV == "production"
+			? process.env.NEXT_PUBLIC_PROD_HOST
+			: process.env.NEXT_PUBLIC_DEV_HOST;
+
+	return fetch(`http://${host}/api/book/${bookId}`, {
 		method: "GET",
 	}).then((res) => {
 		return res.json();
