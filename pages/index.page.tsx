@@ -7,10 +7,38 @@ import { useQuery } from "@tanstack/react-query";
 import { Book } from "@prisma/client";
 import { orderBy } from "lodash";
 import { HomeSearchBar } from "../components/SearchBars/HomeSearchbar/HomeSearchBar";
+import { useEffect, useState } from "react";
+
+export interface SearchParams {
+	book: string;
+	zipCode: string;
+	languages: {
+		English: boolean;
+		German: Boolean;
+		French: boolean;
+	};
+}
+
+const initialSearchParams: SearchParams = {
+	book: "",
+	zipCode: "",
+	languages: {
+		English: false,
+		German: false,
+		French: false,
+	},
+};
 
 const Home: NextPage = (props) => {
+	const [searchParams, setSearchParams] = useState(initialSearchParams);
+	const [book, setBook] = useState("");
+	// const [zipCode, setZipCode] = useState("");
+	// const [query, setQuery] = useState("");
 	const categories = ["Cookbooks", "Fantasy"];
 
+	useEffect(() => {
+		console.log(searchParams);
+	}, [searchParams]);
 	const categoryData = Object.fromEntries(
 		categories.map((category) => [
 			category,
@@ -25,7 +53,10 @@ const Home: NextPage = (props) => {
 
 	return (
 		<>
-			<HomeSearchBar />
+			<HomeSearchBar
+				searchParams={searchParams}
+				setSearchParams={setSearchParams}
+			/>
 			<div className="pl-6">
 				<section id="carousel">
 					<div key="0">
