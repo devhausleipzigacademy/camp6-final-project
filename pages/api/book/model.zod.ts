@@ -19,6 +19,7 @@ export const putBook = z.object({
 		.string()
 		.array()
 		.refine((arg) => JSON.stringify(arg)),
+	isAvailable: z.boolean().optional(),
 	isReserved: z.boolean().optional(),
 });
 

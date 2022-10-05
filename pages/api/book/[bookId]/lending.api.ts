@@ -5,7 +5,7 @@ import { z, ZodError } from "zod";
 //local imports
 import { ErrorResponse } from "../index.api";
 import { prisma } from "../../../../prisma/db";
-import { retrieveBook } from "./interaction";
+import { retrieveBook } from "../interaction";
 
 // Borrow Actions
 const ACTIONS = ["borrow", "return"] as const;
