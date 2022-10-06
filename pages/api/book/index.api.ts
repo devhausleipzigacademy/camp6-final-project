@@ -22,8 +22,6 @@ export default async function handler(
             const { availability, title, author, language, genres } =
                 req.query as Record<string, string>;
 
-            console.log(req.query);
-
             const clauses: Array<Prisma.BookWhereInput> = [];
 
             if (availability !== undefined) {
@@ -58,8 +56,6 @@ export default async function handler(
             if (genres !== undefined) {
                 clauses.push({ genres: { array_contains: genres } });
             }
-
-            console.log(clauses);
 
             const books = await retrieveBooks(clauses);
             const parsedBooks = books.map((book) => getBook.parse(book));

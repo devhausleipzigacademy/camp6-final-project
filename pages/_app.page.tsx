@@ -7,6 +7,7 @@ import {
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Head from "next/head";
+import Header from "../components/Header/Header";
 
 function MyApp({ Component, pageProps }) {
     const [queryClient] = React.useState(() => new QueryClient());
@@ -19,6 +20,7 @@ function MyApp({ Component, pageProps }) {
             </Head>
             <QueryClientProvider client={queryClient}>
                 <Hydrate state={pageProps.dehydratedState}>
+                    <Header />
                     <Component {...pageProps} />
                     <ReactQueryDevtools initialIsOpen={false} />
                 </Hydrate>

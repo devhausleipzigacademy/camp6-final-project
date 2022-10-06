@@ -6,6 +6,8 @@ import fetchBooks from "../utils/fetchBooks";
 import { useQuery } from "@tanstack/react-query";
 import { Book } from "@prisma/client";
 import { orderBy } from "lodash";
+import { HomeSearchBar } from "../components/SearchBars/HomeSearchbar/HomeSearchBar";
+import Header from "../components/Header/Header";
 
 const Home: NextPage = (props) => {
     const genres = ["Cookbooks", "Fantasy"];
@@ -25,12 +27,8 @@ const Home: NextPage = (props) => {
 
     return (
         <>
-            {/* <Header /> */}
-
             <div className="pl-6">
-                <h1>Home</h1>
-                {/* <HomeSearchBar /> */}
-
+                <HomeSearchBar />
                 <section id="carousel">
                     <div key="0">
                         <SubHeading2>Recent Uploads</SubHeading2>

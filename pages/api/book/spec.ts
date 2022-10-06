@@ -102,7 +102,6 @@ describe("Test Book Endpoints", () => {
         const response = httpMocks.createResponse();
 
         await handlerBooks(request, response);
-        console.log(response._getData());
         const data = JSON.parse(response._getData());
 
         // response should contain books array
