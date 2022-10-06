@@ -1,9 +1,3 @@
-// package imports
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-
-//local imports
-import { PutBook } from "../pages/api/book/model.zod";
-
 const host =
 	process.env.NODE_ENV == "production"
 		? process.env.NEXT_PUBLIC_PROD_HOST
@@ -16,6 +10,7 @@ type FetchBookProps = {
 	author?: string;
 	language?: string;
 	availability?: boolean;
+	borrowed: Boolean;
 };
 
 export default function fetchBooks({
@@ -24,6 +19,7 @@ export default function fetchBooks({
 	title,
 	genre,
 	language,
+	borrowed,
 }: FetchBookProps) {
 	let URLString = `http://${host}/api/book?`;
 
@@ -47,27 +43,13 @@ export default function fetchBooks({
 		URLString += `genre=${genre}&`;
 	}
 
+	if (borrowed !== undefined) {
+		URLString += `borrowed=${borrowed}&`;
+	}
+
 	return fetch(URLString, {
 		method: "GET",
 	}).then((res) => {
 		return res.json();
 	});
-}
-
-export function useUpdateBook(bookIdentifier: string) {
-	const queryClient = useQueryClient();
-	return useMutation(
-		["books", bookIdentifier, "update"],
-		(book: PutBook) => {
-			return fetch(`http://${host}/api/book/${bookIdentifier}`, {
-				method: "PUT",
-				body: JSON.stringify(book),
-			});
-		},
-		{
-			onSuccess: () => {
-				queryClient.invalidateQueries(["books"]);
-			},
-		}
-	);
 }

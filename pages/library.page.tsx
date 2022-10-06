@@ -6,7 +6,8 @@ import { useQuery } from "@tanstack/react-query";
 // local imports
 import { Book } from "@prisma/client";
 import { BookPreview } from "../components/bookPreview/BookPreview";
-import fetchBooks, { useUpdateBook } from "../utils/fetchBooks";
+import fetchBooks from "../utils/fetchBooks";
+import { useUpdateBook } from "../utils/fetchBook";
 import { ToggleSwitch } from "../components/toggleSwitch/ToggleSwitch";
 
 export default function Library() {

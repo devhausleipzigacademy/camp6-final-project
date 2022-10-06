@@ -19,7 +19,7 @@ export default async function handler(
 	try {
 		if (req.method === "GET") {
 			// Search parameters (we could add more, e.g. orderBy)
-			const { availability, title, author, language, genres } =
+			const { availability, title, author, language, genres, borrowed } =
 				req.query as Record<string, string>;
 
 			const clauses: Array<Prisma.BookWhereInput> = [];
@@ -33,6 +33,16 @@ export default async function handler(
 							? false
 							: undefined,
 				});
+			}
+
+			if (borrowed !== undefined) {
+				clauses.push(
+					borrowed == "true"
+						? { NOT: [{ borrowerId: null }] }
+						: borrowed == "false"
+						? { borrowerId: null }
+						: undefined
+				);
 			}
 
 			if (title !== undefined) {
