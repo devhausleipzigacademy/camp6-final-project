@@ -14,11 +14,11 @@ export default function fetchBooks({
     genre,
     language,
 }: FetchBookProps) {
-    const host =
-        process.env.NODE_ENV == "production"
-            ? process.env.NEXT_PUBLIC_PROD_HOST
-            : process.env.NEXT_PUBLIC_DEV_HOST;
-
+	const host =
+		process.env.NODE_ENV == "production"
+			? process.env.NEXT_PUBLIC_PROD_HOST
+			: process.env.NEXT_PUBLIC_DEV_HOST;
+      
     let URLString = `http://${host}/api/book?`;
 
     if (availability !== undefined) {

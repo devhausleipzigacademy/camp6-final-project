@@ -43,7 +43,7 @@ const Home: NextPage = (props) => {
     );
 
     const recentUploadsQuery = useQuery<Book[]>(["getBooks", "createdAt"], () =>
-        fetchBooks({ availability: true })
+        fetchBooks({ orderBy: "createdAt", availability: true })
     );
 
     return (
