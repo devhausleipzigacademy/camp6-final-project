@@ -5,7 +5,7 @@ import { ZodError } from "zod";
 
 // local imports
 import { ErrorResponse } from "../index.api";
-import { deleteBook, retrieveBook, updateBook } from "./interaction";
+import { deleteBook, retrieveBook, updateBook } from "../interaction";
 import { GetBook, getBook } from "../model.zod";
 import { putBook } from "../model.zod";
 

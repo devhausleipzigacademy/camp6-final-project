@@ -12,6 +12,7 @@ import {
 } from "../components/SearchBars/HomeSearchbar/HomeSearchBar";
 import { useEffect, useState } from "react";
 
+
 const initialSearchParams: SearchParams = {
 	query: "",
 	zipCode: "",
@@ -25,17 +26,20 @@ const initialSearchParams: SearchParams = {
 
 const Home: NextPage = (props) => {
 	const [searchParams, setSearchParams] = useState(initialSearchParams);
-	const categories = ["Cookbooks", "Fantasy"];
+  
+    const genres = ["Cookbooks", "Fantasy"];
 
-	const categoryData = Object.fromEntries(
-		categories.map((category) => [
-			category,
-			useQuery<Book[]>(["getBooks", category], () => fetchBooks({ category })),
-		])
-	);
+    const categoryData = Object.fromEntries(
+        genres.map((genre) => [
+            genre,
+            useQuery<Book[]>(["getBooks", genre], () =>
+                fetchBooks({ availability: true, genre })
+            ),
+        ])
+    );
 
 	const recentUploadsQuery = useQuery<Book[]>(["getBooks", "createdAt"], () =>
-		fetchBooks({ orderBy: "createdAt" })
+		fetchBooks({ orderBy: "createdAt", availability: true })
 	);
 
 	return (
