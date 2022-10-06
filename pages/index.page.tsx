@@ -7,9 +7,30 @@ import { useQuery } from "@tanstack/react-query";
 import { Book } from "@prisma/client";
 import { orderBy } from "lodash";
 import { HomeSearchBar } from "../components/SearchBars/HomeSearchbar/HomeSearchBar";
-import Header from "../components/Header/Header";
+import { useEffect, useState } from "react";
+
+export interface SearchParams {
+    query: string;
+    zipCode: string;
+    languages: {
+        English: boolean;
+        German: Boolean;
+        French: boolean;
+    };
+}
+
+const initialSearchParams: SearchParams = {
+    query: "",
+    zipCode: "",
+    languages: {
+        English: false,
+        German: false,
+        French: false,
+    },
+};
 
 const Home: NextPage = (props) => {
+    const [searchParams, setSearchParams] = useState(initialSearchParams);
     const genres = ["Cookbooks", "Fantasy"];
 
     const categoryData = Object.fromEntries(
@@ -27,8 +48,11 @@ const Home: NextPage = (props) => {
 
     return (
         <>
+            <HomeSearchBar
+                searchParams={searchParams}
+                setSearchParams={setSearchParams}
+            />
             <div className="pl-6">
-                <HomeSearchBar />
                 <section id="carousel">
                     <div key="0">
                         <SubHeading2>Recent Uploads</SubHeading2>
