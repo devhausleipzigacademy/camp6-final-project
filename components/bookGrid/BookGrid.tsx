@@ -24,7 +24,7 @@ export function BookGrid({ books }: BookGridProps) {
                         linkHref={`/book/${book.identifier}`}
                         bookSize={"previewGrid"}
                     />
-                    <p className="font-arnoPro w-full truncate text-xs font-bold text-textGrey">
+                    <p className="w-full truncate font-arno text-xs font-bold text-textGrey">
                         {book.author}
                     </p>
                     <p className="w-full truncate font-montserrat text-xs font-normal text-textGrey">
