@@ -92,7 +92,7 @@ export const BookPreview = ({
 		imageTag = (
 			<div
 				className={clsx(
-					"flex h-full w-full flex-col items-center justify-between p-4 text-center font-arno text-white",
+					"font-serif flex h-full w-full flex-col items-center justify-between p-4 text-center text-white",
 					placeholderColors[randomInt(3)]
 				)}
 			>
@@ -112,6 +112,7 @@ export const BookPreview = ({
 			</div>
 		);
 	} else {
+
 		imageTag = (
 			<Image
 				src={imgSrc}
