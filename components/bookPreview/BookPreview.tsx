@@ -1,15 +1,18 @@
+// package imports
 import Image, { StaticImageData } from "next/future/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { FiHeart } from "react-icons/fi";
 import clsx from "clsx";
+
+// local imports
 import { randomInt } from "../../utils/random";
-import { link } from "fs";
 
 const bookSizes = {
 	homepage: "h-54",
 	previewGrid: "h-45",
-	listItem: "h-20",
+	listItemSmall: "h-20",
+	listItemBig: "h-22",
 	confirmationScreen: "h-89",
 	carouselItem: "h-54",
 };
@@ -62,6 +65,7 @@ export const BookPreview = ({
 
 	// TODO: if we change design for larger screen we need to modify the sizes below.
 	let sizes = "100vw";
+	let tinyText = false;
 	switch (bookSize) {
 		case "previewGrid":
 			sizes = "40vw";
@@ -72,8 +76,12 @@ export const BookPreview = ({
 		case "confirmationScreen":
 			sizes = "62vw";
 			break;
-		case "listItem":
-			var tinyText = true;
+		case "listItemSmall":
+			tinyText = true;
+			sizes = "15vw";
+			break;
+		case "listItemBig":
+			tinyText = true;
 			sizes = "17vw";
 			break;
 		case "carouselItem":
