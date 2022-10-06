@@ -48,8 +48,10 @@ export default function Favorites(props) {
 			/>
 			<div className="-mt-5 flex flex-col justify-center  gap-0">
 				<p className="mx-10 -mb-2 font-arno text-3xl">Books In Your Area</p>
-				<div className="flex  gap-4 overflow-x-scroll text-grey">
-					{" "}
+				<div className="flex  gap-4 overflow-x-scroll px-4 text-grey">
+					<p className="self-center font-bold text-black underline decoration-yellow">
+						All
+					</p>
 					{genres.map((genres, x) => (
 						<button
 							onClick={() => setSelectedGenres(genres)}

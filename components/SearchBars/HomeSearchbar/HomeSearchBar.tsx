@@ -153,9 +153,9 @@ export function HomeSearchBar({
 	return (
 		<form
 			onSubmit={submitter}
-			className="relative mt-10 mb-10 flex justify-center gap-4 self-center px-1 "
+			className="relative mt-10 mb-10 flex justify-center gap-2 self-center rounded-r-lg px-1 "
 		>
-			<div className="flex  rounded-lg  border-2 border-grey">
+			<div className="flex  rounded-xl border-2 border-grey">
 				<div className="flex flex-row-reverse justify-center">
 					<input
 						onChange={(event) => {
@@ -166,9 +166,9 @@ export function HomeSearchBar({
 					/>
 					<button
 						type="submit"
-						className="   rounded-l-lg  pl-1 shadow-black outline-none"
+						className="   rounded-l-lg  pl-3 shadow-black outline-none"
 					>
-						<BsSearch stroke="green" fill="green" className="text-green shadow-xl " />
+						<BsSearch className="text-grey shadow-xl " />
 					</button>
 				</div>
 
@@ -177,11 +177,11 @@ export function HomeSearchBar({
 					onChange={setZipQuery}
 					// onChange={(value) => setSearchParams({ ...searchParams, zipCode: value })}
 				>
-					<div className="relative border-l-2 border-t-0 border-grey ">
+					<div className="relative border-l-2 border-t-0 border-grey px-3 ">
 						<Combobox.Input
 							type="text"
 							placeholder="in 04103"
-							className="  w-20 pt-2 pl-2 text-sm outline-none"
+							className=" pt-2 pl-2 text-sm outline-none placeholder:underline"
 							onChange={(event) => setZipQuery(event.target.value)}
 						/>
 						<div className=" absolute mt-2 flex max-h-16 flex-col gap-1 overflow-x-auto  bg-white   px-2 font-sora text-xl">

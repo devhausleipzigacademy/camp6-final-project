@@ -39,7 +39,7 @@ export function Header(props) {
 									className={clsx(
 										"-z-30 h-6 w-6 text-grey outline-none duration-1000",
 
-										" h-8 w-8 text-grey outline-none",
+										" h-6 w-6 text-grey outline-none",
 										open ? "" : " opacity-100"
 									)}
 								/>
@@ -95,7 +95,7 @@ export function Header(props) {
 							) : (
 								<BiUser
 									className={clsx(
-										"h-7 w-8 outline-none  duration-1000",
+										"h-6 w-6 outline-none  duration-1000",
 
 										open ? " " : "text-grey "
 									)}
