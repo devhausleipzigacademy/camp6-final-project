@@ -14,6 +14,7 @@ module.exports = {
 			dustyRose: "#E5BABA",
 			green: "#B5C285",
 			grey: "#C4C3C2",
+			textBlack: "#444846",
 			textGrey: "#A39C94",
 			salmon: "#F4A298",
 			yellow: "#F3DE8A",
@@ -23,12 +24,12 @@ module.exports = {
 			//needed for toggle switch
 			buttonGrey: "#D4D3D3",
 		},
-    fontFamily: {
-				arno: ["arno", "sans-serif"],
-				arnobold: ["arno-bold", "sans-serif"],
-				montserrat: ["Montserrat"],
-				sora: ["Sora", "extra-bold"],
-			},
+		fontFamily: {
+			arno: ["arno", "sans-serif"],
+			arnobold: ["arno-bold", "sans-serif"],
+			montserrat: ["Montserrat"],
+			sora: ["Sora", "extra-bold"],
+		},
 		dropShadow: {
 			// needed for book thumbnails/previews
 			DEFAULT: "2px 6px 20px rgba(0, 0, 0, 0.25)",
@@ -76,5 +77,5 @@ module.exports = {
 		// used for storybook testing
 		"text-white",
 		"text-black",
-	]
+	],
 };

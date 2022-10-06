@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { FiHeart } from "react-icons/fi";
 import clsx from "clsx";
 import { randomInt } from "../../utils/random";
+import { link } from "fs";
 
 const bookSizes = {
 	homepage: "h-54",
@@ -32,15 +33,20 @@ interface BookPreviewProps {
 	 */
 	linkHref: string;
 	/**
+	 * Is the book available for requesting and searching?
+	 */
+	isAvailable: boolean;
+	/**
 	 * Determine context and and size of component
 	 */
 	bookSize: keyof typeof bookSizes;
 }
 
 /**
- * Book thumbnail that can be used in lists and overviews. Aspet ratio fixed to prevent distorted images.
+ * Book thumbnail that can be used in lists and overviews. Aspect ratio fixed to prevent distorted images.
  */
 export const BookPreview = ({
+	isAvailable,
 	bookSize,
 	imgSrc,
 	bookTitle,
@@ -79,11 +85,11 @@ export const BookPreview = ({
 	}
 
 	// the actual image tag
-	let image;
+	let imageTag;
 
 	// if no image provide we fill image tag with placeholder
 	if (!imgSrc) {
-		image = (
+		imageTag = (
 			<div
 				className={clsx(
 					"font-serif flex h-full w-full flex-col items-center justify-between p-4 text-center text-white",
@@ -106,7 +112,8 @@ export const BookPreview = ({
 			</div>
 		);
 	} else {
-		image = (
+
+		imageTag = (
 			<Image
 				src={imgSrc}
 				fill
@@ -118,33 +125,47 @@ export const BookPreview = ({
 		);
 	}
 
-	if (bookSize === "previewGrid") {
-		return (
-			<Link href={linkHref}>
-				<div
+	let unavailableOverlay = (
+		<div className="relative flex h-full w-full items-center justify-center opacity-60 grayscale">
+			{imageTag}
+			<div className="fixed z-10  flex w-5/6 items-center justify-center rounded-3xl bg-textBlack p-5">
+				<p
 					className={clsx(
-						bookSizes[bookSize],
-						"relative flex h-44 w-40 items-center justify-center bg-linen"
+						tinyText ? "text-[9px] " : "text-inherit",
+						"fixed font-arno font-bold text-white opacity-100"
 					)}
 				>
-					<div className="relative aspect-6/9 h-5/6 bg-linen drop-shadow">
-						{image}
-					</div>
-					<div className="text-gray-400 absolute bottom-0 right-0 flex aspect-square w-1/4 items-center justify-center bg-white opacity-90 ">
-						<button
-							className="flex h-full w-full items-center justify-center"
-							onClick={toggleFavorite}
-						>
-							<FiHeart
-								className={clsx(
-									"h-5/6 w-5/6 stroke-1",
-									faved ? "fill-salmon text-salmon" : "text-grey"
-								)}
-							/>
-						</button>
-					</div>
+					unavailable
+				</p>
+			</div>
+		</div>
+	);
+
+	if (bookSize === "previewGrid") {
+		return (
+			<div
+				className={clsx(
+					bookSizes[bookSize],
+					"relative flex h-44 w-40 items-center justify-center bg-linen"
+				)}
+			>
+				<div className="relative aspect-6/9 h-5/6 bg-linen drop-shadow">
+					{isAvailable ? imageTag : unavailableOverlay}
 				</div>
-			</Link>
+				<div className="text-gray-400 absolute bottom-0 right-0 flex aspect-square w-1/4 items-center justify-center bg-white opacity-90 ">
+					<button
+						className="flex h-full w-full items-center justify-center"
+						onClick={toggleFavorite}
+					>
+						<FiHeart
+							className={clsx(
+								"h-5/6 w-5/6 stroke-1",
+								faved ? "fill-salmon text-salmon" : "text-grey"
+							)}
+						/>
+					</button>
+				</div>
+			</div>
 		);
 	}
 
@@ -152,10 +173,13 @@ export const BookPreview = ({
 		<div
 			className={clsx(
 				bookSizes[bookSize],
-				"relative aspect-6/9 w-fit bg-linen drop-shadow"
+				"relative aspect-6/9 w-fit bg-linen",
+				modifiedShadow ? "drop-shadow-carouselItem" : "drop-shadow"
 			)}
 		>
-			<Link href={linkHref}>{image}</Link>
+			<Link href={linkHref}>
+				<a>{isAvailable ? imageTag : unavailableOverlay}</a>
+			</Link>
 		</div>
 	);
 };

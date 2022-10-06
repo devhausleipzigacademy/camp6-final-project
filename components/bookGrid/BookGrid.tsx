@@ -1,5 +1,4 @@
 import { Book } from "@prisma/client";
-import { FiBookOpen } from "react-icons/fi";
 import { BookPreview } from "../bookPreview/BookPreview";
 
 interface BookGridProps {
