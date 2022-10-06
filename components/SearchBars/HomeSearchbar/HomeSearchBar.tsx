@@ -153,7 +153,7 @@ export function HomeSearchBar({
 	return (
 		<form
 			onSubmit={submitter}
-			className="relative mt-10 mb-10 flex justify-center gap-4 self-center "
+			className="relative mt-10 mb-10 flex justify-center gap-4 self-center px-1 "
 		>
 			<div className="flex  rounded-lg  border-2 border-grey">
 				<div className="flex flex-row-reverse justify-center">
@@ -162,7 +162,7 @@ export function HomeSearchBar({
 							setQuery(event.target.value);
 						}}
 						type="text"
-						className=" sm:w-30 pl-2 outline-none"
+						className="  pl-2 outline-none"
 					/>
 					<button
 						type="submit"
@@ -181,7 +181,7 @@ export function HomeSearchBar({
 						<Combobox.Input
 							type="text"
 							placeholder="in 04103"
-							className="  w-20 pt-1 pl-4 outline-none"
+							className="  w-20 pt-2 pl-2 text-sm outline-none"
 							onChange={(event) => setZipQuery(event.target.value)}
 						/>
 						<div className=" absolute mt-2 flex max-h-16 flex-col gap-1 overflow-x-auto  bg-white   px-2 font-sora text-xl">

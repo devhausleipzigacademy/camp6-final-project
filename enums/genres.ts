@@ -25,4 +25,11 @@ export default [
 	"Humor",
 ] as const;
 
-const genreColors = ["blue", "cream", "dustyRose", "grey", "salmon", "yellow"];
+export const genreColors = [
+	"blue",
+	"cream",
+	"dustyRose",
+	"grey",
+	"salmon",
+	"yellow",
+];

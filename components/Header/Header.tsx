@@ -37,7 +37,7 @@ export function Header(props) {
 								<HiOutlineMenuAlt4
 									onClick={() => setMenu(true)}
 									className={clsx(
-										"-z-30 h-8 w-8 text-grey outline-none duration-1000",
+										"-z-30 h-6 w-6 text-grey outline-none duration-1000",
 
 										" h-8 w-8 text-grey outline-none",
 										open ? "" : " opacity-100"
