@@ -8,6 +8,7 @@ import { Book } from "@prisma/client";
 import { BookPreview } from "../components/bookPreview/BookPreview";
 import fetchBooks, { useUpdateBook } from "../utils/fetchBooks";
 import { ToggleSwitch } from "../components/toggleSwitch/ToggleSwitch";
+import { CustomButton } from "../components/button/Button";
 
 export default function Library() {
 	const { data: books, isLoading: booksLoading } = useQuery<Book[]>(
@@ -15,12 +16,26 @@ export default function Library() {
 		() => fetchBooks({})
 	);
 
+	function addBookhandler() {
+		return;
+	}
+
 	if (booksLoading) return <p>Loading...</p>;
 
 	if (!booksLoading && books === undefined) return <p>no books found</p>;
 
 	return (
 		<>
+			{/* TODO: add functionality to addButton */}
+			{/* <div className="fixed right-0 z-20 mt-[87vh] pr-5">
+				<CustomButton
+					functionality={"AddBook"}
+					onClick={() => {
+						addBookhandler();
+					}}
+				></CustomButton>
+			</div> */}
+
 			<h2 className="pageTitle">
 				Library
 				<Link href="/loans">
@@ -59,7 +74,7 @@ function LibraryItem({ book }: LibraryItemProps) {
 			</Link>
 			<div className="flex items-center gap-3">
 				{/* TODO: add functionality to Edit Button */}
-				<FiEdit className="text-brown" />
+				{/* <FiEdit className="text-brown" /> */}
 
 				<ToggleSwitch
 					value={book.isAvailable}

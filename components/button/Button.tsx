@@ -7,7 +7,7 @@ import BookArrowUpSvg from "../bookarrowupsvg/BookArrowUpSvg";
 
 const customDesigns = {
 	AddBook:
-		"h-10 w-10 rounded-full bg-yellow fill-black p-2 text-black drop-shadow-plusButton",
+		"h-16 aspect-square rounded-full bg-yellow fill-black text-black drop-shadow-plusButton",
 	ConfirmationPrimary:
 		"h-12 min-h-fit w-48 min-w-fit rounded-2xl bg-green fill-white p-2 font-serif text-base font-semibold text-white drop-shadow",
 	ConfirmationSecondary:
@@ -65,7 +65,7 @@ export const CustomButton = ({
 		case "AddBook":
 			type = "button";
 			classes = customDesigns.AddBook;
-			children = <FiPlus className="h-5" />;
+			children = <FiPlus className="h-8 w-8 " />;
 
 			break;
 		case "ConfirmationPrimary":
