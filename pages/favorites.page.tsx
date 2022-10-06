@@ -11,9 +11,7 @@ export default function Favorites() {
 
 	return (
 		<>
-			<h2 className="font-arnoPro border-b border-grey pb-4 pt-7 text-center text-2xl font-bold text-dustyRose">
-				Favorites
-			</h2>
+			<h2 className="pageTitle">Favorites</h2>
 			{query.isLoading ? <p>Loading...</p> : <BookGrid books={query.data} />}
 		</>
 	);

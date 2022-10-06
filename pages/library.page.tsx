@@ -1,6 +1,5 @@
 // package imports
 import Link from "next/link";
-import { FiEdit } from "react-icons/fi";
 import { useQuery } from "@tanstack/react-query";
 
 // local imports
@@ -9,6 +8,7 @@ import { BookPreview } from "../components/bookPreview/BookPreview";
 import fetchBooks from "../utils/fetchBooks";
 import { useUpdateBook } from "../utils/fetchBook";
 import { ToggleSwitch } from "../components/toggleSwitch/ToggleSwitch";
+import { CustomButton } from "../components/button/Button";
 
 export default function Library() {
 	const { data: books, isLoading: booksLoading } = useQuery<Book[]>(
@@ -22,6 +22,14 @@ export default function Library() {
 
 	return (
 		<>
+			<div className="fixed top-[88vh] right-4">
+				<CustomButton
+					functionality={"AddBook"}
+					onClick={function (): void {
+						throw new Error("Function not implemented.");
+					}}
+				></CustomButton>
+			</div>
 			<h2 className="pageTitle">
 				Library
 				<Link href="/loans">
@@ -60,7 +68,7 @@ function LibraryItem({ book }: LibraryItemProps) {
 			</Link>
 			<div className="flex items-center gap-3">
 				{/* TODO: add functionality to Edit Button */}
-				<FiEdit className="text-brown" />
+				{/* <FiEdit className="text-brown" /> */}
 
 				<ToggleSwitch
 					value={book.isAvailable}

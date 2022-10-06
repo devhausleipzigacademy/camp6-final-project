@@ -10,7 +10,6 @@ import { useUpdateBook } from "../utils/fetchBook";
 import { CustomButton } from "../components/button/Button";
 import { FaTelegram } from "react-icons/fa";
 import { fetchUser } from "../utils/fetchUser";
-import { checkPreferredLanguage } from "../utils/checkPreferredLanguage";
 
 export default function Loans() {
 	const { data: books, isLoading: booksLoading } = useQuery<Book[]>(
@@ -79,13 +78,14 @@ function LoanItem({ book }: LoanItemProps) {
 			/>
 			<div className="flex flex-col">
 				<Link href={`/book/${book.identifier}`}>
-					<a className="flex w-full flex-col justify-center font-montserrat text-sm font-normal text-textBlack">
+					<a className="flex w-full flex-col justify-center font-montserrat text-sm font-light text-textBlack">
 						<p>{book.author}</p>
 						<p>{book.title}</p>
 					</a>
 				</Link>
-				<p className=" py-2  font-arno text-2xs font-semibold text-textGrey">
-					{borrower.name} has borrowed this on {date}
+				<p className=" py-2 font-arno text-2xs font-normal text-grey">
+					<span className="underline">{borrower.name}</span> has borrowed this
+					on {date}
 				</p>
 				<div className="flex gap-2">
 					<CustomButton

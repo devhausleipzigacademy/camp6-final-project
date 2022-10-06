@@ -59,7 +59,6 @@ export const BookPreview = ({
 	const [faved, setFaved] = useState(false);
 
 	function toggleFavorite() {
-		console.log(faved);
 		setFaved(!faved);
 	}
 

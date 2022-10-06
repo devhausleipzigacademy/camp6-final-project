@@ -10,7 +10,7 @@ type FetchBookProps = {
 	author?: string;
 	language?: string;
 	availability?: boolean;
-	borrowed: Boolean;
+	borrowed?: Boolean;
 };
 
 export default function fetchBooks({
