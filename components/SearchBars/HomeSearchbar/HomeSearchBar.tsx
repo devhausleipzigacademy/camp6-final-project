@@ -1,17 +1,35 @@
 import { Combobox } from "@headlessui/react";
 import { match } from "assert";
 import clsx from "clsx";
-import { useEffect, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { IoMdOptions } from "react-icons/io";
 import { string } from "zod";
+
 type HomeSearchBarProps = {
-	onChange: () => void;
+	// onChange: () => void;
+	searchParams: SearchParams;
+	setSearchParams: React.Dispatch<React.SetStateAction<SearchParams>>;
 };
 
-export function HomeSearchBar() {
-	const [book, setBook] = useState(undefined);
-	const [zipCode, setZipCode] = useState("");
+export interface SearchParams {
+	query: string;
+	zipCode: string;
+	languages: {
+		English: boolean;
+		German: Boolean;
+		French: boolean;
+		Arabic: Boolean;
+	};
+}
+
+export function HomeSearchBar({
+	searchParams,
+	setSearchParams,
+}: HomeSearchBarProps) {
+	// const [book, setBook] = useState("");
+	// const [zipCode, setZipCode] = useState("");
+	const [zipQuery, setZipQuery] = useState("");
 	const [query, setQuery] = useState("");
 	const books = [
 		"Crying in The Titans",
@@ -21,22 +39,98 @@ export function HomeSearchBar() {
 		"Birth Without Duty",
 		"Answering the Titans",
 	];
+	console.log("query:", query, "Zip:", zipQuery);
+	const locations = [
+		"2048",
+		"2049",
+		"2050",
+		"2051",
+		"2052",
+		"2053",
+		"2054",
+		"2055",
+		"2056",
+		"2057",
+		"2058",
+		"2059",
+		"2060",
+		"2061",
+		"2062",
+		"2089",
+		"2090",
+		"2091",
+		"2092",
+		"2093",
+		"2094",
+		"2095",
+		"2096",
+		"2097",
+		"2098",
+		"2099",
+		"2100",
+		"2101",
+		"2102",
+		"2103",
+		"2104",
+		"2105",
+		"2106",
+		"2107",
+		"2063",
+		"2064",
+		"2065",
+		"2066",
+		"2067",
+		"2068",
+		"2069",
+		"2070",
+		"2071",
+		"2072",
+		"2073",
+		"2074",
+		"2075",
+		"2076",
+		"2077",
+		"2078",
+		"2079",
+		"2080",
+		"2081",
+		"2082",
+		"2083",
+		"2084",
+		"2085",
+		"2086",
+		"2087",
+		"2088",
+	];
+	const languages = [
+		{ langName: "English", langCode: "en" },
+		{ langName: "German", langCode: "de" },
+		{ langName: "Turkish", langCode: "tr" },
+		{ langName: "Arabic", langCode: "ar" },
+	];
+	const [checkedLanguages, setCheckedLanguages] = useState({
+		English: false,
+		German: false,
+		French: false,
+		Arabic: false,
+	});
+	console.log(searchParams);
+	function submitter(event: FormEvent<HTMLFormElement>) {
+		event.preventDefault();
+		console.log("sss", query, zipQuery);
+		setSearchParams({
+			query: query,
+			zipCode: zipQuery,
+			languages: checkedLanguages,
+		});
+		return console.log("sss", query, zipQuery);
+	}
 
-	const locations = ["84301", "64321", "04101", "12301"];
-	const placeHolderLang = ["English", "Turkish", "French", "Texas"];
 	const [isActive, setIsActive] = useState(false);
-	const [isChecked, setIsChecked] = useState(
-		placeHolderLang.reduce((acc, current) => {
-			acc[current] = false;
-			return acc;
-		}, {})
-	);
+
 	function handler(event) {
-		console.log(event.target);
 		const isButton = event.target.matches("#search-form-button *");
 		const isMenu = event.target.matches("#search-form *");
-		console.log(isActive);
-		console.log(isButton, isMenu);
 		if (isButton || (!(isButton || isMenu) && isActive)) {
 			setIsActive((prev) => !prev);
 		}
@@ -48,108 +142,104 @@ export function HomeSearchBar() {
 			document.removeEventListener("click", handler);
 		};
 	}, [isActive]);
-	const filteredBooks = useMemo(
-		() =>
-			books.filter((bookName) =>
-				bookName.toLowerCase().includes(query.toLowerCase())
-			),
-		[query]
-	);
+
 	const filteredZip = useMemo(
 		() =>
 			locations.filter((zipCode) =>
-				zipCode.toLowerCase().includes(query.toLowerCase())
+				zipCode.toLowerCase().startsWith(zipQuery.toLowerCase())
 			),
-		[query]
+		[zipQuery]
 	);
-
 	return (
-		<div>
-			<div className="min-w-mobile   flex w-mobile justify-center gap-6  py-2">
-				<div className="flex flex-wrap rounded-xl border-2 border-slate-300">
-					<button className="rounded-l-lg bg-white pl-2 outline-none">
-						<BsSearch className=" text-slate-300" />
+		<form
+			onSubmit={submitter}
+			className="relative mt-10 mb-10 flex justify-center gap-4 self-center "
+		>
+			<div className="flex  rounded-lg  border-2 border-grey">
+				<div className="flex flex-row-reverse justify-center">
+					<input
+						onChange={(event) => {
+							setQuery(event.target.value);
+						}}
+						type="text"
+						className=" sm:w-30 pl-2 outline-none"
+					/>
+					<button
+						type="submit"
+						className="   rounded-l-lg  pl-1 shadow-black outline-none"
+					>
+						<BsSearch stroke="green" fill="green" className="text-green shadow-xl " />
 					</button>
-					<Combobox value={book} onChange={setBook}>
+				</div>
+
+				<Combobox
+					value={zipQuery}
+					onChange={setZipQuery}
+					// onChange={(value) => setSearchParams({ ...searchParams, zipCode: value })}
+				>
+					<div className="relative border-l-2 border-t-0 border-grey ">
 						<Combobox.Input
-							className="relative outline-none"
-							onChange={(event) => setQuery(event.target.value)}
+							type="text"
+							placeholder="in 04103"
+							className="  w-20 pt-1 pl-4 outline-none"
+							onChange={(event) => setZipQuery(event.target.value)}
 						/>
-						<div className=" max-h-25 bottom absolute top-[100px]   w-mobile overflow-auto border-l-2 bg-green-300 ">
-							<Combobox.Options value={book} onChange={setBook}>
-								{filteredBooks.map((searchedBook) => (
-									<Combobox.Option
-										onSelect={(searchedBook) => setBook(searchedBook)}
-										key={searchedBook}
-										value={searchedBook}
-									>
-										<span>{searchedBook}</span>
-									</Combobox.Option>
-								))}
+						<div className=" absolute mt-2 flex max-h-16 flex-col gap-1 overflow-x-auto  bg-white   px-2 font-sora text-xl">
+							<Combobox.Options>
+								{zipQuery === ""
+									? ""
+									: filteredZip.map((zip) => (
+											<Combobox.Option
+												className={""}
+												onClick={() => setZipQuery(zip)}
+												key={zip}
+												value={zip}
+											>
+												<span> {zip}</span>
+											</Combobox.Option>
+									  ))}
 							</Combobox.Options>
 						</div>
-					</Combobox>
-					<Combobox value={zipCode} onChange={setZipCode}>
-						<div className="relative border-l-2">
-							<Combobox.Input
-								type="number"
-								placeholder="in 04103"
-								className="  pt-1 pl-2 outline-none"
-								onChange={(event) => setQuery(event.target.value)}
-							/>
-							<div className=" right absolute max-h-24  flex-col  overflow-auto border-l-2 bg-green-300 ">
-								<Combobox.Options>
-									{filteredZip.map((zip) => (
-										<Combobox.Option
-											onSelect={(zip) => setZipCode(zip)}
-											key={zip}
-											value={zip}
-										>
-											<span>in {zip}</span>
-										</Combobox.Option>
-									))}
-								</Combobox.Options>
-							</div>
-						</div>
-					</Combobox>
-				</div>
-				<div>
-					<div id="search-form-button" className="">
-						<button
-							type="button"
-							className="    rounded-lg border-2  border-slate-200  bg-white p-2 text-slate-400 outline-none"
-						>
-							<IoMdOptions className="h-4 w-5 " />
-						</button>
 					</div>
-					<div id="search-form">
-						<form
-							className={clsx(
-								isActive ? "opacity-100" : "invisible opacity-0 ",
-								"absolute  flex transform flex-col  rounded-lg border-2 border-gray-400 bg-white py-2 px-4 text-start text-sm font-medium text-black  duration-500"
-							)}
-						>
-							{placeHolderLang.map((language, idx) => (
-								<label key={language} className="flex gap-1">
-									<input
-										type="checkbox"
-										name=""
-										checked={isChecked[language]}
-										onChange={(event) =>
-											setIsChecked({
-												...isChecked,
-												[language]: event.target.checked,
-											})
-										}
-										className="mr-1 rounded outline-none focus:ring-0"
-									/>
-									{language}
-								</label>
-							))}
-						</form>
+				</Combobox>
+			</div>
+			<div>
+				<div id="search-form-button" className="">
+					<button
+						type="button"
+						className="  rounded-lg border-2  border-grey  bg-white p-2 text-grey outline-none"
+					>
+						<IoMdOptions className="h-4 w-5 " />
+					</button>
+				</div>
+				<div className="absolute ml-2" id="search-form">
+					<div
+						className={clsx(
+							isActive ? "opacity-100" : "invisible hidden opacity-0 ",
+							" absolute -right-12 flex transform flex-col  rounded-lg border-2  border-grey bg-white py-2 px-4 text-start text-sm font-medium text-black  duration-500"
+						)}
+					>
+						{languages.map(({ langName, langCode }, idx) => (
+							<label key={langName} className="flex self-start">
+								<input
+									value={langCode}
+									type="checkbox"
+									checked={checkedLanguages[langName]}
+									onChange={(event) =>
+										setCheckedLanguages({
+											...checkedLanguages,
+											[langName]: event.target.checked,
+										})
+									}
+									name=""
+									className="mr-1 rounded pr-2 outline-none "
+								/>
+								{langName}
+							</label>
+						))}
 					</div>
 				</div>
 			</div>
-		</div>
+		</form>
 	);
 }
