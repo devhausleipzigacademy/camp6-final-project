@@ -10,52 +10,54 @@ import { GetBook, getBook } from "../model.zod";
 import { putBook } from "../model.zod";
 
 export default async function handler(
-    req: NextApiRequest,
-    res: NextApiResponse<Book | GetBook | { id: string } | ErrorResponse>
+	req: NextApiRequest,
+	res: NextApiResponse<Book | GetBook | { id: string } | ErrorResponse>
 ) {
-    try {
-        if (req.method === "GET") {
-            const bookId = req.query.bookId as string;
+	try {
+		if (req.method === "GET") {
+			const bookId = req.query.bookId as string;
 
-            const book = await retrieveBook(bookId);
+			const book = await retrieveBook(bookId);
 
-            const parsedBook = getBook.parse(book);
-            res.status(200).json(parsedBook);
-        }
-        if (req.method === "PUT") {
-            const data = putBook.parse(req.body);
-            const bookId = req.query.bookId as string;
+			const parsedBook = getBook.parse(book);
+			res.status(200).json(parsedBook);
+		}
+		if (req.method === "PUT") {
+			const parsedBody = JSON.parse(req.body);
 
-            await updateBook(bookId, data);
+			const data = putBook.parse(parsedBody);
+			const bookId = req.query.bookId as string;
 
-            res.status(204).end();
-        }
-        if (req.method === "DELETE") {
-            const bookId = req.query.bookId as string;
+			await updateBook(bookId, data);
 
-            const deletedBook = await deleteBook(bookId);
+			res.status(204).end();
+		}
+		if (req.method === "DELETE") {
+			const bookId = req.query.bookId as string;
 
-            res.status(200).json(deletedBook);
-        }
-    } catch (err) {
-        if (err instanceof ZodError) {
-            const errorResponse: ErrorResponse = {
-                message: "Invalid book.",
-            };
-            if (["development", "test"].includes(process.env.NODE_ENV)) {
-                errorResponse.error = err;
-            }
+			const deletedBook = await deleteBook(bookId);
 
-            res.status(422).send(errorResponse);
-        }
+			res.status(200).json(deletedBook);
+		}
+	} catch (err) {
+		if (err instanceof ZodError) {
+			const errorResponse: ErrorResponse = {
+				message: "Invalid book.",
+			};
+			if (["development", "test"].includes(process.env.NODE_ENV)) {
+				errorResponse.error = err;
+			}
 
-        const errorResponse: ErrorResponse = {
-            message: "Looks like something went wrong. Please try again.",
-        };
-        if (["development", "test"].includes(process.env.NODE_ENV)) {
-            errorResponse.error = err;
-        }
+			res.status(422).send(errorResponse);
+		}
 
-        res.status(404).send(errorResponse);
-    }
+		const errorResponse: ErrorResponse = {
+			message: "Looks like something went wrong. Please try again.",
+		};
+		if (["development", "test"].includes(process.env.NODE_ENV)) {
+			errorResponse.error = err;
+		}
+
+		res.status(404).send(errorResponse);
+	}
 }

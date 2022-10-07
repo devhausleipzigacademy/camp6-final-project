@@ -1,4 +1,7 @@
+// package imports
 import { Prisma } from "@prisma/client";
+
+// local imports
 import { prisma } from "../../../prisma/db";
 import { PutBook } from "./model.zod";
 
@@ -36,7 +39,7 @@ export async function updateBook(bookId: string, data: PutBook) {
 		where: {
 			identifier: bookId,
 		},
-		data: { ...data },
+		data: data,
 	});
 	return updatedBook;
 }

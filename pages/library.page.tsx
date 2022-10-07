@@ -1,65 +1,80 @@
-// import { Book } from "@prisma/client";
-// import { useState } from "@storybook/addons";
-// import { FiEdit } from "react-icons/fi";
-// import { BookPreview } from "../components/bookPreview/BookPreview";
-// import { CustomButton } from "../components/button/Button";
-// import { ToggleSwitch } from "../components/toggleSwitch/ToggleSwitch";
-// import { useBooks } from "../hooks/useBooks";
+// package imports
+import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
 
-// export default function Library() {
-// 	const { data: books, isLoading: booksLoading } = useBooks();
+// local imports
+import { Book } from "@prisma/client";
+import { BookPreview } from "../components/bookPreview/BookPreview";
+import fetchBooks from "../utils/fetchBooks";
+import { useUpdateBook } from "../utils/fetchBook";
+import { ToggleSwitch } from "../components/toggleSwitch/ToggleSwitch";
+import { CustomButton } from "../components/button/Button";
 
-// 	if (booksLoading) return <p>Loading...</p>;
+export default function Library() {
+	const { data: books, isLoading: booksLoading } = useQuery<Book[]>(
+		["books"],
+		() => fetchBooks({})
+	);
 
-// 	if (!booksLoading && books === undefined) return <p>no books found</p>;
+	if (booksLoading) return <p>Loading...</p>;
 
-// 	return (
-// 		<>
-// 			<h2 className="pageTitle">
-// 				{/* TODO: add Link to "Loans at a Glance" */}
-// 				Library <span className="pl-12 text-grey">Loans at a Glance</span>
-// 			</h2>
-// 			{books.map((book) => (
-// 				<LibraryItem book={book} />
-// 			))}
-// 			{/* const library item = book listitem - authors, title - edit button, toggle
-// 			switch overlay over book to make it unavailable
-//             border-b border-grey pb-4
-// 			pt-7 text-center font-arnoPro text-2xl font-bold text-dustyRose */}
-// 		</>
-// 	);
-// }
+	if (!booksLoading && books === undefined) return <p>no books found</p>;
 
-// interface LibraryItemProps {
-// 	book: Book;
-// }
-// const [isAvailable, setIsAvailable] = useState(true)
-// isAvailable
-// const toggleAvailablity(availability:boolean) {
-//     return
-// }
+	return (
+		<>
+			<div className="fixed top-[88vh] right-4">
+				<CustomButton
+					functionality={"AddBook"}
+					onClick={function (): void {
+						throw new Error("Function not implemented.");
+					}}
+				></CustomButton>
+			</div>
+			<h2 className="pageTitle">
+				Library
+				<Link href="/loans">
+					<a className="pl-12 text-grey">Loans at a Glance</a>
+				</Link>
+			</h2>
+			{books.map((book) => (
+				<LibraryItem key={book.identifier} book={book} />
+			))}
+		</>
+	);
+}
 
-// function LibraryItem({ book }: LibraryItemProps) {
-// 	return (
-// 		<div className="flex justify-evenly border-b-0.75 border-grey p-5 font-montserrat text-sm font-normal">
-// 			<BookPreview
-// 				bookTitle={book.title}
-// 				bookAuthor={book.author}
-// 				imgSrc={book.image}
-// 				linkHref={`/book/${book.identifier}`}
-// 				bookSize={"listItem"}
-// 			/>
-// 			<div className="flex w-full flex-col justify-center">
-// 				<p>{book.author}</p>
-// 				<p>{book.title}</p>
-// 			</div>
-// 			<div className="flex gap-3">
-// 				<FiEdit />
-// 				<ToggleSwitch
-// 					value={isAvailable}
-// 					toggleHandler={toggleAvailablity()}
-// 				></ToggleSwitch>
-// 			</div>
-// 		</div>
-// 	);
-// }
+interface LibraryItemProps {
+	book: Book;
+}
+
+function LibraryItem({ book }: LibraryItemProps) {
+	const { mutate } = useUpdateBook(book.identifier);
+
+	return (
+		<div className="flex cursor-pointer justify-evenly border-b-0.75 border-grey p-5">
+			<BookPreview
+				isAvailable={book.isAvailable}
+				bookTitle={book.title}
+				bookAuthor={book.author}
+				imgSrc={book.image}
+				linkHref={`/book/${book.identifier}`}
+				bookSize={"listItemSmall"}
+			/>
+			<Link href={`/book/${book.identifier}`}>
+				<a className="ml-7 flex w-full flex-col justify-center font-montserrat text-sm font-normal text-textBlack">
+					<p>{book.author}</p>
+					<p>{book.title}</p>
+				</a>
+			</Link>
+			<div className="flex items-center gap-3">
+				{/* TODO: add functionality to Edit Button */}
+				{/* <FiEdit className="text-brown" /> */}
+
+				<ToggleSwitch
+					value={book.isAvailable}
+					toggleHandler={() => mutate({ isAvailable: !book.isAvailable })}
+				></ToggleSwitch>
+			</div>
+		</div>
+	);
+}

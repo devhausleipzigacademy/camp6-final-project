@@ -8,17 +8,17 @@ createdAt                   DateTime @default(now())
 updatedAt                   DateTime @updatedAt
 postalAddressCountry        String
 postalAddressRegion         String
-postalAddresspostalCode     Int
-postalAddressstreetAddress  String
+postalAddressPostalCode     Int
+postalAddressStreetAddress  String
 latitude                    Float
 longitude                   Float
+userId						String?
+user                        User? @relation("userlocations", fields: [userId], references: [identifier])
 books                       Book[] @relation("booklocation")
-user                        User? @relation("userlocation")
 }
 model User {
   identifier     String   @id @default(uuid())
-  location      Location? @relation("userlocation", fields: [locationId], references: [identifier])
-  locationId    String @unique
+  locations      Location[] @relation("userlocations")
 }
 
 
