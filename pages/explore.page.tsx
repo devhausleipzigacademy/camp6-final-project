@@ -5,7 +5,7 @@ import {
 import fetchBooks from "../utils/fetchBooks";
 import { generateFakeBook } from "./api/book/generator";
 import { createBook } from "./api/book/interaction";
-import genres from "../enums/genres";
+
 import { Book } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { useState, SetStateAction } from "react";
@@ -28,7 +28,19 @@ export default function Favorites(props) {
 	};
 	book();
 
-	const topTenGenres = genres.slice(0, 10).sort();
+	const topTenGenres = [
+		"Art & Design Biography",
+		"Crime",
+		"Fantasy",
+		"Food & Drink",
+		"Graphic Novels",
+		"Historical",
+		"Horror",
+		"Literature",
+		"Science Fiction Theory",
+		"Textbooks",
+		"Young Adult",
+	].sort();
 	const filteredBooks = fakeBooks.filter((book, idx) => {
 		const { genres } = book;
 		return genres.includes(selectedGenres);
@@ -89,15 +101,3 @@ export default function Favorites(props) {
 		</>
 	);
 }
-
-// {selectedGenres === "All" ? (
-// 	query.isLoading ? (
-// 		<p>Loading...</p>
-// 	) : (
-// 		<BookGrid books={fakeBooks as Array<Book>} />
-// 	)
-// ) : query.isLoading ? (
-// 	<p>Loading...</p>
-// ) : (
-// 	<BookGrid books={filteredBooks as Array<Book>} />
-// )}
