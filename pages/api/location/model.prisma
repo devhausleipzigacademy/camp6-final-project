@@ -1,0 +1,50 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+    identifier                  String   @id @default(uuid())
+    booksBorrowed       Book[] @relation("borrowing")
+    booksOwned          Book[] @relation("owning")
+    userlocationId      String
+    userlocation        User @relation("userlocation", fields: [userlocationId], references: [identifier])
+}
+
+model Book {
+    identifier       String   @id @default(uuid())
+    createdAt       DateTime @default(now())   
+    updatedAt       DateTime @updatedAt
+    title           String
+    author          String
+    language        String
+    image           String?
+    description     String?
+    isbn            String?
+    publishYear     DateTime?
+    genres          Json
+    tags            Json
+    isAvailable     Boolean @default(true)
+    isReserved      Boolean @default(false)
+    ownerId         String
+    owner           User? @relation("owning", fields: [ownerId], references: [identifier])
+    borrowerId      String?
+    borrower        User? @relation("borrowing", fields: [borrowerId], references: [identifier])
+    locationId      String?
+    booklocation    Location? @relation("booklocation", fields: [locationId], references: [identifier])
+}
+
+
+model Location {
+identifier                   String   @id @default(uuid())
+createdAt                   DateTime @default(now())   
+updatedAt                   DateTime @updatedAt
+postalAddressCountry        String
+postalAddressRegion         String
+postalAddresspostalCode     Int
+postalAddressstreetAddress  String
+latitude                    Float
+longitude                   Float
+booklocation                Book[] @relation("booklocation")
+userlocation                User @relation("userlocation")
+}
