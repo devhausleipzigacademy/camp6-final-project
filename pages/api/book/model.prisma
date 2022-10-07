@@ -29,4 +29,12 @@ model Book {
     owner           User? @relation("owning", fields: [ownerId], references: [identifier])
     borrowerId  String?
     borrower        User? @relation("borrowing", fields: [borrowerId], references: [identifier])
+    location                Location? @relation("booklocation", fields: [locationId], references: [identifier])
+    locationId    String?
+
+}
+
+model Location {
+  identifier       String @id 
+  books           Book[] @relation("booklocation")
 }

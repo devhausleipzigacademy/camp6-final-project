@@ -1,5 +1,5 @@
 model User {
-  identifier    String   @id @default(uuid())
+  identifier     String   @id @default(uuid())
   name          String?
   image         String?
   username      String
@@ -8,6 +8,8 @@ model User {
   updatedAt     DateTime @updatedAt
   booksBorrowed Book[]   @relation("borrowing")
   booksOwned    Book[]   @relation("owning")
+  location      Location? @relation("userlocation", fields: [locationId], references: [identifier])
+  locationId    String @unique
 }
 
 model Book {
@@ -16,4 +18,9 @@ model Book {
   owner      User?   @relation("owning", fields: [ownerId], references: [identifier])
   borrowerId String?
   borrower   User?   @relation("borrowing", fields: [borrowerId], references: [identifier])
+}
+
+model Location {
+  identifier           String    @id
+  user                User? @relation("userlocation")
 }
