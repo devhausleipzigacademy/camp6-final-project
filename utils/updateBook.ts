@@ -1,5 +1,3 @@
-import { Book } from "@prisma/client";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { PutBook } from "../pages/api/book/model.zod";
 
 const host =
@@ -7,10 +5,15 @@ const host =
         ? process.env.NEXT_PUBLIC_PROD_HOST
         : process.env.NEXT_PUBLIC_DEV_HOST;
 
-export default function fetchBook(bookId: string): Promise<Book> {
+export const updateBook = ({
+    bookId,
+    book,
+}: {
+    bookId: string;
+    book: PutBook;
+}) => {
     return fetch(`http://${host}/api/book/${bookId}`, {
-        method: "GET",
-    }).then((res) => {
-        return res.json();
+        method: "PUT",
+        body: JSON.stringify(book),
     });
-}
+};
