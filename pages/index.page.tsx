@@ -44,6 +44,7 @@ const Home: NextPage = (props) => {
 				// onSubmit={() => {}}
 				searchParams={searchParams}
 				setSearchParams={setSearchParams}
+				placeHodlerText={"in 04103"}
 			/>
 			<div className="pl-6">
 				<section id="carousel">

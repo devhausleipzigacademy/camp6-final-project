@@ -9,6 +9,7 @@ import { string } from "zod";
 type HomeSearchBarProps = {
 	// onChange: () => void;
 	searchParams: SearchParams;
+	placeHodlerText: string;
 	setSearchParams: React.Dispatch<React.SetStateAction<SearchParams>>;
 };
 
@@ -26,6 +27,7 @@ export interface SearchParams {
 export function HomeSearchBar({
 	searchParams,
 	setSearchParams,
+	placeHodlerText,
 }: HomeSearchBarProps) {
 	// const [book, setBook] = useState("");
 	// const [zipCode, setZipCode] = useState("");
@@ -142,7 +144,6 @@ export function HomeSearchBar({
 			document.removeEventListener("click", handler);
 		};
 	}, [isActive]);
-
 	const filteredZip = useMemo(
 		() =>
 			locations.filter((zipCode) =>
@@ -153,7 +154,7 @@ export function HomeSearchBar({
 	return (
 		<form
 			onSubmit={submitter}
-			className="relative mt-10 mb-10 flex justify-center gap-2 self-center rounded-r-lg px-1 "
+			className="relative mt-10 mb-10 flex  justify-center gap-2 self-center rounded-r-lg px-1 "
 		>
 			<div className="flex  rounded-xl border-2 border-grey">
 				<div className="flex flex-row-reverse justify-center">
@@ -177,11 +178,11 @@ export function HomeSearchBar({
 					onChange={setZipQuery}
 					// onChange={(value) => setSearchParams({ ...searchParams, zipCode: value })}
 				>
-					<div className="relative border-l-2 border-t-0 border-grey px-3 ">
+					<div className="relative w-20  border-l-2 border-t-0 border-grey ">
 						<Combobox.Input
 							type="text"
-							placeholder="in 04103"
-							className=" pt-2 pl-2 text-sm outline-none placeholder:underline"
+							placeholder={placeHodlerText}
+							className=" w-10/12 pt-2 pl-2 text-sm outline-none placeholder:underline"
 							onChange={(event) => setZipQuery(event.target.value)}
 						/>
 						<div className=" absolute mt-2 flex max-h-16 flex-col gap-1 overflow-x-auto  bg-white   px-2 font-sora text-xl">
