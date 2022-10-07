@@ -25,8 +25,9 @@ model Book {
     tags            Json
     isAvailable     Boolean @default(true)
     isReserved      Boolean @default(false)
-    ownerId  String
+    ownerId         String
     owner           User? @relation("owning", fields: [ownerId], references: [identifier])
-    borrowerId  String?
+    borrowerId      String?
     borrower        User? @relation("borrowing", fields: [borrowerId], references: [identifier])
+    borrowDate      DateTime?
 }

@@ -61,6 +61,7 @@ module.exports = {
 				45: "11.25rem /* 180 pixel*/",
 				54: "13.5rem /* 216 pixel*/",
 				89: "22.25rem /* 356pixel*/",
+				22: "5.5rem /* 88pixel*/",
 			},
 			fontSize: {
 				"2xs": "10px",

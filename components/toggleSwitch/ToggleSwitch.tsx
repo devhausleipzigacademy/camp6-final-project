@@ -24,7 +24,7 @@ export function ToggleSwitch({
 	return (
 		<label
 			htmlFor="priority-switch"
-			className="relative mb-4 flex h-4 w-9   
+			className="relative h-4 w-9
 			cursor-pointer items-center"
 		>
 			<input
@@ -36,7 +36,7 @@ export function ToggleSwitch({
 				onChange={toggleHandler}
 			/>
 			<div
-				className="toggle-bg h-full w-full rounded-full bg-buttonGrey shadow-toggleSwitch  
+				className="toggle-bg h-full w-full rounded-full bg-buttonGrey shadow-toggleSwitch 
 			"
 			></div>
 			<span className="sr-only ml-3 text-sm font-medium">{text}</span>
