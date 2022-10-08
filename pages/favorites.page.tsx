@@ -7,12 +7,20 @@ import { BookGrid } from "../components/bookGrid/BookGrid";
 import fetchBooks from "../utils/fetchBooks";
 
 export default function Favorites() {
-	const query = useQuery<Book[]>(["books"], () => fetchBooks({}));
+    const query = useQuery<Book[]>(["books"], () =>
+        fetchBooks({
+            orderBy: "title",
+        })
+    );
 
-	return (
-		<>
-			<h2 className="pageTitle">Favorites</h2>
-			{query.isLoading ? <p>Loading...</p> : <BookGrid books={query.data} />}
-		</>
-	);
+    return (
+        <>
+            <h2 className="pageTitle">Favorites</h2>
+            {query.isLoading ? (
+                <p>Loading...</p>
+            ) : (
+                <BookGrid books={query.data} />
+            )}
+        </>
+    );
 }

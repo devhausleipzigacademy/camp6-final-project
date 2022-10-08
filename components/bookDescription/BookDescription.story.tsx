@@ -32,10 +32,10 @@ const colors = [
 
 // export const colorrr = colorss.slice(0, randomNumber());
 
-export function ExampleTags() {
+export function ExampleTags({ tags }) {
     return (
         <div className="mt-4 ml-1 flex gap-2">
-            {tagslist.map((x, index) => (
+            {tags.map((x, index) => (
                 <button
                     key={index}
                     className={`${
@@ -71,7 +71,7 @@ ExampleBook.args = {
         "Franz is a weird IT guy, who teaches in day light and kills by the night Here we are going to witness what is it like to live like a troubled,Typescriptlover",
     image: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.getap.com.tr%2Fwp-content%2Fuploads%2F2018%2F09%2Fkitap.jpg&f=1&nofb=1",
     children: [
-        <ExampleTags />,
+        <ExampleTags tags={[...tagslist]} />,
         <CustomButton functionality="ExternalApp" onClick={() => {}}>
             <FaTelegram />
             Message user
