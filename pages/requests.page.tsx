@@ -17,17 +17,20 @@ import { updateBook } from "../utils/updateBook";
 
 // renders out the list of borrow requests
 export default function Library() {
-  const { data: requests, isLoading: requestsLoading } = useQuery<
+  const { data: requests, status: status } = useQuery<
     (Request & {
       book: Book;
       requester: User;
     })[]
   >(["requests"], () => fetchRequests({}));
 
-  if (requestsLoading) return <p>Loading...</p>;
+  if (status === "loading") return <p>Loading...</p>;
 
-  if (!requestsLoading && requests === undefined)
-    return <p>no requests found</p>;
+  if (status === "error") return <p>No requests found.</p>;
+
+  if (requests.length === 0) return <p>You have no open requests.</p>;
+
+  // TODO: abstract status notification as util function
 
   return (
     <>
