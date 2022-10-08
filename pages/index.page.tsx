@@ -32,6 +32,7 @@ const initialSearchParams: SearchParams = {
 };
 
 const Home: NextPage = (props) => {
+<<<<<<< Updated upstream
     const [searchParams, setSearchParams] = useState(initialSearchParams);
     const genres = ["Cookbook", "Fiction"];
 
@@ -92,6 +93,54 @@ const Home: NextPage = (props) => {
             </div>
         </>
     );
+=======
+  const categories = ["Cookbooks", "Fantasy"];
+
+  const categoryData = Object.fromEntries(
+    categories.map((category) => [
+      category,
+      useQuery<Book[]>(["getBooks", category], () => fetchBooks({ category })),
+    ])
+  );
+
+  const recentUploadsQuery = useQuery<Book[]>(["getBooks", "createdAt"], () =>
+    fetchBooks({ orderBy: "createdAt" })
+  );
+
+  return (
+    <>
+      {/* <Header /> */}
+
+      <div className="pl-6">
+        <h1>Home</h1>
+        {/* <HomeSearchBar /> */}
+
+        <section id="carousel">
+          <div key="0">
+            <SubHeading2>Recent Uploads</SubHeading2>
+            {recentUploadsQuery.isLoading ? (
+              <p>Loading...</p>
+            ) : (
+              <Carousel books={recentUploadsQuery.data} />
+            )}
+          </div>
+          {Object.entries(categoryData).map(([category, query], index) => {
+            return (
+              <div key={index + 1}>
+                <SubHeading2>{category}</SubHeading2>
+                {query.isLoading ? (
+                  <p>Loading...</p>
+                ) : (
+                  <Carousel books={query.data} />
+                )}
+              </div>
+            );
+          })}
+        </section>
+      </div>
+    </>
+  );
+>>>>>>> Stashed changes
 };
 
 export default Home;
