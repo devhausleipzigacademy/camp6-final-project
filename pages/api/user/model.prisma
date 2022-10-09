@@ -8,8 +8,7 @@ model User {
   updatedAt     DateTime @updatedAt
   booksBorrowed Book[]   @relation("borrowing")
   booksOwned    Book[]   @relation("owning")
-  location      Location? @relation("userlocation", fields: [locationId], references: [identifier])
-  locationId    String @unique
+  locations      Location[] @relation("userlocations")
 }
 
 model Book {
@@ -22,5 +21,6 @@ model Book {
 
 model Location {
   identifier           String    @id
-  user                User? @relation("userlocation")
+  userId						          String?
+  user                        User? @relation("userlocations", fields: [userId], references: [identifier])
 }

@@ -5,22 +5,21 @@ datasource db {
 model Location {
 identifier                   String    @id @default(uuid())
 createdAt                   DateTime @default(now())   
-updatedAt                   DateTime @updatedAt
-postalAddressCountry        String
-postalAddressRegion         String
-postalAddressPostalCode     Int
-postalAddressStreetAddress  String
+postalAddressCountry        String?
+postalAddressRegion         String?
+postalAddressPostalCode     Int?
+postalAddressStreetAddress  String?
 latitude                    Float
 longitude                   Float
-userId						String?
-user                        User? @relation("userlocations", fields: [userId], references: [identifier])
+userId						String
+user                        User @relation("userlocations", fields: [userId], references: [identifier])
 books                       Book[] @relation("booklocation")
 }
+
 model User {
   identifier     String   @id @default(uuid())
   locations      Location[] @relation("userlocations")
 }
-
 
 model Book {
     identifier       String   @id @default(uuid())

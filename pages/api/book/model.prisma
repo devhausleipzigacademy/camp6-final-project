@@ -38,5 +38,4 @@ model Book {
 model Location {
   identifier       String @id 
   books           Book[] @relation("booklocation")
-  borrowDate      DateTime?
 }

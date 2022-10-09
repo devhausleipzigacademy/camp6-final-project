@@ -25,7 +25,6 @@ export const putBook = z.object({
 		.optional(),
 	isAvailable: z.boolean().optional(),
 	isReserved: z.boolean().optional(),
-	borrowerId: z.string().optional(),
 	locationId: z.string().optional(),
 });
 

@@ -1,16 +1,11 @@
 // package imports
 import { NextApiRequest, NextApiResponse } from "next";
+import { Prisma } from "@prisma/client";
 import { ZodError } from "zod";
 
 // local imports
-import {
-	postLocation,
-	PostLocation,
-	getLocation,
-	GetLocation,
-} from "./model.zod";
-// TODO: add interactions
-import { Location, Prisma } from "@prisma/client";
+import { postLocation, getLocation, GetLocation } from "./model.zod";
+import { createLocation, retrieveLocations } from "./interaction";
 
 export type ErrorResponse = {
 	message: string;
@@ -26,56 +21,38 @@ export default async function handler(
 			// Search parameters (we could add more, e.g. orderBy)
 			const { hasBooks } = req.query as Record<string, string>;
 
-			const clauses: Array<Prisma.BookWhereInput> = [];
+			const clauses: Array<Prisma.LocationWhereInput> = [];
 
-			if (availability !== undefined) {
-				clauses.push({
-					isAvailable:
-						availability == "true"
-							? true
-							: availability == "false"
-							? false
-							: undefined,
-				});
+			if (hasBooks !== undefined) {
+				clauses.push(
+					hasBooks == "true"
+						? { NOT: { books: { none: {} } } }
+						: hasBooks == "false"
+						? { books: { none: {} } }
+						: undefined
+				);
 			}
 
-			if (title !== undefined) {
-				clauses.push({
-					title: { contains: title, mode: "insensitive" },
-				});
-			}
+			const locations = await retrieveLocations(clauses);
 
-			if (author !== undefined) {
-				clauses.push({
-					author: { contains: author, mode: "insensitive" },
-				});
-			}
+			const parsedLocations = locations.map((location) =>
+				getLocation.parse(location)
+			);
 
-			if (language !== undefined) {
-				clauses.push({
-					language: { contains: language, mode: "insensitive" },
-				});
-			}
-
-			if (genres !== undefined) {
-				clauses.push({ genres: { array_contains: genres } });
-			}
-
-			const books = await retrieveBooks(clauses);
-			const parsedBooks = books.map((book) => getBook.parse(book));
-
-			res.status(200).json(parsedBooks);
+			res.status(200).json(parsedLocations);
 		}
 		if (req.method === "POST") {
-			const data = postBook.parse(req.body);
-			const book = await createBook(data);
+			console.log(req.body);
+			const data = postLocation.parse(req.body);
+			console.log(data);
+			const location = await createLocation(data);
 
-			res.status(201).json({ identifier: book.identifier });
+			res.status(201).json({ identifier: location.identifier });
 		}
 	} catch (err) {
 		if (err instanceof ZodError) {
 			const errorResponse: ErrorResponse = {
-				message: "Invalid book.",
+				message: "Invalid location.",
 			};
 			if (["development", "test"].includes(process.env.NODE_ENV)) {
 				errorResponse.error = err;
