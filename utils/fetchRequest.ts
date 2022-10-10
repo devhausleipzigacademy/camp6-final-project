@@ -30,3 +30,20 @@ export function useDeleteRequest(requestIdentifier: string) {
     }
   );
 }
+
+export function useDeleteRequests(bookIdentifier: string) {
+  const queryClient = useQueryClient();
+  return useMutation(
+    ["requests", bookIdentifier, "delete"],
+    () => {
+      return fetch(`http://${host}/api/request?bookId=${bookIdentifier}`, {
+        method: "DELETE",
+      });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["requests"]);
+      },
+    }
+  );
+}

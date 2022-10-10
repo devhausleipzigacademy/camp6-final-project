@@ -7,7 +7,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Book, Request, User } from "@prisma/client";
 import { BookPreview } from "../components/bookPreview/BookPreview";
 import { fetchRequests } from "../utils/fetchRequests";
-import { useDeleteRequest } from "../utils/fetchRequest";
+import { useDeleteRequest, useDeleteRequests } from "../utils/fetchRequest";
 import { updateBook } from "../utils/updateBook";
 
 // TODO:
@@ -44,6 +44,7 @@ export default function Library() {
             request={request}
             requesterName={request.requester.name}
             requesterUserName={request.requester.username}
+            bookId={request.bookId}
           />
         </div>
       ))}
@@ -58,6 +59,7 @@ interface RequestItemProps {
   request: Request;
   requesterName: string;
   requesterUserName: string;
+  bookId: string;
 }
 
 function RequestItem({
@@ -65,10 +67,12 @@ function RequestItem({
   request,
   requesterName,
   requesterUserName,
+  bookId,
 }: RequestItemProps) {
-  const { mutate: mutateRequest } = useDeleteRequest(request.identifier);
+  const { mutate: declineRequest } = useDeleteRequest(request.identifier);
+  const { mutate: declineRequests } = useDeleteRequests(bookId);
   const queryClient = useQueryClient();
-  const mutation = useMutation(updateBook, {
+  const { mutate: borrowBook } = useMutation(updateBook, {
     onSuccess: () => {
       queryClient.invalidateQueries(["books"]);
     },
@@ -88,18 +92,16 @@ function RequestItem({
       <div className="flex flex-col justify-center p-4 px-5">
         <p className="font-arnobold text-sm text-black">
           {requesterName} requested to borrow {/* TODO: add book link */}
-          <a href="#" className=" text-black underline ">
-            {book.title}
-          </a>
         </p>
-        <a href="#" className="font-arno text-xs text-textGrey ">
-          @{requesterUserName}
-        </a>
+        <Link href={`/book/${bookId}`}>
+          <a className=" text-black underline ">{book.title}</a>
+        </Link>
+        @{requesterUserName}
       </div>
 
       <div className="relative flex items-center gap-3">
         <button // deny request
-          onClick={() => mutateRequest()}
+          onClick={() => declineRequest()}
         >
           <FiXCircle className="text-brown" size={30} />
         </button>
@@ -109,11 +111,11 @@ function RequestItem({
               /* TODO: decide what happens to other requests for the same book; 
               create telegram bot action that notifies user about request acceptance*/
             }
-            mutation.mutate({
+            borrowBook({
               bookId: book.identifier,
               book: { borrowerId: request.requesterId },
             });
-            mutateRequest();
+            declineRequests();
           }}
         >
           <FiCheckCircle className="text-green" size={30} />
