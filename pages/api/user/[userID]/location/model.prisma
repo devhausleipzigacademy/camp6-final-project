@@ -3,17 +3,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 model Location {
-identifier                   String    @id @default(uuid())
-createdAt                   DateTime @default(now())   
-postalAddressCountry        String?
-postalAddressRegion         String?
-postalAddressPostalCode     Int?
-postalAddressStreetAddress  String?
-latitude                    Float
-longitude                   Float
-userId						String
-user                        User @relation("userlocations", fields: [userId], references: [identifier])
-books                       Book[] @relation("booklocation")
+  identifier String @id @default(uuid())
+	books Book[] @relation(name: "booklocation")
+	createdAt DateTime @default(now())
+	postalAddressCountry String? 
+	postalAddressRegion String? 
+	postalAddressPostalCode Int? 
+	postalAddressStreetAddress String? 
+	latitude Float 
+	longitude Float 
+	userId String 
+	user User @relation(name: "userlocations", fields: [userId], references: [identifier], onDelete: Cascade)
 }
 
 model User {

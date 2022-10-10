@@ -10,29 +10,27 @@ model User {
 }
 
 model Book {
-    identifier       String   @id @default(uuid())
-    createdAt       DateTime @default(now())   
-    updatedAt       DateTime @updatedAt
-    title           String
-    // This is a note saying that we might want to change the author from string to its own model
-    author          String
-    language        String
-    image           String?
-    description     String?
-    isbn            String?
-    publishYear     DateTime?
-    genres          Json
-    tags            Json
-    isAvailable     Boolean @default(true)
-    isReserved      Boolean @default(false)
-    ownerId         String
-    owner           User? @relation("owning", fields: [ownerId], references: [identifier])
-    borrowerId      String?
-    borrower        User? @relation("borrowing", fields: [borrowerId], references: [identifier])
-    borrowDate      DateTime?
-    location                Location? @relation("booklocation", fields: [locationId], references: [identifier])
-    locationId    String?
-
+  identifier String @id @default(uuid())
+	createdAt DateTime @default(now())
+	updatedAt DateTime @updatedAt
+	title String 
+	author String 
+	language String 
+	image String? 
+	description String? 
+	isbn String? 
+	publishYear DateTime? 
+	genres Json 
+	tags Json 
+	isAvailable Boolean @default(true)
+	isReserved Boolean @default(false)
+	ownerId String 
+	owner User? @relation(name: "owning", fields: [ownerId], references: [identifier])
+	borrowerId String? 
+	borrower User? @relation(name: "borrowing", fields: [borrowerId], references: [identifier])
+	borrowDate DateTime? 
+	location Location? @relation(name: "booklocation", fields: [locationId], references: [identifier])
+	locationId String? 
 }
 
 model Location {

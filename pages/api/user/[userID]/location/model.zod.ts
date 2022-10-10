@@ -2,6 +2,8 @@ import { z } from "zod";
 
 // Zod Model for posting locations
 export const postLocation = z.object({
+	latitude: z.number(),
+	longitude: z.number(),
 	postalAddressCountry: z.string().optional(),
 	postalAddressRegion: z.string().optional(),
 	postalAddressPostalCode: z
@@ -10,8 +12,6 @@ export const postLocation = z.object({
 		.step(5, "German Zip Code must contain exactly five numbers.")
 		.optional(),
 	postalAddressStreetAddress: z.string().optional(),
-	latitude: z.number(),
-	longitude: z.number(),
 });
 
 // Zod Model for getting Location

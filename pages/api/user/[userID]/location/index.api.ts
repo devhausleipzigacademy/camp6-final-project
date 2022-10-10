@@ -44,9 +44,8 @@ export default async function handler(
 		if (req.method === "POST") {
 			const userId = req.query.userId as string;
 
-			console.log("query:", userId);
-			const data = postLocation.parse(req.body);
-			// console.log(data);
+			const data = postLocation.parse(JSON.parse(req.body));
+
 			const location = await createLocation(userId, data);
 
 			res.status(201).json({ identifier: location.identifier });

@@ -1,14 +1,14 @@
 model User {
-  identifier     String   @id @default(uuid())
-  name          String?
-  image         String?
-  username      String
-  telegramId    String
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  booksBorrowed Book[]   @relation("borrowing")
-  booksOwned    Book[]   @relation("owning")
-  locations      Location[] @relation("userlocations")
+  identifier String @id @default(uuid())
+	booksBorrowed Book[] @relation(name: "borrowing")
+	booksOwned Book[] @relation(name: "owning")
+	locations Location[] @relation(name: "userlocations")
+	name String? 
+	image String? 
+	username String 
+	telegramId String 
+	createdAt DateTime @default(now())
+	updatedAt DateTime @updatedAt
 }
 
 model Book {
@@ -21,6 +21,6 @@ model Book {
 
 model Location {
   identifier           String    @id
-  userId						          String?
-  user                        User? @relation("userlocations", fields: [userId], references: [identifier])
+	userId String 
+	user User @relation(name: "userlocations", fields: [userId], references: [identifier], onDelete: Cascade)
 }
