@@ -3,16 +3,18 @@ import { Prisma } from "@prisma/client";
 
 // local imports
 import { prisma } from "../../../../../prisma/db";
+import { PostBook } from "../../../book/model.zod";
 
 // TODO: data prop should have type PostLocation but that leads to error - check whether we can fix error (same for book interaction)
-export async function createLocation(data) {
+export async function createLocation(userId: string, data) {
 	console.log("hello", data);
 	const locationModel = await prisma.location.create({
 		data: {
+			userId: userId,
 			...data,
 		},
 	});
-
+	console.log("hello prisma");
 	return locationModel;
 }
 

@@ -29,6 +29,7 @@ describe("Test Location DB handlers (including interactions)", () => {
 		const request = httpMocks.createRequest({
 			method: "GET",
 			url: `user/${testUser.identifier}/location/`,
+			query: { userId: testUser.identifier },
 		});
 
 		const response = httpMocks.createResponse();
@@ -39,28 +40,35 @@ describe("Test Location DB handlers (including interactions)", () => {
 		expect(isArray(data)).toEqual(true);
 	});
 	// 3rd Test
-	it("POST handler creates location in db", async () => {
-		const request = httpMocks.createRequest({
-			method: "POST",
-			url: `/user/${testUser.identifier}/location/`,
-			body: {
-				userId: testUser.identifier,
-				latitude: 41.40338,
-				longitude: 2.17403,
-			},
-		});
-		console.log(testUser.identifier);
-		const response = httpMocks.createResponse();
+	// it("POST handler creates location in db", async () => {
+	// 	const request = httpMocks.createRequest({
+	// 		method: "POST",
+	// 		url: `api/user/${testUser.identifier}/location`,
+	// 		query: { userId: testUser.identifier },
+	// 		body: {
+	// 			latitude: 41.40338,
+	// 			longitude: 2.17403,
+	// 		},
+	// 	});
+	// 	console.log("testUser.identifier:", testUser.identifier);
+	// 	const response = httpMocks.createResponse();
 
-		handler(request, response);
-		// console.log("response", response._getData());
-		// const data = JSON.parse(response._getData());
+	// 	handler(request, response);
+	// 	console.log("response", response._getData());
+	// 	const data = JSON.parse(response._getData());
 
-		// expect(data.identifier).toBeDefined();
-	});
+	// 	expect(data.identifier).toBeDefined();
+	// });
 
 	// 4th Test
-	// it("GET Handler retrieves single specific location")
+	it("GET Handler retrieves single specific location", async () => {
+		const locationId = "b12d1df4-1e4d-4ac7-92a7-07c62d4056a7";
+		const request = httpMocks.createRequest({
+			method: "GET",
+			url: `user/${testUser.identifier}/location/${locationId}`,
+			query: { locationId: locationId },
+		});
+	});
 
 	// 5th Test
 	// it("DELETE handler removes location from db")

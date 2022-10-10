@@ -42,10 +42,12 @@ export default async function handler(
 			res.status(200).json(parsedLocations);
 		}
 		if (req.method === "POST") {
-			console.log(req.body);
+			const userId = req.query.userId as string;
+
+			console.log("query:", userId);
 			const data = postLocation.parse(req.body);
-			console.log(data);
-			const location = await createLocation(data);
+			// console.log(data);
+			const location = await createLocation(userId, data);
 
 			res.status(201).json({ identifier: location.identifier });
 		}

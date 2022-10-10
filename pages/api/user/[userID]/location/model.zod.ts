@@ -4,7 +4,7 @@ import { z } from "zod";
 export const postLocation = z.object({
 	postalAddressCountry: z.string().optional(),
 	postalAddressRegion: z.string().optional(),
-	postalAddresspostalCode: z
+	postalAddressPostalCode: z
 		.number()
 		.int()
 		.step(5, "German Zip Code must contain exactly five numbers.")
@@ -12,7 +12,6 @@ export const postLocation = z.object({
 	postalAddressStreetAddress: z.string().optional(),
 	latitude: z.number(),
 	longitude: z.number(),
-	userId: z.string(),
 });
 
 // Zod Model for getting Location
@@ -23,7 +22,7 @@ export const getLocation = postLocation.extend({
 	// optional values are returned as null from prisma hence getBook model needs to account for that
 	postalAddressCountry: z.union([z.string(), z.null()]),
 	postalAddressRegion: z.union([z.string(), z.null()]),
-	postalAddresspostalCode: z.union([z.number(), z.null()]),
+	postalAddressPostalCode: z.union([z.number(), z.null()]),
 	postalAddressStreetAddress: z.union([z.string(), z.null()]),
 });
 
