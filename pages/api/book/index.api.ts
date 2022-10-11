@@ -5,22 +5,79 @@ import { ZodError } from "zod";
 // local imports
 import { postBook, getBook, GetBook } from "./model.zod";
 import { createBook, retrieveBooks } from "./interaction";
+import { Prisma } from "@prisma/client";
 
 export type ErrorResponse = {
-	message: string;
-	error?: any;
+    message: string;
+    error?: any;
 };
 
 export default async function handler(
-	req: NextApiRequest,
-	res: NextApiResponse<GetBook[] | { identifier: string } | ErrorResponse>
+    req: NextApiRequest,
+    res: NextApiResponse<GetBook[] | { identifier: string } | ErrorResponse>
 ) {
-	try {
-		if (req.method === "GET") {
-			// space to add search filters at some later stage in time
+    try {
+        if (req.method === "GET") {
+            const {
+                isAvailable,
+                title,
+                author,
+                language,
+                genre,
+                borrowed,
+                orderBy,
+            } = req.query as Record<string, string>;
 
-			const books = await retrieveBooks();
-			const parsedBooks = books.map((book) => getBook.parse(book));
+            const clauses: Array<Prisma.BookWhereInput> = [];
+
+            if (isAvailable !== undefined) {
+                clauses.push({
+                    isAvailable:
+                        isAvailable == "true"
+                            ? true
+                            : isAvailable == "false"
+                            ? false
+                            : undefined,
+                });
+            }
+
+            if (borrowed !== undefined) {
+                clauses.push(
+                    borrowed == "true"
+                        ? { NOT: [{ borrowerId: null }] }
+                        : borrowed == "false"
+                        ? { borrowerId: null }
+                        : undefined
+                );
+            }
+
+            if (title !== undefined) {
+                clauses.push({
+                    title: { contains: title, mode: "insensitive" },
+                });
+            }
+
+            if (author !== undefined) {
+                clauses.push({
+                    author: { contains: author, mode: "insensitive" },
+                });
+            }
+
+            if (language !== undefined) {
+                clauses.push({
+                    language: { contains: language, mode: "insensitive" },
+                });
+            }
+
+            if (genre !== undefined) {
+                clauses.push({ genres: { array_contains: genre } });
+            }
+            console.log(orderBy);
+            const books = await retrieveBooks({
+                clauses,
+                orderBy: orderBy,
+            });
+            const parsedBooks = books.map((book) => getBook.parse(book));
 
 			res.status(200).json(parsedBooks);
 		}
@@ -28,24 +85,27 @@ export default async function handler(
 			const data = postBook.parse(req.body);
 			const book = await createBook(data);
 
-			res.status(201).json({ identifier: book.identifier });
-		}
-	} catch (err) {
-		if (err instanceof ZodError) {
-			const errorResponse: ErrorResponse = {
-				message: "Invalid book.",
-			};
-			if (["development", "test"].includes(process.env.NODE_ENV)) {
-				errorResponse.error = err;
-			}
-			res.status(422).send(errorResponse);
-		}
-		const errorResponse: ErrorResponse = {
-			message: "Looks like something went wrong. Please try again.",
-		};
-		if (["development", "test"].includes(process.env.NODE_ENV)) {
-			errorResponse.error = err;
-		}
-		res.status(400).send(errorResponse);
-	}
+            res.status(201).json({ identifier: book.identifier });
+        }
+    } catch (err) {
+        if (err instanceof ZodError) {
+            const errorResponse: ErrorResponse = {
+                message: "Invalid book.",
+            };
+            if (["development", "test"].includes(process.env.NODE_ENV)) {
+                errorResponse.error = err;
+            }
+            res.status(422).send(errorResponse);
+        }
+
+        console.log(err);
+
+        const errorResponse: ErrorResponse = {
+            message: "Looks like something went wrong. Please try again.",
+        };
+        if (["development", "test"].includes(process.env.NODE_ENV)) {
+            errorResponse.error = err;
+        }
+        res.status(400).send(errorResponse);
+    }
 }

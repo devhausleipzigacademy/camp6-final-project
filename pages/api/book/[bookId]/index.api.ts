@@ -5,7 +5,7 @@ import { ZodError } from "zod";
 
 // local imports
 import { ErrorResponse } from "../index.api";
-import { deleteBook, retrieveBook, updateBook } from "./interaction";
+import { deleteBook, retrieveBook, updateBook } from "../interaction";
 import { GetBook, getBook } from "../model.zod";
 import { putBook } from "../model.zod";
 
@@ -23,7 +23,9 @@ export default async function handler(
 			res.status(200).json(parsedBook);
 		}
 		if (req.method === "PUT") {
-			const data = putBook.parse(req.body);
+			const parsedBody = JSON.parse(req.body);
+
+			const data = putBook.parse(parsedBody);
 			const bookId = req.query.bookId as string;
 
 			await updateBook(bookId, data);

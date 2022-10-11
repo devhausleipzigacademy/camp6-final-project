@@ -11,14 +11,19 @@ export const putBook = z.object({
 	description: z.string().optional(),
 	isbn: z.string().optional(),
 	publishYear: z.date().optional(),
+	borrowerId: z.string().optional(),
+	borrowDate: z.date().optional(),
 	genres: z
 		.enum(GENRES)
 		.array()
-		.refine((arg) => JSON.stringify(arg)),
+		.refine((arg) => JSON.stringify(arg))
+		.optional(),
 	tags: z
 		.string()
 		.array()
-		.refine((arg) => JSON.stringify(arg)),
+		.refine((arg) => JSON.stringify(arg))
+		.optional(),
+	isAvailable: z.boolean().optional(),
 	isReserved: z.boolean().optional(),
 });
 
@@ -41,6 +46,7 @@ export const getBook = postBook.extend({
 	description: z.union([z.string(), z.null()]),
 	isbn: z.union([z.string(), z.null()]),
 	publishYear: z.union([z.date(), z.null()]),
+	borrowDate: z.union([z.date(), z.null()]),
 });
 
 export type PutBook = z.infer<typeof putBook>;

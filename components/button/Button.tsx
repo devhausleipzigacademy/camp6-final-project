@@ -1,25 +1,28 @@
+// package imports
 import clsx from "clsx";
 import { ReactNode } from "react";
 import { FaTelegram } from "react-icons/fa";
 import { FiPlus } from "react-icons/fi";
+
+// local imports
 import genreColors from "../../enums/genres";
 import BookArrowUpSvg from "../bookarrowupsvg/BookArrowUpSvg";
 
 const customDesigns = {
 	AddBook:
-		"h-10 w-10 rounded-full bg-yellow fill-black p-2 text-black drop-shadow-plusButton",
+		"h-16 p-4 aspect-square rounded-full bg-yellow fill-black  text-black drop-shadow-plusButton",
 	ConfirmationPrimary:
-		"h-12 min-h-fit w-48 min-w-fit rounded-2xl bg-green fill-white p-2 font-serif text-base font-semibold text-white drop-shadow",
+		"h-12 min-h-fit w-48 min-w-fit rounded-2xl bg-green fill-white p-2 font-arno text-base font-semibold text-white drop-shadow",
 	ConfirmationSecondary:
-		"bg-transparent h-12 min-h-fit w-48 min-w-fit rounded-2xl fill-grey p-2 font-serif text-base font-semibold text-grey",
+		"bg-transparent h-12 min-h-fit w-48 min-w-fit rounded-2xl fill-grey p-2 font-arno text-base font-semibold text-grey",
 	ExternalApp:
-		"min-w-40 min-h-12 max-h-fit max-w-fit rounded-2xl bg-green fill-white p-2 font-serif text-base font-semibold text-white drop-shadow",
+		"min-w-40 min-h-12 max-h-fit max-w-fit rounded-2xl bg-green fill-white p-2 font-arno text-base font-semibold text-white drop-shadow",
 	Genre:
-		"h-6 w-fit rounded-md bg-grey px-3 py-2	font-serif text-base font-normal text-brown",
+		"h-6 w-fit rounded-md bg-grey px-3 py-2	font-arno text-base font-normal text-brown",
 	LibraryMessage:
-		"h-5 min-h-fit w-25 min-w-fit rounded-2xl border border-brown p-1 font-serif text-2xs font-semibold text-brown",
+		"h-5 min-h-fit w-25 min-w-fit rounded-2xl border border-brown p-1 font-arno text-2xs font-semibold text-brown",
 	LibraryReturned:
-		"h-5 min-h-fit w-25 min-w-fit rounded-2xl border border-green p-1 font-serif text-2xs font-semibold text-green",
+		"h-5 min-h-fit w-25 min-w-fit rounded-2xl border border-green py-1 px-3 font-arno text-2xs font-semibold text-green",
 };
 
 type ButtonType = "button" | "submit" | "reset" | undefined;
@@ -65,7 +68,7 @@ export const CustomButton = ({
 		case "AddBook":
 			type = "button";
 			classes = customDesigns.AddBook;
-			children = <FiPlus className="h-5" />;
+			children = <FiPlus className="h-full  w-full stroke-2" />;
 
 			break;
 		case "ConfirmationPrimary":
