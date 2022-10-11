@@ -28,7 +28,12 @@ export default function Library() {
 
   if (status === "error") return <p>No requests found.</p>;
 
-  if (requests.length === 0) return <p>You have no open requests.</p>;
+  if (requests.length === 0)
+    return (
+      <p className=" flex justify-center pt-16 font-montserrat text-base text-black">
+        You have no open requests.
+      </p>
+    );
 
   // TODO: abstract status notification as util function
 
