@@ -10,11 +10,6 @@ import { fetchRequests } from "../utils/fetchRequests";
 import { useDeleteRequest, useDeleteRequests } from "../utils/fetchRequest";
 import { updateBook } from "../utils/updateBook";
 
-// TODO:
-// 1. filter for books that have a request on them, belong to a specific user and are available
-// 2. when the user accepts a request, the respective book is set to unavailable and the request gets removed
-// 3. when the user denies a request, the respective book stays available and the request gets removed
-
 // renders out the list of borrow requests
 export default function Library() {
   const { data: requests, status: status } = useQuery<
@@ -24,9 +19,19 @@ export default function Library() {
     })[]
   >(["requests"], () => fetchRequests({}));
 
-  if (status === "loading") return <p>Loading...</p>;
+  if (status === "loading")
+    return (
+      <p className=" flex justify-center pt-16 font-montserrat text-base text-black">
+        Loading...
+      </p>
+    );
 
-  if (status === "error") return <p>No requests found.</p>;
+  if (status === "error")
+    return (
+      <p className=" flex justify-center pt-16 font-montserrat text-base text-black">
+        No requests found.
+      </p>
+    );
 
   if (requests.length === 0)
     return (
@@ -48,7 +53,6 @@ export default function Library() {
             book={request.book}
             request={request}
             requesterName={request.requester.name}
-            requesterUserName={request.requester.username}
             bookId={request.bookId}
           />
         </div>
@@ -63,7 +67,6 @@ interface RequestItemProps {
   key: string;
   request: Request;
   requesterName: string;
-  requesterUserName: string;
   bookId: string;
 }
 
@@ -71,7 +74,6 @@ function RequestItem({
   book,
   request,
   requesterName,
-  requesterUserName,
   bookId,
 }: RequestItemProps) {
   const { mutate: declineRequest } = useDeleteRequest(request.identifier);
@@ -96,12 +98,11 @@ function RequestItem({
 
       <div className="flex flex-col justify-center p-4 px-5">
         <p className="font-arnobold text-sm text-black">
-          {requesterName} requested to borrow {/* TODO: add book link */}
+          {requesterName} requested to borrow{" "}
+          <Link href={`/book/${bookId}`}>
+            <a className=" text-black underline ">{book.title}</a>
+          </Link>
         </p>
-        <Link href={`/book/${bookId}`}>
-          <a className=" text-black underline ">{book.title}</a>
-        </Link>
-        @{requesterUserName}
       </div>
 
       <div className="relative flex items-center gap-3">
@@ -113,12 +114,14 @@ function RequestItem({
         <button // accept request
           onClick={() => {
             {
-              /* TODO: decide what happens to other requests for the same book; 
-              create telegram bot action that notifies user about request acceptance*/
+              /* TODO: create telegram bot action that notifies user about request acceptance*/
             }
             borrowBook({
               bookId: book.identifier,
-              book: { borrowerId: request.requesterId },
+              book: {
+                borrowerId: request.requesterId,
+                borrowDate: new Date(),
+              },
             });
             declineRequests();
           }}
