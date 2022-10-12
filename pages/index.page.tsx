@@ -10,6 +10,7 @@ import { Book } from "@prisma/client";
 import { HomeSearchBar } from "../components/SearchBars/HomeSearchbar/HomeSearchBar";
 import { useState } from "react";
 import SubHeading2 from "../components/Subheading/Subheading";
+import checkQuery from "../utils/checkQuery";
 
 export interface SearchParams {
 	query: string;
@@ -51,6 +52,7 @@ const Home: NextPage = (props) => {
 	const recentUploadsQuery = useQuery<Book[]>(["getBooks", "createdAt"], () =>
 		fetchBooks({ orderBy: "createdAt", isAvailable: true })
 	);
+
 
 	return (
 		<>

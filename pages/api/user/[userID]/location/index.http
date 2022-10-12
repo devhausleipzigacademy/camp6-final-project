@@ -1,0 +1,7 @@
+POST http://localhost:8080/api/user/195c47b7-677a-43b0-b359-10de5b88e261/location
+Content-Type: application/json
+
+{
+				"latitude": 41.40338,
+				"longitude": 2.17403
+}
