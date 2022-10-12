@@ -6,7 +6,6 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const userId = req.query.userId as string;
-  console.log("userId: ", userId);
 
   if (req.method === "GET") {
     const likedBooks = await prisma.book.findMany({

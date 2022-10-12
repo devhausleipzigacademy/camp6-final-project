@@ -14,7 +14,6 @@ export function fetchUser(userId: string): Promise<User> {
 }
 
 export function fetchLikedBooks(userId: string): Promise<Book[]> {
-  console.log(userId);
   return fetch(`http://${host}/api/user/${userId}/likes`, {
     method: "GET",
   }).then((res) => {

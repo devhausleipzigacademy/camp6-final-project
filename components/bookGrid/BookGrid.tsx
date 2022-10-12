@@ -23,6 +23,7 @@ export function BookGrid({ books }: BookGridProps) {
             bookAuthor={book.author}
             linkHref={`/book/${book.identifier}`}
             bookSize={"previewGrid"}
+            isFaved={true}
           />
           <p className="w-full truncate font-arno text-xs font-bold text-textGrey">
             {book.author}
