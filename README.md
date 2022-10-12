@@ -70,10 +70,3 @@ https://github.com/storybookjs/eslint-plugin-storybook#readme
 
 For details and info on Storybook check the introduction file inside the stories folder.
 
-To run Storybook use
-
-```bash
-yarn storybook
-```
-
-Open [http://localhost:6006](http://localhost:6006) with your browser to see the result.

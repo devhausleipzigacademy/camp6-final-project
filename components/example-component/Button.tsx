@@ -1,5 +1,6 @@
 import "./button.css";
-import Image from "next/future/image";
+
+import Image from "next/image";
 
 interface ButtonProps {
 	/**
