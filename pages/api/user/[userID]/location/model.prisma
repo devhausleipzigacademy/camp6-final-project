@@ -1,0 +1,29 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+model Location {
+  identifier String @id @default(uuid())
+	books Book[] @relation(name: "booklocation")
+	createdAt DateTime @default(now())
+	postalAddressCountry String? 
+	postalAddressRegion String? 
+	postalAddressPostalCode Int? 
+	postalAddressStreetAddress String? 
+	latitude Float 
+	longitude Float 
+	userId String 
+	user User @relation(name: "userlocations", fields: [userId], references: [identifier], onDelete: Cascade)
+}
+
+model User {
+  identifier     String   @id @default(uuid())
+  locations      Location[] @relation("userlocations")
+}
+
+model Book {
+    identifier       String   @id @default(uuid())
+    location                Location? @relation("booklocation", fields: [locationId], references: [identifier])
+    locationId    String?
+}
+
