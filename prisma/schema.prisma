@@ -1,0 +1,61 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+
+model Book {
+    identifier       String   @id @default(uuid())
+    createdAt       DateTime @default(now())   
+    updatedAt       DateTime @updatedAt
+    title           String
+    // This is a note saying that we might want to change the author from string to its own model
+    author          String
+    language        String
+    image           String?
+    description     String?
+    isbn            String?
+    publishYear     DateTime?
+    genres          Json
+    tags            Json
+    isAvailable     Boolean @default(true)
+    isReserved      Boolean @default(false)
+    ownerId         String
+    owner           User? @relation("owning", fields: [ownerId], references: [identifier])
+    borrowerId      String?
+    borrower        User? @relation("borrowing", fields: [borrowerId], references: [identifier])
+    borrowDate      DateTime?
+    requests        Request[] @relation("requested")
+    likedBy         User[] @relation("liked")
+}
+
+    
+
+
+model User {
+  identifier       String   @id @default(uuid())
+  name            String?
+  image           String?
+  username        String
+  telegramId      String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  booksBorrowed   Book[]   @relation("borrowing")
+  booksOwned      Book[]   @relation("owning")
+  bookRequests    Request[] @relation("requesting")
+  likedBooks      Book[] @relation("liked")
+}
+
+model Request {
+    identifier       String   @id @default(uuid())
+    createdAt       DateTime @default(now())
+    bookId          String
+    book            Book @relation("requested", fields: [bookId], references: [identifier])   
+    requesterId     String
+    requester       User @relation("requesting", fields: [requesterId], references: [identifier])
+}
