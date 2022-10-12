@@ -58,3 +58,13 @@ export async function deleteBook(bookId) {
 	});
 	return deletedBook;
 }
+
+export async function searchBookLanguages() {
+	const languages = await prisma.book.groupBy({
+		by: ["language"],
+
+		_count: { language: true },
+		orderBy: { _count: { language: "desc" } },
+	});
+	return languages;
+}

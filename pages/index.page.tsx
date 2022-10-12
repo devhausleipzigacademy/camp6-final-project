@@ -49,38 +49,10 @@ const Home: NextPage = (props) => {
 		])
 	);
 
-	const {
-		data: recentUploadsQuery,
-		status: queryStatus,
-		error,
-	} = useQuery<Book[]>(["getBooks", "createdAt"], () =>
+	const recentUploadsQuery = useQuery<Book[]>(["getBooks", "createdAt"], () =>
 		fetchBooks({ orderBy: "createdAt", isAvailable: true })
 	);
 
-	checkQuery({
-		queryStatus: queryStatus,
-		queryItem: recentUploadsQuery,
-		queryName: "book",
-	});
-
-	if (queryStatus === "loading") {
-		return <p className="p-6 font-montserrat text-textGrey">Loading...</p>;
-	}
-
-	if (queryStatus === "error") {
-		return (
-			<div className="flex h-screen w-full flex-col items-center justify-center">
-				<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFgCFmiB0pQYHGDklq0EZX35hq-EuOP7N8Xg&usqp=CAU" />
-				<p className="font-montserrat text-textGrey">
-					Something went wrong. Please try again later.
-				</p>
-			</div>
-		);
-	}
-
-	if (recentUploadsQuery.length === 0) {
-		return <p className="p-6 font-montserrat text-textGrey">No books found.</p>;
-	}
 
 	return (
 		<>
@@ -92,19 +64,25 @@ const Home: NextPage = (props) => {
 				<section id="carousel">
 					<div key="0">
 						<SubHeading2>Recent Uploads</SubHeading2>
-
-						<Carousel books={recentUploadsQuery} />
+						{recentUploadsQuery.isError ? (
+							<p>Something went wrong...</p>
+						) : recentUploadsQuery.isLoading ? (
+							<p>Loading...</p>
+						) : (
+							<Carousel books={recentUploadsQuery.data} />
+						)}
 					</div>
 					{Object.entries(categoryData).map(([category, query], index) => {
-						checkQuery({
-							queryItem: query.data,
-							queryName: "books",
-							queryStatus: query.status,
-						});
 						return (
 							<div key={index + 1}>
 								<SubHeading2>{category}</SubHeading2>
-								<Carousel books={query.data} />
+								{query.isError ? (
+									<p>Something went wrong...</p>
+								) : query.isLoading ? (
+									<p>Loading...</p>
+								) : (
+									<Carousel books={query.data} />
+								)}
 							</div>
 						);
 					})}
