@@ -85,9 +85,11 @@ export function Header(props) {
 					</>
 				)}
 			</Menu>
-			<div className="font-sora text-4xl font-extrabold tracking-wider text-yellow">
-				bookshare
-			</div>
+			<Link href={"/"}>
+				<a className="font-sora text-4xl font-extrabold tracking-wider text-yellow">
+					bookshare
+				</a>
+			</Link>
 			<Menu>
 				{({ open }) => (
 					/* Use the `open` state to conditionally change the direction of the chevron icon. */

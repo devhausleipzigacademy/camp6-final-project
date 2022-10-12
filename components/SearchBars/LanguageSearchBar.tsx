@@ -1,47 +1,48 @@
+// package imports
 import { Combobox } from "@headlessui/react";
-import { useMemo, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
-import languagesJSON from "../../enums/ISO-languages.json";
-const languageList: { code: string; name: string }[] = Object.entries(
-	languagesJSON
-).map(([key, value]) => ({
-	code: key,
-	name: value[0],
-}));
+// local imports
+import { LanguageListItem, languageList } from "../../utils/languagePicker";
+
+interface LanguageSearchBarProps {
+	selectedLanguage: LanguageListItem;
+	setSelectedLanguage: Dispatch<SetStateAction<LanguageListItem>>;
+}
 
 export function LanguageSearchBar() {
-	const [selectedLangCode, setSelectedLangCode] = useState("");
+	const [selectedLanguage, setSelectedLanguage] = useState(languageList[0]);
 	const [query, setQuery] = useState("");
 
-	const filteredLanguages = useMemo(
-		() =>
-			languageList.filter((language) =>
-				language.name.toLowerCase().includes(query.toLowerCase())
-			),
-		[query]
-	);
+	const filteredLanguages =
+		query === ""
+			? languageList
+			: languageList.filter((language) => {
+					return language.name.toLowerCase().includes(query.toLowerCase());
+			  });
 
 	return (
-		<div>
-			<Combobox value={selectedLangCode} onChange={setSelectedLangCode}>
-				<Combobox.Input
-					className="outline-none"
-					onChange={(event) => setQuery(event.target.value)}
-				/>
-				<div className=" flex max-h-52  w-mobile  flex-col overflow-auto bg-green-300 ">
-					<Combobox.Options>
-						{filteredLanguages.map((language) => (
-							<Combobox.Option
-								onSelect={(language) => setSelectedLangCode(language.code)}
-								key={language.code}
-								value={language.code}
-							>
-								<span>{language.name}</span>
-							</Combobox.Option>
-						))}
-					</Combobox.Options>
-				</div>
-			</Combobox>
-		</div>
+		<Combobox value={selectedLanguage} onChange={setSelectedLanguage}>
+			<Combobox.Input
+				className={"inputField"}
+				onChange={(event) => setQuery(event.target.value)}
+				displayValue={(language: LanguageListItem) => language.name}
+			/>
+			<Combobox.Options
+				className="border border-dotted border-grey"
+				placeholder="select a language"
+			>
+				{filteredLanguages.map((language) => (
+					<Combobox.Option
+						key={language.code}
+						value={language}
+						className="cursor-pointer text-sm text-textBlack"
+						placeholder="select a language"
+					>
+						{language.name}
+					</Combobox.Option>
+				))}
+			</Combobox.Options>
+		</Combobox>
 	);
 }
