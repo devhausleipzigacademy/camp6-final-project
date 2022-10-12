@@ -1,4 +1,5 @@
 import "./button.css";
+
 import Image from "next/image";
 
 interface ButtonProps {
@@ -56,6 +57,7 @@ export const Button = ({
 			<Image
 				width={50}
 				height={50}
+				alt="It's a cat"
 				src="https://ih1.redbubble.net/image.3315780744.1289/pp,504x498-pad,600x600,f8f8f8.jpg"
 			/>
 		</>

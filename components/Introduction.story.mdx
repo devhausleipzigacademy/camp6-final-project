@@ -1,0 +1,47 @@
+import { Meta } from "@storybook/addon-docs";
+
+<Meta title="Introduction" />
+
+# Welcome to Storybook for Camp 6 Final Project
+
+We have an example component and story in the left sidebar for you to check out.
+
+## Getting Started
+
+Run the following comman to start storybook.
+
+```
+yarn storybook
+```
+
+## Creating Stories for Components
+
+All components should have their own folder inside the components folder. The folder should contain the actual component plus the story file plus, eventually, a test file.
+
+Once you have created a component folder and component file, create a story file and call it [componentName].story.tsx
+
+Inside story file, copy from example or write
+
+-   **import** React ComponentStory, ComponentMeta
+
+-   **export default** that contains a title for the story and a component on which the story should be based (make sure to import the component or else it won't work)
+
+-   specify the **args** (based on component props)
+
+-   const **Template** containing all args
+
+-   **export const** for each test or variant case (e.g. primary, secondary or large button)
+
+Full tutorial can be found [here](https://storybook.js.org/tutorials/intro-to-storybook/react/en/simple-component/).
+
+## Organizing stories
+
+On storybook, stories can be placed inside folders to better organize components.
+To do that, simply change the title of the default export inside the story file.
+
+Useful link:
+https://storybook.js.org/blog/structuring-your-storybook/
+
+### Future Nice to Haves
+
+Design Tokens

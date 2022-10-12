@@ -1,0 +1,19 @@
+model User {
+  identifier    String   @id @default(uuid())
+  name          String?
+  image         String?
+  username      String
+  telegramId    String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  booksBorrowed Book[]   @relation("borrowing")
+  booksOwned    Book[]   @relation("owning")
+}
+
+model Book {
+  identifier String  @id @default(uuid())
+  ownerId    String
+  owner      User?   @relation("owning", fields: [ownerId], references: [identifier])
+  borrowerId String?
+  borrower   User?   @relation("borrowing", fields: [borrowerId], references: [identifier])
+}

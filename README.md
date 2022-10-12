@@ -12,7 +12,15 @@ First, install all dependencies:
 yarn install
 ```
 
-Then, run the development server:
+Then, either start Storybook to work on the components:
+
+```bash
+yarn storybook
+```
+
+Open [http://localhost:6006](http://localhost:6006) with your browser to see the result.
+
+Or run the development server:
 
 ```bash
 yarn dev
@@ -20,11 +28,25 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
 [API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+
+## Unit Testing with Vitest
+
+We use Vitest to test our code. It is already set up, just make sure to **yarn install** and create a test file.
+
+Test files should be placed in the same folder as the code you wish to test. The file be named spec.ts. For an example, check out pages/api/book/spec.ts.
+
+For details and examples check the documentation linked below.
+
+Open your terminal and use the following script to run Jest:
+
+```bash
+yarn test
+```
+
+Check out [the guide](https://vitest.dev/guide/#overview) for details.
 
 ## Learn More
 
@@ -47,3 +69,4 @@ Installed the ESLint Plugin for Storybook
 https://github.com/storybookjs/eslint-plugin-storybook#readme
 
 For details and info on Storybook check the introduction file inside the stories folder.
+
