@@ -1,10 +1,11 @@
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+	provider = "postgresql"
+	url      = env("DATABASE_URL")
 }
 
 generator client {
-  provider = "prisma-client-js"
+	provider = "prisma-client-js"
+    previewFeatures = ["fullTextSearch"]
 }
 
 
@@ -14,7 +15,6 @@ model Book {
     createdAt       DateTime @default(now())   
     updatedAt       DateTime @updatedAt
     title           String
-    // This is a note saying that we might want to change the author from string to its own model
     author          String
     language        String
     image           String?
@@ -31,22 +31,26 @@ model Book {
     borrower        User? @relation("borrowing", fields: [borrowerId], references: [identifier])
     borrowDate      DateTime?
     requests Request[] @relation("requested")
+	location Location? @relation(name: "booklocation", fields: [locationId], references: [identifier])
+    locationId String? 
 }
 
     
 
 
 model User {
-  identifier    String   @id @default(uuid())
-  name          String?
-  image         String?
-  username      String
-  telegramId    String
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  booksBorrowed Book[]   @relation("borrowing")
-  booksOwned    Book[]   @relation("owning")
-  bookRequests    Request[] @relation("requesting")
+	identifier     String   @id @default(uuid())
+	name          String?
+	image         String?
+	username      String
+	telegramId    String
+	createdAt     DateTime @default(now())
+	updatedAt     DateTime @updatedAt
+	booksBorrowed Book[]   @relation("borrowing")
+	booksOwned    Book[]   @relation("owning")
+	bookRequests  Request[] @relation("requesting")
+	locations	  Location[] @relation(name: "userlocations")
+
 }
 
 model Request {
@@ -56,4 +60,18 @@ model Request {
     book        Book @relation("requested", fields: [bookId], references: [identifier])   
     requesterId  String
     requester           User @relation("requesting", fields: [requesterId], references: [identifier])
+}
+
+model Location {
+  identifier String @id @default(uuid())
+    books Book[] @relation(name: "booklocation")
+    createdAt DateTime @default(now())
+    postalAddressCountry String? 
+    postalAddressRegion String? 
+    postalAddressPostalCode Int? 
+    postalAddressStreetAddress String? 
+    latitude Float 
+    longitude Float 
+    userId String 
+    user User @relation(name: "userlocations", fields: [userId], references: [identifier], onDelete: Cascade)
 }

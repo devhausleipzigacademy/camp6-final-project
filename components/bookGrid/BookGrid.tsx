@@ -1,4 +1,5 @@
 import { Book } from "@prisma/client";
+import Link from "next/link";
 import { BookPreview } from "../bookPreview/BookPreview";
 
 interface BookGridProps {
@@ -24,12 +25,20 @@ export function BookGrid({ books }: BookGridProps) {
 						linkHref={`/book/${book.identifier}`}
 						bookSize={"previewGrid"}
 					/>
-					<p className="w-full truncate font-arno text-xs font-bold text-textGrey">
-						{book.author}
-					</p>
-					<p className="w-full truncate font-montserrat text-xs font-normal text-textGrey">
-						{book.title}
-					</p>
+					<Link href={`/book/${book.identifier}`}>
+						<a>
+							<p className="w-full truncate font-arno text-xs font-bold text-textGrey">
+								{book.author}
+							</p>
+						</a>
+					</Link>
+					<Link href={`/book/${book.identifier}`}>
+						<a>
+							<p className="w-full truncate font-montserrat text-xs font-normal text-textGrey">
+								{book.title}
+							</p>
+						</a>
+					</Link>
 				</div>
 			))}
 		</div>
