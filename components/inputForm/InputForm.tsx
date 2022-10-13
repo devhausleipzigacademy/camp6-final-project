@@ -1,29 +1,85 @@
 // package imports
+import { Combobox } from "@headlessui/react";
+import { Book } from "@prisma/client";
+import { useEffect } from "@storybook/addons";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
 // local imports
 import { CustomButton } from "../../components/button/Button";
-import { LanguageSearchBar } from "../../components/SearchBars/LanguageSearchBar";
+import { retrieveBook } from "../../pages/api/book/interaction";
 import { PostBook } from "../../pages/api/book/model.zod";
+import fetchBook from "../../utils/fetchBook";
+import languagePicker, {
+	languageList,
+	LanguageListItem,
+} from "../../utils/languagePicker";
+import { createBook } from "../../utils/updateBook";
 
 export const InitialInput: PostBook = {
 	title: "",
 	author: "",
 	language: "",
+	genres: [],
+	tags: [],
+	isbn: "",
+	image: "",
+	description: "",
 };
 
 interface InputFormProps {
 	formType: "create" | "update";
+	ownerId: string;
+	oldBookData: Book;
 }
 
-export default function InputForm({ formType }: InputFormProps) {
+export default function InputForm({
+	formType,
+	ownerId,
+	oldBookData,
+}: InputFormProps) {
+	const queryClient = useQueryClient();
+
 	const [userInput, SetUserInput] = useState<PostBook>(InitialInput);
 	const [showMore, setShowMore] = useState(false);
+	// two useStates for the Language Combobox
+	const [selectedLanguage, setSelectedLanguage] = useState(languageList[0]);
+	const [query, setQuery] = useState("");
+
+	if (oldBookData) {
+		const { data: book, status } = useQuery<Book>(
+			["getBook", oldBookData.identifier],
+			() => fetchBook(String(oldBookData.identifier)),
+			{
+				enabled: oldBookData.identifier.length > 0,
+				onSuccess: () => {
+					SetUserInput({ ...book });
+					const language = languagePicker([
+						{ _count: 0, language: oldBookData.language },
+					]);
+					setSelectedLanguage(language[0]);
+				},
+			}
+		);
+	}
+	console.log(userInput);
+
+	const createNewBook = useMutation(createBook, {
+		onSuccess: () => {
+			queryClient.invalidateQueries(["books"]);
+		},
+	});
 
 	function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
+		const language = selectedLanguage.code;
 
 		if (formType === "create") {
+			createNewBook.mutate({
+				...userInput,
+				language: language,
+				ownerId: ownerId,
+			});
 		}
 	}
 
@@ -98,6 +154,19 @@ export default function InputForm({ formType }: InputFormProps) {
 		);
 	}
 
+	// // // // // //
+	// // For the language picker combo box
+	// // // // // //
+
+	const filteredLanguages =
+		query === ""
+			? languageList
+			: languageList.filter((language) => {
+					return language.name.toLowerCase().includes(query.toLowerCase());
+			  });
+
+	// // // // // //
+
 	if (!showMore) moreInputOptions = <></>;
 
 	return (
@@ -107,7 +176,6 @@ export default function InputForm({ formType }: InputFormProps) {
 				className="m-10 flex flex-col px-4 font-arnobold font-medium text-grey "
 			>
 				<label htmlFor="title">Title</label>
-
 				<input
 					type="text"
 					name="title"
@@ -118,9 +186,7 @@ export default function InputForm({ formType }: InputFormProps) {
 						SetUserInput({ ...userInput, title: event.target.value })
 					}
 				/>
-
 				<label htmlFor="author">Author</label>
-
 				<input
 					type="text"
 					name="author"
@@ -131,11 +197,30 @@ export default function InputForm({ formType }: InputFormProps) {
 						SetUserInput({ ...userInput, author: event.target.value })
 					}
 				/>
-
 				<label htmlFor="language">Language</label>
-
-				<LanguageSearchBar />
-
+				{/* LanguageSearchBar */}
+				<Combobox value={selectedLanguage} onChange={setSelectedLanguage}>
+					<Combobox.Input
+						className={"inputField"}
+						onChange={(event) => setQuery(event.target.value)}
+						displayValue={(language: LanguageListItem) => language.name}
+					/>
+					<Combobox.Options
+						className="border border-dotted border-grey"
+						placeholder="select a language"
+					>
+						{filteredLanguages.map((language) => (
+							<Combobox.Option
+								key={language.code}
+								value={language}
+								className="cursor-pointer text-sm text-textBlack"
+								placeholder="select a language"
+							>
+								{language.name}
+							</Combobox.Option>
+						))}
+					</Combobox.Options>
+				</Combobox>
 				{moreInputOptions}
 				<button
 					onClick={() => {

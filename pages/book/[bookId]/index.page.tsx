@@ -4,13 +4,13 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { FaTelegram } from "react-icons/fa";
 import { GoLocation } from "react-icons/go";
 import { HiChevronLeft } from "react-icons/hi";
-import { ExampleTags } from "../../components/bookDescription/BookDescription.story";
-import { CustomButton } from "../../components/button/Button";
+import { ExampleTags } from "../../../components/bookDescription/BookDescription.story";
+import { CustomButton } from "../../../components/button/Button";
 import { useQuery } from "@tanstack/react-query";
 import { Book } from "@prisma/client";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
-import fetchBook from "../../utils/fetchBook";
-import checkQuery from "../../utils/checkQuery";
+import fetchBook from "../../../utils/fetchBook";
+import checkQuery from "../../../utils/checkQuery";
 
 export async function getStaticProps({ params }) {
 	const { bookId } = params;

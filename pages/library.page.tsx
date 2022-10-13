@@ -10,13 +10,13 @@ import { ToggleSwitch } from "../components/toggleSwitch/ToggleSwitch";
 import { CustomButton } from "../components/button/Button";
 import { updateBook } from "../utils/updateBook";
 import checkQuery from "../utils/checkQuery";
+import { FiEdit } from "react-icons/fi";
+import router from "next/router";
 
 export default function Library() {
 	const { data: books, status: booksStatus } = useQuery<Book[]>(["books"], () =>
 		fetchBooks({ orderBy: "title" })
 	);
-
-	console.log(books);
 
 	const queryCheck = checkQuery({
 		queryStatus: booksStatus,
@@ -28,15 +28,13 @@ export default function Library() {
 }
 
 function libraryPageContent(books) {
-	if (books !== undefined)
+	if (books !== undefined && books !== null)
 		return (
-			<>
-				<div className="fixed top-[88vh] right-4">
+			<div className="mb-16 ">
+				<div className="fixed top-[88vh] right-4 z-10">
 					<CustomButton
 						functionality={"AddBook"}
-						onClick={function (): void {
-							throw new Error("Function not implemented.");
-						}}
+						onClick={() => router.push("/addbook/")}
 					></CustomButton>
 				</div>
 				<h2 className="pageTitle">
@@ -48,7 +46,7 @@ function libraryPageContent(books) {
 				{books.map((book) => (
 					<LibraryItem key={book.identifier} book={book} />
 				))}
-			</>
+			</div>
 		);
 }
 interface LibraryItemProps {
@@ -64,6 +62,8 @@ function LibraryItem({ book }: LibraryItemProps) {
 			queryClient.invalidateQueries(["books"]);
 		},
 	});
+
+	const bookUrl = book.title.replaceAll(" ", "-");
 
 	return (
 		<div className="flex cursor-pointer justify-evenly border-b-0.75 border-grey p-5">
@@ -82,8 +82,9 @@ function LibraryItem({ book }: LibraryItemProps) {
 				</a>
 			</Link>
 			<div className="flex items-center gap-3">
-				{/* TODO: add functionality to Edit Button */}
-				{/* <FiEdit className="text-brown" /> */}
+				<button onClick={() => router.push(`/book/${book.identifier}/edit`)}>
+					<FiEdit className="text-brown" />
+				</button>
 
 				<ToggleSwitch
 					value={book.isAvailable}

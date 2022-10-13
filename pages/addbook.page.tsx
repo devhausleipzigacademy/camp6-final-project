@@ -3,6 +3,8 @@ import { VscChromeClose } from "react-icons/vsc";
 import InputForm from "../components/inputForm/InputForm";
 
 export default function AddBook() {
+	const ownerId = "0293df67-60f8-446e-a7cd-70844e8768ea";
+
 	return (
 		<>
 			<div className="sticky -top-4 z-10 border-b-0.75 border-grey bg-white pb-4">
@@ -14,7 +16,7 @@ export default function AddBook() {
 					New Book Information
 				</h2>
 			</div>
-			<InputForm formType={"create"} />;
+			<InputForm formType={"create"} ownerId={ownerId} />;
 		</>
 	);
 }

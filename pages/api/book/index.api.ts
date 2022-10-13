@@ -93,9 +93,13 @@ export default async function handler(
 			res.status(200).json(parsedBooks);
 		}
 		if (req.method === "POST") {
-			const data = postBook.parse(req.body);
+			const parsedBody = JSON.parse(req.body);
+			const data = postBook.parse(parsedBody);
+
+			console.log(data);
 			const book = await createBook(data);
 
+			console.log(book);
 			res.status(201).json({ identifier: book.identifier });
 		}
 	} catch (err) {

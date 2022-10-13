@@ -17,27 +17,31 @@ export default function Loans() {
 		fetchBooks({ borrowed: true })
 	);
 
-	const loansPageContent = (
-		<>
-			<h2 className="pageTitle">
-				<Link href="/library">
-					<a className="pr-12 text-grey">Library</a>
-				</Link>
-				Loans at a Glance
-			</h2>
-
-			{books.map((book) => (
-				<LoanItem key={book.identifier} book={book} />
-			))}
-		</>
-	);
 	const queryCheck = checkQuery({
 		queryStatus: booksStatus,
 		queryItem: books,
 		queryName: "loans",
-		successReturn: loansPageContent,
+		successReturn: loansPageContent(books),
 	});
 	return queryCheck;
+}
+
+function loansPageContent(books: Book[]) {
+	if (books !== undefined && books !== null)
+		return (
+			<>
+				<h2 className="pageTitle">
+					<Link href="/library">
+						<a className="pr-12 text-grey">Library</a>
+					</Link>
+					Loans at a Glance
+				</h2>
+
+				{books.map((book) => (
+					<LoanItem key={book.identifier} book={book} />
+				))}
+			</>
+		);
 }
 interface LoanItemProps {
 	book: Book;
