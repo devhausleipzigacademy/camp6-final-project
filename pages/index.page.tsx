@@ -53,13 +53,9 @@ const Home: NextPage = (props) => {
 		fetchBooks({ orderBy: "createdAt", isAvailable: true })
 	);
 
-
 	return (
 		<>
-			<HomeSearchBar
-				searchParams={searchParams}
-				setSearchParams={setSearchParams}
-			/>
+			<HomeSearchBar />
 			<div className="pl-6">
 				<section id="carousel">
 					<div key="0">

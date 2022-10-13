@@ -57,10 +57,7 @@ type HomeSearchBarProps = {
 	setSearchParams: React.Dispatch<React.SetStateAction<SearchParams>>;
 };
 
-export function HomeSearchBar({
-	searchParams,
-	setSearchParams,
-}: HomeSearchBarProps) {
+export function HomeSearchBar({}) {
 	const [error, SetError] = useState("");
 	const [languageArray, setLanguageArray] = useState([]);
 
