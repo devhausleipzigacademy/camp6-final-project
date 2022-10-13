@@ -1,12 +1,13 @@
 // package imports
 import Image, { StaticImageData } from "next/future/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useEffect, useState } from "react";
 import { FiHeart } from "react-icons/fi";
 import clsx from "clsx";
 
 // local imports
 import { randomInt } from "../../utils/random";
+import { BiGame } from "react-icons/bi";
 
 const bookSizes = {
   homepage: "h-54",
@@ -43,7 +44,9 @@ interface BookPreviewProps {
    * Determine context and and size of component
    */
   bookSize: keyof typeof bookSizes;
-
+  /**
+   * Has the user added this book to their favorites?
+   */
   isFaved: boolean;
 }
 
@@ -57,7 +60,6 @@ export const BookPreview = ({
   bookTitle,
   bookAuthor,
   linkHref,
-  isFaved,
 }: BookPreviewProps) => {
   const [faved, setFaved] = useState(isFaved);
 
@@ -72,6 +74,10 @@ export const BookPreview = ({
   function toggleFavorite() {
     setFaved((faved) => !faved);
   }
+
+  const bgColor = placeholderColors[randomInt(3)];
+
+  console.log("bgColor: ", bgColor);
 
   // TODO: if we change design for larger screen we need to modify the sizes below.
   let sizes = "100vw";
@@ -109,9 +115,10 @@ export const BookPreview = ({
   if (!imgSrc) {
     imageTag = (
       <div
+        id="test"
         className={clsx(
           "flex h-full w-full flex-col items-center justify-between p-4 text-center font-arno text-white",
-          placeholderColors[randomInt(3)]
+          bgColor
         )}
       >
         <p

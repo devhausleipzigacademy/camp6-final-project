@@ -72,6 +72,7 @@ function LibraryItem({ book }: LibraryItemProps) {
         imgSrc={book.image}
         linkHref={`/book/${book.identifier}`}
         bookSize={"listItemSmall"}
+        isFaved={false}
       />
       <Link href={`/book/${book.identifier}`}>
         <a className="ml-7 flex w-full flex-col justify-center font-montserrat text-sm font-normal text-textBlack">
