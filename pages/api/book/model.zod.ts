@@ -4,6 +4,7 @@ import LANGUAGES from "../../../enums/languages";
 
 // Zod Model for updating books
 export const putBook = z.object({
+<<<<<<< HEAD
 	title: z.string().optional(),
 	author: z.string().optional(),
 	language: z.enum(LANGUAGES).optional(),
@@ -26,21 +27,45 @@ export const putBook = z.object({
 	isAvailable: z.boolean().optional(),
 	isReserved: z.boolean().optional(),
 	locationId: z.string().optional(),
+=======
+  title: z.string().optional(),
+  author: z.string().optional(),
+  language: z.enum(LANGUAGES).optional(),
+  image: z.string().optional(),
+  description: z.string().optional(),
+  isbn: z.string().optional(),
+  publishYear: z.date().optional(),
+  borrowerId: z.string().optional(),
+  borrowDate: z.date().optional(),
+  genres: z
+    .enum(GENRES)
+    .array()
+    .refine((arg) => JSON.stringify(arg))
+    .optional(),
+  tags: z
+    .string()
+    .array()
+    .refine((arg) => JSON.stringify(arg))
+    .optional(),
+  isAvailable: z.boolean().optional(),
+  isReserved: z.boolean().optional(),
+>>>>>>> upstream/request-page
 });
 
 // Zod Model for Posting Book
 export const postBook = putBook.extend({
-	title: z.string(),
-	author: z.string(),
-	language: z.enum(LANGUAGES),
-	ownerId: z.string(),
+  title: z.string(),
+  author: z.string(),
+  language: z.enum(LANGUAGES),
+  ownerId: z.string(),
 });
 
 export const getBook = postBook.extend({
-	identifier: z.string(),
-	createdAt: z.date(),
-	updatedAt: z.date(),
+  identifier: z.string(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
 
+<<<<<<< HEAD
 	// optional values are returned as null from prisma hence getBook model needs to account for that
 	borrowerId: z.union([z.string(), z.null()]),
 	locationId: z.union([z.string(), z.null()]),
@@ -49,6 +74,15 @@ export const getBook = postBook.extend({
 	isbn: z.union([z.string(), z.null()]),
 	publishYear: z.union([z.date(), z.null()]),
 	borrowDate: z.union([z.date(), z.null()]),
+=======
+  // optional values are returned as null from prisma hence getBook model needs to account for that
+  borrowerId: z.union([z.string(), z.null()]),
+  image: z.union([z.string(), z.null()]),
+  description: z.union([z.string(), z.null()]),
+  isbn: z.union([z.string(), z.null()]),
+  publishYear: z.union([z.date(), z.null()]),
+  borrowDate: z.union([z.date(), z.null()]),
+>>>>>>> upstream/request-page
 });
 
 export type PutBook = z.infer<typeof putBook>;
