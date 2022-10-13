@@ -9,40 +9,48 @@ import fetchBooks from "../utils/fetchBooks";
 import { ToggleSwitch } from "../components/toggleSwitch/ToggleSwitch";
 import { CustomButton } from "../components/button/Button";
 import { updateBook } from "../utils/updateBook";
+import checkQuery from "../utils/checkQuery";
 
 export default function Library() {
-	const { data: books, isLoading: booksLoading } = useQuery<Book[]>(
-		["books"],
-		() => fetchBooks({ orderBy: "title" })
+	const { data: books, status: booksStatus } = useQuery<Book[]>(["books"], () =>
+		fetchBooks({ orderBy: "title" })
 	);
 
-	if (booksLoading) return <p>Loading...</p>;
+	console.log(books);
 
-	if (!booksLoading && books === undefined) return <p>no books found</p>;
-
-	return (
-		<>
-			<div className="fixed top-[88vh] right-4">
-				<CustomButton
-					functionality={"AddBook"}
-					onClick={function (): void {
-						throw new Error("Function not implemented.");
-					}}
-				></CustomButton>
-			</div>
-			<h2 className="pageTitle">
-				Library
-				<Link href="/loans">
-					<a className="pl-12 text-grey">Loans at a Glance</a>
-				</Link>
-			</h2>
-			{books.map((book) => (
-				<LibraryItem key={book.identifier} book={book} />
-			))}
-		</>
-	);
+	const queryCheck = checkQuery({
+		queryStatus: booksStatus,
+		queryItem: books,
+		queryName: "books",
+		successReturn: libraryPageContent(books),
+	});
+	return queryCheck;
 }
 
+function libraryPageContent(books) {
+	if (books !== undefined)
+		return (
+			<>
+				<div className="fixed top-[88vh] right-4">
+					<CustomButton
+						functionality={"AddBook"}
+						onClick={function (): void {
+							throw new Error("Function not implemented.");
+						}}
+					></CustomButton>
+				</div>
+				<h2 className="pageTitle">
+					Library
+					<Link href="/loans">
+						<a className="pl-12 text-grey">Loans at a Glance</a>
+					</Link>
+				</h2>
+				{books.map((book) => (
+					<LibraryItem key={book.identifier} book={book} />
+				))}
+			</>
+		);
+}
 interface LibraryItemProps {
 	key: string;
 	book: Book;
