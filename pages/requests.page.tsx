@@ -94,6 +94,7 @@ function RequestItem({
         linkHref={`/book/${book.identifier}`}
         bookSize={"listItemSmall"}
         isAvailable={book.isAvailable}
+        isFaved={false}
       />
 
       <div className="flex flex-col justify-center p-4 px-5">

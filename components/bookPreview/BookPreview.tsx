@@ -1,13 +1,14 @@
 // package imports
 import Image, { StaticImageData } from "next/future/image";
 import Link from "next/link";
-import React, { useEffect, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { FiHeart } from "react-icons/fi";
 import clsx from "clsx";
 
 // local imports
 import { randomInt } from "../../utils/random";
-import { BiGame } from "react-icons/bi";
+import { updateBook } from "../../utils/updateBook";
 
 const bookSizes = {
   homepage: "h-54",
@@ -60,8 +61,15 @@ export const BookPreview = ({
   bookTitle,
   bookAuthor,
   linkHref,
+  isFaved,
 }: BookPreviewProps) => {
+  const queryClient = useQueryClient();
   const [faved, setFaved] = useState(isFaved);
+  const { mutate: borrowBook } = useMutation(updateBook, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["books"]);
+    },
+  });
 
   useEffect(() => {
     if (faved === true) {
@@ -76,8 +84,6 @@ export const BookPreview = ({
   }
 
   const bgColor = placeholderColors[randomInt(3)];
-
-  console.log("bgColor: ", bgColor);
 
   // TODO: if we change design for larger screen we need to modify the sizes below.
   let sizes = "100vw";

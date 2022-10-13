@@ -11,7 +11,7 @@ export const putBook = z.object({
   description: z.string().optional(),
   isbn: z.string().optional(),
   publishYear: z.date().optional(),
-  borrowerId: z.string().optional(),
+  borrowerId: z.union([z.string(), z.null()]).optional(),
   borrowDate: z.date().optional(),
   genres: z
     .enum(GENRES)
@@ -41,7 +41,6 @@ export const getBook = postBook.extend({
   updatedAt: z.date(),
 
   // optional values are returned as null from prisma hence getBook model needs to account for that
-  borrowerId: z.union([z.string(), z.null()]),
   image: z.union([z.string(), z.null()]),
   description: z.union([z.string(), z.null()]),
   isbn: z.union([z.string(), z.null()]),

@@ -10,16 +10,33 @@ import { CustomButton } from "../components/button/Button";
 import { FaTelegram } from "react-icons/fa";
 import { fetchUser } from "../utils/fetchUser";
 import { updateBook } from "../utils/updateBook";
+import { date } from "zod";
 
 export default function Loans() {
-  const { data: books, isLoading: booksLoading } = useQuery<Book[]>(
-    ["books"],
-    () => fetchBooks({ borrowed: true })
+  const { data: books, status: status } = useQuery<Book[]>(["books"], () =>
+    fetchBooks({ borrowed: true })
   );
 
-  if (booksLoading) return <p>Loading...</p>;
+  if (status === "loading")
+    return (
+      <p className=" flex justify-center pt-16 font-montserrat text-base text-black">
+        Loading...
+      </p>
+    );
 
-  if (!booksLoading && books === undefined) return <p>no books found</p>;
+  if (status === "error")
+    return (
+      <p className=" flex justify-center pt-16 font-montserrat text-base text-black">
+        No requests found.
+      </p>
+    );
+
+  if (books.length === 0)
+    return (
+      <p className=" flex justify-center pt-16 font-montserrat text-base text-black">
+        You have no open loans.
+      </p>
+    );
 
   return (
     <>
@@ -59,11 +76,13 @@ function LoanItem({ book }: LoanItemProps) {
   if (!borrowerIsLoading && borrower === undefined)
     return <p>no borrowed book found</p>;
 
-  // const [year, month, rest] = book.borrowDate.toString().split("-");
-  // const [day, time] = rest.split("T");
+  if (borrower === null) return <p>no borrowed book found</p>;
 
-  // const preferredLanguage = checkPreferredLanguage()
-  // let date = `${day}/${month}/${year}`;
+  const [year, month, rest] = book.borrowDate.toString().split("-");
+  const [day] = rest.split("T");
+
+  // const preferredLanguage = checkPreferredLanguage();
+  let date = `${day}/${month}/${year}`;
 
   // if (preferredLanguage == 'English') date =
   // if (preferredLanguage == 'German')
@@ -93,7 +112,7 @@ function LoanItem({ book }: LoanItemProps) {
         </Link>
         <p className=" py-2 font-arno text-2xs font-normal text-grey">
           <span className="underline">{borrower.name}</span> has borrowed this
-          on {book.borrowDate}
+          on {date}
         </p>
         <div className="flex gap-2">
           <CustomButton
@@ -107,12 +126,12 @@ function LoanItem({ book }: LoanItemProps) {
           </CustomButton>
           <CustomButton
             functionality={"LibraryReturned"}
-            onClick={() =>
+            onClick={() => {
               mutation.mutate({
                 bookId: book.identifier,
                 book: { borrowerId: null, borrowDate: null },
-              })
-            }
+              });
+            }}
           ></CustomButton>
         </div>
       </div>
