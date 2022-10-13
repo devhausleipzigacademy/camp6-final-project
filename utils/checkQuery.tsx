@@ -2,12 +2,14 @@ interface checkQueryProps {
 	queryStatus: "error" | "success" | "loading";
 	queryItem: any;
 	queryName: string;
+	successReturn: React.ReactNode;
 }
 
 export default function checkQuery({
 	queryStatus,
 	queryItem,
 	queryName,
+	successReturn,
 }: checkQueryProps) {
 	if (queryStatus === "loading") {
 		return <p className="p-6 font-montserrat text-textGrey">Loading...</p>;
@@ -29,4 +31,6 @@ export default function checkQuery({
 			<p className="p-6 font-montserrat text-textGrey">No {queryName} found.</p>
 		);
 	}
+
+	return successReturn;
 }

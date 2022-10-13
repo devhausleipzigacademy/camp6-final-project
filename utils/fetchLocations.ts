@@ -21,6 +21,7 @@ export default function fetchLocations({
 	return fetch(URLString, {
 		method: "GET",
 	}).then((res) => {
+		if (!res.ok) throw Error;
 		return res.json();
 	});
 }

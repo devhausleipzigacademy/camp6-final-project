@@ -9,6 +9,8 @@ import Link from "next/link";
 import { Book } from "@prisma/client";
 import { searchBooks } from "../../utils/fetchBooks";
 import { BookGrid } from "../../components/bookGrid/BookGrid";
+import checkQuery from "../../utils/checkQuery";
+import { useEffect } from "react";
 
 export async function getStaticProps({ params }) {
 	const { searchParams } = params;
@@ -36,7 +38,7 @@ export async function getStaticPaths() {
 	};
 }
 
-export default function BookDescription() {
+export default function SearchResults() {
 	const router = useRouter();
 	const { searchParams } = router.query;
 
@@ -44,27 +46,14 @@ export default function BookDescription() {
 		? searchParams.join(" ")
 		: searchParams;
 
-	const { data: searchResults, status: SearchStatus } = useQuery<Book[]>(
+	const { data: searchResults, status: searchStatus } = useQuery<Book[]>(
 		["books", "search"],
 		() => searchBooks(query)
 	);
 
-	if (searchResults.length === 0)
-		return (
-			<div className="m-5 flex flex-col gap-5">
-				<p className="font-montserrat text-textGrey">
-					Sorry, we could not find any books that matched your criteria.
-				</p>
-				<span
-					className="flex h-8 w-fit cursor-pointer items-center self-center rounded-2xl bg-green p-2 font-arno text-white"
-					onClick={() => router.back()}
-				>
-					Click here to go back
-				</span>
-			</div>
-		);
+	console.log(searchResults, searchStatus);
 
-	return (
+	const searchPage = (
 		<>
 			<div className="sticky -top-4 z-10 border-b-0.75 border-grey bg-white pb-4">
 				<button onClick={() => router.back()}>
@@ -75,11 +64,16 @@ export default function BookDescription() {
 					Search Results
 				</h2>
 			</div>
-			{SearchStatus === "loading" ? (
-				<p>Loading...</p>
-			) : (
-				<BookGrid books={searchResults} />
-			)}
+
+			<BookGrid books={searchResults} />
 		</>
 	);
+
+	const queryCheck = checkQuery({
+		queryStatus: searchStatus,
+		queryItem: searchResults,
+		queryName: "search results",
+		successReturn: searchPage,
+	});
+	return queryCheck;
 }

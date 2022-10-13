@@ -19,6 +19,7 @@ export default function fetchLocation({
 	return fetch(`http://${host}/api/user/${userId}/location/${locationId}`, {
 		method: "GET",
 	}).then((res) => {
+		if (!res.ok) throw Error;
 		return res.json();
 	});
 }
