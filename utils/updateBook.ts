@@ -1,19 +1,32 @@
-import { PutBook } from "../pages/api/book/model.zod";
+import { PostBook, PutBook } from "../pages/api/book/model.zod";
 
 const host =
-    process.env.NODE_ENV == "production"
-        ? process.env.NEXT_PUBLIC_PROD_HOST
-        : process.env.NEXT_PUBLIC_DEV_HOST;
+	process.env.NODE_ENV == "production"
+		? process.env.NEXT_PUBLIC_PROD_HOST
+		: process.env.NEXT_PUBLIC_DEV_HOST;
 
 export const updateBook = ({
-    bookId,
-    book,
+	bookId,
+	book,
 }: {
-    bookId: string;
-    book: PutBook;
+	bookId: string;
+	book: PutBook;
 }) => {
-    return fetch(`http://${host}/api/book/${bookId}`, {
-        method: "PUT",
-        body: JSON.stringify(book),
-    });
+	return fetch(`http://${host}/api/book/${bookId}`, {
+		method: "PUT",
+		body: JSON.stringify(book),
+	});
 };
+
+export function deleteBook(bookId: string) {
+	return fetch(`http://${host}/api/book/${bookId}`, {
+		method: "DELETE",
+	});
+}
+
+export function createBook(data: PostBook) {
+	return fetch(`http://${host}/api/book/`, {
+		method: "POST",
+		body: JSON.stringify(data),
+	});
+}

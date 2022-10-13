@@ -9,6 +9,7 @@ export function fetchUser(userId: string): Promise<User> {
 	return fetch(`http://${host}/api/user/${userId}`, {
 		method: "GET",
 	}).then((res) => {
+		if (!res.ok) throw Error;
 		return res.json();
 	});
 }
