@@ -51,8 +51,6 @@ export default function SearchResults() {
 		() => searchBooks(query)
 	);
 
-	console.log(searchResults, searchStatus);
-
 	const searchPage = (
 		<>
 			<div className="sticky -top-4 z-10 border-b-0.75 border-grey bg-white pb-4">
