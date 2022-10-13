@@ -1,16 +1,12 @@
 import { Menu, Transition } from "@headlessui/react";
 import clsx from "clsx";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-import { useState } from "react";
-import { AiFillAlert, AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose } from "react-icons/ai";
 import { BiUser } from "react-icons/bi";
 import { HiOutlineMenuAlt4 } from "react-icons/hi";
-export function Header(props) {
-  const [isShown, setIsShown] = useState("false");
-  const [menu, setMenu] = useState(false);
-  const [userMenu, setUserMenu] = useState(false);
+
+export function Header() {
   const router = useRouter();
 
   const pages = [
@@ -34,12 +30,11 @@ export function Header(props) {
               {open ? (
                 <AiOutlineClose
                   className={clsx(
-                    "  absolute z-20 h-8 w-8 text-yellow duration-500"
+                    "  absolute z-30 h-8 w-8 text-yellow duration-500"
                   )}
                 />
               ) : (
                 <HiOutlineMenuAlt4
-                  onClick={() => setMenu(true)}
                   className={clsx(
                     "-z-30 h-8 w-8 text-grey outline-none duration-1000",
 
@@ -52,7 +47,7 @@ export function Header(props) {
 
             <Transition
               className={
-                "  absolute left-0 top-0 z-10 flex h-screen  w-screen flex-col justify-center overflow-clip  bg-green  outline-none  duration-500  sm:min-h-screen sm:w-screen  lg:w-1/2"
+                "  absolute left-0 top-0 z-20 flex h-screen  w-screen flex-col justify-center overflow-clip  bg-green  outline-none  duration-500  sm:min-h-screen sm:w-screen  lg:w-1/2"
               }
               enter="transition duration-500 ease-in-out"
               enterFrom="transform  scale-x-0 opacity-0"
@@ -113,7 +108,7 @@ export function Header(props) {
 
             <Transition
               className={
-                "  absolute right-0 top-0 z-10 flex h-screen  w-screen flex-col justify-center overflow-clip  bg-green  outline-none  duration-500  sm:min-h-screen sm:w-screen  lg:w-1/2"
+                "  absolute right-0 top-0 z-0 flex h-screen  w-screen flex-col justify-center overflow-clip  bg-green  outline-none  duration-500  sm:min-h-screen sm:w-screen  lg:w-1/2"
               }
               enter="transition duration-500 ease-in-out"
               enterFrom="transform  -scale-x-0 opacity-0"

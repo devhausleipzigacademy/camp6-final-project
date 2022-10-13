@@ -25,6 +25,7 @@ export const putBook = z.object({
     .optional(),
   isAvailable: z.boolean().optional(),
   isReserved: z.boolean().optional(),
+  locationId: z.string().optional(),
 });
 
 // Zod Model for Posting Book
@@ -41,6 +42,8 @@ export const getBook = postBook.extend({
   updatedAt: z.date(),
 
   // optional values are returned as null from prisma hence getBook model needs to account for that
+  borrowerId: z.union([z.string(), z.null()]),
+  locationId: z.union([z.string(), z.null()]),
   image: z.union([z.string(), z.null()]),
   description: z.union([z.string(), z.null()]),
   isbn: z.union([z.string(), z.null()]),

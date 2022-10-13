@@ -15,22 +15,3 @@ export function fetchRequests({}: FetchRequestProps) {
     return res.json();
   });
 }
-
-// export function useUpdateRequest(bookIdentifier: string) {
-//   const queryClient = useQueryClient();
-//   return useMutation(
-//     ["requests", requestIdentifier, "update"],
-//     (request: PutRequest) => {
-//     {/* TODO: create Zod model*/}
-//       return fetch(`http://${host}/api/request/${requestIdentifier}`, {
-//         method: "PUT",
-//         body: JSON.stringify(request),
-//       });
-//     },
-//     {
-//       onSuccess: () => {
-//         queryClient.invalidateQueries(["books"]);
-//       },
-//     }
-//   );
-// }

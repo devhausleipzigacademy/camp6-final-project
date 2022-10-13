@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Book } from "@prisma/client";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import fetchBook from "../../utils/fetchBook";
+import checkQuery from "../../utils/checkQuery";
 
 export async function getStaticProps({ params }) {
   const { bookId } = params;
@@ -41,7 +42,7 @@ export default function BookDescription() {
   const router = useRouter();
   const { bookId } = router.query;
 
-  const { data: book } = useQuery<Book>(
+  const { data: book, status } = useQuery<Book>(
     ["getBook", bookId],
     () => fetchBook(String(bookId)),
     {
@@ -55,7 +56,7 @@ export default function BookDescription() {
 
   const location = "04107+Leipzig";
 
-  return (
+  const bookDescriptionContent = (
     <div className="flex w-mobile flex-col items-stretch py-5 px-10">
       <div className="relative my-5 h-fit rounded-3xl bg-[#fef1e0] px-36 py-20 ">
         <div>
@@ -75,7 +76,7 @@ export default function BookDescription() {
             src={book?.image ? book.image : "https://picsum.photos/80/120"}
             width={80}
             height={120}
-            alt={book.title}
+            alt={book.title ? book.title : "no title"}
           />
           <div className="flex flex-col items-center">
             <p className="text-2xl font-bold">{book.title}</p>
@@ -109,4 +110,12 @@ export default function BookDescription() {
       </div>
     </div>
   );
+
+  const queryCheck = checkQuery({
+    queryStatus: status,
+    queryItem: book,
+    queryName: "book",
+    successReturn: bookDescriptionContent,
+  });
+  return queryCheck;
 }

@@ -9,16 +9,7 @@ export function fetchUser(userId: string): Promise<User> {
   return fetch(`http://${host}/api/user/${userId}`, {
     method: "GET",
   }).then((res) => {
-    return res.json();
-  });
-}
-
-export function fetchLikedBooks(userId: string): Promise<Book[]> {
-  return fetch(`http://${host}/api/user/${userId}/likes`, {
-    method: "GET",
-  }).then((res) => {
     if (!res.ok) throw Error;
-
     return res.json();
   });
 }

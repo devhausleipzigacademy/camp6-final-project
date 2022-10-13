@@ -29,7 +29,6 @@ export default async function handler(
         ...parsedBody,
         borrowDate: new Date(parsedBody.borrowDate),
       });
-
       const bookId = req.query.bookId as string;
 
       await updateBook(bookId, data);
