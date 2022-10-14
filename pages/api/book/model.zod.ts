@@ -12,8 +12,7 @@ export const putBook = z.object({
   isbn: z.string().optional(),
   publishYear: z.date().optional(),
   genres: z
-    .enum(GENRES)
-    .array()
+    .array(z.string())
     .refine((arg) => JSON.stringify(arg))
     .optional(),
   tags: z

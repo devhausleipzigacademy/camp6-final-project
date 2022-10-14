@@ -1,3 +1,4 @@
+import { isError } from "lodash";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import TelegramLoginButton from "react-telegram-login";
@@ -28,7 +29,10 @@ export default function Login() {
       const telegramId = localStorage.getItem("c6-tid");
       // if theres no telegramId in localstorage create it
       if (!telegramId) {
-        localStorage.setItem("c6-tid", user.telegramId);
+        localStorage.setItem(
+          "c6-tid",
+          JSON.stringify({ tid: user.telegramId, uid: user.identifier })
+        );
       }
       router.push("/");
     } catch (err) {

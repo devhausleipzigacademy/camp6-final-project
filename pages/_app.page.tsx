@@ -29,7 +29,7 @@ function MyApp({ Component, pageProps }) {
           <div className="flex h-screen flex-col">
             <Header />
             <Component {...pageProps} />
-            <Footer />
+            {/* <Footer /> */}
           </div>
           <ReactQueryDevtools initialIsOpen={false} />
         </Hydrate>

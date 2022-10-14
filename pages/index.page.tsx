@@ -10,25 +10,34 @@ import { Book } from "@prisma/client";
 import { HomeSearchBar } from "../components/SearchBars/HomeSearchbar/HomeSearchBar";
 import SubHeading2 from "../components/Subheading/Subheading";
 import checkQuery from "../utils/checkQuery";
+import { useEffect, useState } from "react";
 
 const Home: NextPage = (props) => {
-  const genres = ["Cookbook", "Fiction"];
+  const [genres, setGenres] = useState<string[]>([]);
+  useEffect(() => {
+    fetch("http://bookshare.local/api/book")
+      .then((res) => res.json())
+      .then((res) => Array.from(new Set(res.map((book) => book.genres).flat())))
+      .then((res) => setGenres(res as string[]));
+  }, []);
 
-  const categoryData = Object.fromEntries(
-    genres.map((genre) => [
-      genre,
-      useQuery<Book[]>(["books", genre], () =>
-        fetchBooks({
-          orderBy: "createdAt",
-          isAvailable: true,
-          genre,
-        })
-      ),
-    ])
-  );
+  // const categoryData = Object.fromEntries(
+  //   genres.map((genre) => [
+  //     genre,
+  //     useQuery<Book[]>(["books", genre], () =>
+  //       fetchBooks({
+  //         orderBy: "createdAt",
+  //         isAvailable: true,
+  //         genre,
+  //       })
+  //     ),
+  //   ])
+  // );
 
-  const recentUploadsQuery = useQuery<Book[]>(["getBooks", "createdAt"], () =>
-    fetchBooks({ orderBy: "createdAt", isAvailable: true })
+  const { data, isLoading } = useQuery<Book[]>(
+    ["getBooks", "createdAt"],
+    () => fetch("http://bookshare.local/api/book").then((res) => res.json())
+    // fetchBooks({ orderBy: "createdAt", isAvailable: true })
   );
 
   const indexPageContent = (
@@ -38,9 +47,12 @@ const Home: NextPage = (props) => {
         <section id="carousel">
           <div key="0">
             <SubHeading2>Recent Uploads</SubHeading2>
-            <Carousel books={recentUploadsQuery.data} />
+            <Carousel books={data} />
           </div>
-          {Object.entries(categoryData).map(([category, query], index) => {
+          {genres.map((genre) => (
+            <Genre key={genre} genre={genre} />
+          ))}
+          {/* {Object.entries(categoryData).map(([category, query], index) => {
             return (
               <div key={index + 1}>
                 <SubHeading2>{category}</SubHeading2>
@@ -48,19 +60,45 @@ const Home: NextPage = (props) => {
                 <Carousel books={query.data} />
               </div>
             );
-          })}
+          })} */}
         </section>
       </div>
     </>
   );
 
-  const queryCheck = checkQuery({
-    queryStatus: recentUploadsQuery.status,
-    queryItem: recentUploadsQuery.data,
-    queryName: "books",
-    successReturn: indexPageContent,
-  });
-  return queryCheck;
+  // const queryCheck = checkQuery({
+  //   queryStatus: recentUploadsQuery.status,
+  //   queryItem: recentUploadsQuery.data,
+  //   queryName: "books",
+  //   successReturn: indexPageContent,
+  // });
+  // return queryCheck;
+  return indexPageContent;
 };
 
 export default Home;
+
+interface GenreProps {
+  genre: string;
+}
+function Genre({ genre }: GenreProps) {
+  const { data, isLoading } = useQuery<Book[]>(
+    ["books", genre],
+    () =>
+      fetch(`http://bookshare.local/api/book?genre=${genre}`).then((res) =>
+        res.json()
+      )
+    // fetchBooks({
+    //   orderBy: "createdAt",
+    //   isAvailable: true,
+    //   genre,
+    // })
+  );
+  console.log(data);
+  return (
+    <>
+      <SubHeading2>{genre}</SubHeading2>
+      <Carousel books={data} />
+    </>
+  );
+}

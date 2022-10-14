@@ -19,143 +19,143 @@ import languagePicker, { languageModel } from "../../../utils/languagePicker";
 import LanguageButton from "../../languageButton/languageButton";
 
 const books = [
-	"Crying in The Titans",
-	"Gone Town",
-	"Come Town",
-	"Away Town",
-	"Birth Without Duty",
-	"Answering the Titans",
+  "Crying in The Titans",
+  "Gone Town",
+  "Come Town",
+  "Away Town",
+  "Birth Without Duty",
+  "Answering the Titans",
 ];
 
 const locations = [
-	"84301",
-	"64321",
-	"04101",
-	"12301",
-	"64321",
-	"04101",
-	"12301",
-	"64321",
-	"04101",
-	"12301",
-	"64321",
-	"04101",
-	"12301",
-	"64321",
-	"04101",
-	"12301",
+  "84301",
+  "64321",
+  "04101",
+  "12301",
+  "64321",
+  "04101",
+  "12301",
+  "64321",
+  "04101",
+  "12301",
+  "64321",
+  "04101",
+  "12301",
+  "64321",
+  "04101",
+  "12301",
 ];
 
 export interface languageItem {
-	code: string;
-	name: string;
+  code: string;
+  name: string;
 }
 
 type HomeSearchBarProps = {
-	// onChange: () => void;
-	searchParams: SearchParams;
-	setSearchParams: React.Dispatch<React.SetStateAction<SearchParams>>;
+  // onChange: () => void;
+  searchParams: SearchParams;
+  setSearchParams: React.Dispatch<React.SetStateAction<SearchParams>>;
 };
 
 export function HomeSearchBar({}) {
-	const [error, SetError] = useState("");
-	const [languageArray, setLanguageArray] = useState([]);
+  const [error, SetError] = useState("");
+  const [languageArray, setLanguageArray] = useState([]);
 
-	const { data: languages, status: languageStatus } = useQuery<languageModel[]>(
-		["languages"],
-		() => countLanguages(),
-		{
-			onSuccess: (data) => {
-				const results = languagePicker(data);
-				setLanguageArray(results);
-			},
-		}
-	);
+  // const { data: languages, status: languageStatus } = useQuery<languageModel[]>(
+  // 	["languages"],
+  // 	() => countLanguages(),
+  // 	{
+  // 		onSuccess: (data) => {
+  // 			const results = languagePicker(data);
+  // 			setLanguageArray(results);
+  // 		},
+  // 	}
+  // );
 
-	// // // // Furkan // // // // // // // //
+  // // // // Furkan // // // // // // // //
 
-	const [book, setBook] = useState("");
-	const [zipCode, setZipCode] = useState("");
+  const [book, setBook] = useState("");
+  const [zipCode, setZipCode] = useState("");
 
-	const [query, setQuery] = useState("");
+  const [query, setQuery] = useState("");
 
-	const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(false);
 
-	function handler(event) {
-		const isButton = event.target.matches("#search-form-button *");
-		const isMenu = event.target.matches("#search-form *");
-		if (isButton || (!(isButton || isMenu) && isActive)) {
-			setIsActive((prev) => !prev);
-		}
-	}
-	// #search - form,
-	useEffect(() => {
-		document.addEventListener("click", handler);
-		return () => {
-			document.removeEventListener("click", handler);
-		};
-	}, [isActive]);
+  function handler(event) {
+    const isButton = event.target.matches("#search-form-button *");
+    const isMenu = event.target.matches("#search-form *");
+    if (isButton || (!(isButton || isMenu) && isActive)) {
+      setIsActive((prev) => !prev);
+    }
+  }
+  // #search - form,
+  useEffect(() => {
+    document.addEventListener("click", handler);
+    return () => {
+      document.removeEventListener("click", handler);
+    };
+  }, [isActive]);
 
-	const filteredZip = useMemo(
-		() =>
-			locations.filter((zipCode) =>
-				zipCode.toLowerCase().startsWith(query.toLowerCase())
-			),
-		[query]
-	);
+  const filteredZip = useMemo(
+    () =>
+      locations.filter((zipCode) =>
+        zipCode.toLowerCase().startsWith(query.toLowerCase())
+      ),
+    [query]
+  );
 
-	// // // // // // // // // // // // // // // //
+  // // // // // // // // // // // // // // // //
 
-	function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-		event.preventDefault();
-		if (query.length === 0) {
-			SetError("Please enter a search term");
-		} else {
-			Router.push(`/search/${query}`);
-			SetError("");
-		}
-	}
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (query.length === 0) {
+      SetError("Please enter a search term");
+    } else {
+      Router.push(`/search/${query}`);
+      SetError("");
+    }
+  }
 
-	if (languageStatus === "loading") {
-		return <p>Loading...</p>;
-	}
-	if (languageStatus === "error") {
-		return <p>Error...</p>;
-	}
+  // if (languageStatus === "loading") {
+  //   return <p>Loading...</p>;
+  // }
+  // if (languageStatus === "error") {
+  //   return <p>Error...</p>;
+  // }
 
-	return (
-		<div className="mt-5 mb-10 flex h-9 justify-center self-center font-montserrat text-sm font-light text-textGrey">
-			<form
-				onSubmit={handleSubmit}
-				className="flex h-full w-80 rounded-lg border-2 border-searchBar pr-1"
-			>
-				<Link
-					href={`/search/${query}`}
-					className=" flex aspect-square h-full justify-center self-start"
-				>
-					<FiSearch className="h-full w-12  stroke-2 p-1 pl-3 text-searchBar" />
-				</Link>
-				<input
-					className="w-full focus:outline-none"
-					onChange={(event) => {
-						SetError("");
-						setQuery(event.target.value);
-					}}
-					type="text"
-				/>
-				<input type="submit" hidden />
-				<input
-					id="search-form-button"
-					type="text"
-					className="h-full  w-20 border-l-2 border-searchBar pl-2 placeholder-textGrey 
+  return (
+    <div className="mt-5 mb-10 flex h-9 justify-center self-center font-montserrat text-sm font-light text-textGrey">
+      <form
+        onSubmit={handleSubmit}
+        className="flex h-full w-80 rounded-lg border-2 border-searchBar pr-1"
+      >
+        <Link
+          href={`/search/${query}`}
+          className=" flex aspect-square h-full justify-center self-start"
+        >
+          <FiSearch className="h-full w-12  stroke-2 p-1 pl-3 text-searchBar" />
+        </Link>
+        <input
+          className="w-full focus:outline-none"
+          onChange={(event) => {
+            SetError("");
+            setQuery(event.target.value);
+          }}
+          type="text"
+        />
+        <input type="submit" hidden />
+        <input
+          id="search-form-button"
+          type="text"
+          className="h-full  w-20 border-l-2 border-searchBar pl-2 placeholder-textGrey 
                     placeholder:underline  placeholder:decoration-1 focus:placeholder-opacity-0 focus:outline-none"
-					placeholder="in 04103"
-				/>
-				{/* <LanguageButton
+          placeholder="in 04103"
+        />
+        {/* <LanguageButton
 					languages={languageArray}
 					onClickhandler={() => {}}
 				></LanguageButton> */}
-				{/* <Combobox
+        {/* <Combobox
 					value={searchParams.zipCode}
 					onChange={(value) =>
 						setSearchParams({ ...searchParams, zipCode: value })
@@ -179,9 +179,9 @@ export function HomeSearchBar({}) {
 						</div>
 					</div>
 				</Combobox> */}
-			</form>
-			{error && <p className="error text-red-500">{error}</p>}
-			{/* <div>
+      </form>
+      {error && <p className="error text-red-500">{error}</p>}
+      {/* <div>
 				<div id="search-form-button" className="">
 					<button
 						type="button"
@@ -220,6 +220,6 @@ export function HomeSearchBar({}) {
 					</form>
 				</div>
 			</div> */}
-		</div>
-	);
+    </div>
+  );
 }

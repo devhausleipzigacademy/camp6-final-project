@@ -3,7 +3,12 @@ const nextConfig = {
   pageExtensions: ["page.tsx", "api.ts"],
   reactStrictMode: true,
   images: {
-    domains: ["loremflickr.com", "picsum.photos", "images.booklooker.de"],
+    domains: [
+      "loremflickr.com",
+      "picsum.photos",
+      "images.booklooker.de",
+      "books.google.com",
+    ],
   },
   swcMinify: true,
 };

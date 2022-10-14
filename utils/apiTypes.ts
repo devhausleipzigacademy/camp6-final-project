@@ -1,5 +1,5 @@
 export type BooksResponse = {
-  totalItems: number;
+  count: number;
   items: GoogleBook[];
 };
 

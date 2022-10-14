@@ -8,117 +8,117 @@ import { postBook, getBook, GetBook } from "./model.zod";
 import { createBook, retrieveBooks, searchBookLanguages } from "./interaction";
 
 export type ErrorResponse = {
-	message: string;
-	error?: any;
+  message: string;
+  error?: any;
 };
 
 export default async function handler(
-	req: NextApiRequest,
-	res: NextApiResponse<GetBook[] | { identifier: string } | ErrorResponse>
+  req: NextApiRequest,
+  res: NextApiResponse<GetBook[] | { identifier: string } | ErrorResponse>
 ) {
-	try {
-		if (req.method === "GET") {
-			const {
-				isAvailable,
-				title,
-				author,
-				language,
-				genre,
-				borrowed,
-				orderBy,
-				searchRequest,
-			} = req.query as Record<string, string>;
+  try {
+    if (req.method === "GET") {
+      const {
+        isAvailable,
+        title,
+        author,
+        language,
+        genre,
+        borrowed,
+        orderBy,
+        searchRequest,
+      } = req.query as Record<string, string>;
 
-			const clauses: Array<Prisma.BookWhereInput> = [];
+      const clauses: Array<Prisma.BookWhereInput> = [];
 
-			if (isAvailable !== undefined) {
-				clauses.push({
-					isAvailable:
-						isAvailable == "true"
-							? true
-							: isAvailable == "false"
-							? false
-							: undefined,
-				});
-			}
+      if (isAvailable !== undefined) {
+        clauses.push({
+          isAvailable:
+            isAvailable == "true"
+              ? true
+              : isAvailable == "false"
+              ? false
+              : undefined,
+        });
+      }
 
-			if (borrowed !== undefined) {
-				clauses.push(
-					borrowed == "true"
-						? { NOT: [{ borrowerId: null }] }
-						: borrowed == "false"
-						? { borrowerId: null }
-						: undefined
-				);
-			}
+      if (borrowed !== undefined) {
+        clauses.push(
+          borrowed == "true"
+            ? { NOT: [{ borrowerId: null }] }
+            : borrowed == "false"
+            ? { borrowerId: null }
+            : undefined
+        );
+      }
 
-			if (title !== undefined) {
-				clauses.push({
-					title: { contains: title, mode: "insensitive" },
-				});
-			}
+      if (title !== undefined) {
+        clauses.push({
+          title: { contains: title, mode: "insensitive" },
+        });
+      }
 
-			if (author !== undefined) {
-				clauses.push({
-					author: { contains: author, mode: "insensitive" },
-				});
-			}
+      if (author !== undefined) {
+        clauses.push({
+          author: { contains: author, mode: "insensitive" },
+        });
+      }
 
-			if (language !== undefined) {
-				clauses.push({
-					language: { contains: language, mode: "insensitive" },
-				});
-			}
+      if (language !== undefined) {
+        clauses.push({
+          language: { contains: language, mode: "insensitive" },
+        });
+      }
 
-			if (genre !== undefined) {
-				clauses.push({ genres: { array_contains: genre } });
-			}
+      if (genre !== undefined) {
+        clauses.push({ genres: { array_contains: genre } });
+      }
 
-			if (searchRequest !== undefined) {
-				clauses.push(
-					{ title: { search: searchRequest } },
-					{ author: { search: searchRequest } },
-					{ language: { search: searchRequest } },
-					{ description: { search: searchRequest } },
-					{ isbn: { search: searchRequest } }
-				);
-			}
+      if (searchRequest !== undefined) {
+        clauses.push(
+          { title: { search: searchRequest } },
+          { author: { search: searchRequest } },
+          { language: { search: searchRequest } },
+          { description: { search: searchRequest } },
+          { isbn: { search: searchRequest } }
+        );
+      }
 
-			const books = await retrieveBooks({
-				clauses,
-				orderBy: orderBy,
-			});
-			const parsedBooks = books.map((book) => getBook.parse(book));
+      const books = await retrieveBooks({
+        clauses,
+        orderBy: orderBy,
+      });
+      const parsedBooks = books.map((book) => getBook.parse(book));
 
-			res.status(200).json(parsedBooks);
-		}
-		if (req.method === "POST") {
-			const parsedBody = JSON.parse(req.body);
-			const data = postBook.parse(parsedBody);
+      res.status(200).json(parsedBooks);
+    }
+    if (req.method === "POST") {
+      const parsedBody = JSON.parse(req.body);
+      const data = postBook.parse(parsedBody);
 
-			console.log(data);
-			const book = await createBook(data);
+      console.log(data);
+      const book = await createBook(data);
 
-			console.log(book);
-			res.status(201).json({ identifier: book.identifier });
-		}
-	} catch (err) {
-		if (err instanceof ZodError) {
-			const errorResponse: ErrorResponse = {
-				message: "Invalid book.",
-			};
-			if (["development", "test"].includes(process.env.NODE_ENV)) {
-				errorResponse.error = err;
-			}
-			res.status(422).send(errorResponse);
-		}
+      console.log("after prisma", book);
+      res.status(201).json({ identifier: book.identifier });
+    }
+  } catch (err) {
+    if (err instanceof ZodError) {
+      const errorResponse: ErrorResponse = {
+        message: "Invalid book.",
+      };
+      if (["development", "test"].includes(process.env.NODE_ENV)) {
+        errorResponse.error = err;
+      }
+      res.status(422).send(errorResponse);
+    }
 
-		const errorResponse: ErrorResponse = {
-			message: "Looks like something went wrong. Please try again.",
-		};
-		if (["development", "test"].includes(process.env.NODE_ENV)) {
-			errorResponse.error = err;
-		}
-		res.status(400).send(errorResponse);
-	}
+    const errorResponse: ErrorResponse = {
+      message: "Looks like something went wrong. Please try again.",
+    };
+    if (["development", "test"].includes(process.env.NODE_ENV)) {
+      errorResponse.error = err;
+    }
+    res.status(400).send(errorResponse);
+  }
 }
