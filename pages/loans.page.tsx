@@ -1,6 +1,6 @@
 // package imports
 import Link from "next/link";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 // local imports
 import { Book, User } from "@prisma/client";
@@ -13,8 +13,9 @@ import { updateBook } from "../utils/updateBook";
 import checkQuery from "../utils/checkQuery";
 
 export default function Loans() {
-	const { data: books, status: booksStatus } = useQuery<Book[]>(["books"], () =>
-		fetchBooks({ borrowed: true })
+	const { data: books, status: booksStatus } = useQuery<Book[]>(
+		["books", "loans"],
+		() => fetchBooks({ borrowed: true })
 	);
 
 	const queryCheck = checkQuery({
@@ -48,7 +49,13 @@ interface LoanItemProps {
 }
 
 function LoanItem({ book }: LoanItemProps) {
-	const mutation = useMutation(updateBook);
+	const queryClient = useQueryClient();
+
+	const mutation = useMutation(updateBook, {
+		onSuccess: () => {
+			queryClient.invalidateQueries(["books"]);
+		},
+	});
 
 	const { data: borrower, isLoading: borrowerIsLoading } = useQuery<User>(
 		["users"],
@@ -59,6 +66,8 @@ function LoanItem({ book }: LoanItemProps) {
 
 	if (!borrowerIsLoading && borrower === undefined)
 		return <p>no borrowed book found</p>;
+
+	console.log("book on loan:", book);
 
 	const [year, month, rest] = book.borrowDate.toString().split("-");
 	const [day, time] = rest.split("T");
@@ -74,6 +83,7 @@ function LoanItem({ book }: LoanItemProps) {
 		return;
 	}
 
+	if (borrower === null || borrower === undefined) return <p>Loading...</p>;
 	return (
 		<div className="flex cursor-pointer  justify-evenly border-b-0.75 border-grey p-5">
 			<BookPreview
@@ -83,6 +93,7 @@ function LoanItem({ book }: LoanItemProps) {
 				imgSrc={book.image}
 				linkHref={`/book/${book.identifier}`}
 				bookSize={"listItemBig"}
+				isFaved={false}
 			/>
 			<div className="flex flex-col">
 				<Link href={`/book/${book.identifier}`}>
@@ -107,12 +118,12 @@ function LoanItem({ book }: LoanItemProps) {
 					</CustomButton>
 					<CustomButton
 						functionality={"LibraryReturned"}
-						onClick={() =>
+						onClick={() => {
 							mutation.mutate({
 								bookId: book.identifier,
 								book: { borrowerId: null, borrowDate: null },
-							})
-						}
+							});
+						}}
 					></CustomButton>
 				</div>
 			</div>
