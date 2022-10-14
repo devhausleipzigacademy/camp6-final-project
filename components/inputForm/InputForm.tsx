@@ -30,7 +30,7 @@ export const InitialInput: PostBook = {
 interface InputFormProps {
 	formType: "create" | "update";
 	ownerId: string;
-	oldBookData: Book;
+	oldBookData?: Book;
 }
 
 export default function InputForm({
@@ -43,7 +43,10 @@ export default function InputForm({
 	const [userInput, SetUserInput] = useState<PostBook>(InitialInput);
 	const [showMore, setShowMore] = useState(false);
 	// two useStates for the Language Combobox
-	const [selectedLanguage, setSelectedLanguage] = useState(languageList[0]);
+	const [selectedLanguage, setSelectedLanguage] = useState({
+		code: "",
+		name: "",
+	});
 	const [query, setQuery] = useState("");
 
 	if (oldBookData) {

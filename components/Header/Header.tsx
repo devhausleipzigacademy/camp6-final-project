@@ -106,7 +106,7 @@ export function Header() {
 
 						<Transition
 							className={
-								" absolute right-0 top-0 z-0 flex h-screen w-screen flex-col justify-center overflow-clip bg-green outline-none duration-500 sm:min-h-screen sm:w-screen lg:w-1/2"
+								" absolute right-0 top-0 z-20 flex h-screen w-screen flex-col justify-center overflow-clip bg-green outline-none duration-500 sm:min-h-screen sm:w-screen lg:w-1/2"
 							}
 							enter="transition duration-500 ease-in-out"
 							enterFrom="transform -scale-x-0 opacity-0"
@@ -123,7 +123,6 @@ export function Header() {
 											href: "/settings",
 										},
 										{ name: "sign out", href: "/sign out" },
-										{ name: "TESTPAGE", href: "/TESTPAGE" },
 									].map(({ name: pageName, href: hrefLink }, index) => (
 										<Menu.Item
 											as="a"

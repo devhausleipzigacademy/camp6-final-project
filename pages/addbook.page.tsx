@@ -7,7 +7,7 @@ export default function AddBook() {
 
 	return (
 		<>
-			<div className="sticky -top-4 z-10 border-b-0.75 border-grey bg-white pb-4">
+			<div className="-top-4 border-b-0.75 border-grey bg-white pb-4">
 				<button onClick={() => router.back()}>
 					<VscChromeClose className="absolute mt-1 ml-7 h-6 w-6 text-textGrey" />
 				</button>
