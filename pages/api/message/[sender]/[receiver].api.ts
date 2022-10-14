@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { TelegramClient } from "messaging-api-telegram";
+import { TelegramClient, TelegramTypes } from "messaging-api-telegram";
 
 export default async function handler(
   req: NextApiRequest,
@@ -23,7 +23,8 @@ export default async function handler(
 
   client.sendMessage(
     req.query.receiver as string,
-    `Hi ${receiver.user.firstName} you got a book request from ${sender.user.firstName} pls check your requests in the app`
+    `Hi ${receiver.user.firstName} you got a book request from <a href="tg://user?id=${req.query.sender}">${sender.user.firstName}</a> pls check your requests in the app`,
+    { parseMode: TelegramTypes.ParseMode.HTML }
   );
 
   res.status(200).json({ message: "message sent" });
