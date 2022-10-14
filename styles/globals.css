@@ -17,6 +17,10 @@
 	.pageTitle {
 		@apply border-b-0.75 border-grey pb-4 pt-7 text-center font-arno text-2xl font-semibold text-dustyRose;
 	}
+
+	.inputField {
+		@apply mb-2 border-b border-grey font-arno text-lg text-textBlack focus:border-green focus:outline-none;
+	}
 }
 
 @layer utilities {

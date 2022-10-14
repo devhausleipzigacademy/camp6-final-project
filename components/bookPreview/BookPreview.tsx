@@ -1,12 +1,14 @@
 // package imports
 import Image, { StaticImageData } from "next/future/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { FiHeart } from "react-icons/fi";
 import clsx from "clsx";
 
 // local imports
 import { randomInt } from "../../utils/random";
+import { updateBook } from "../../utils/updateBook";
 
 const bookSizes = {
 	homepage: "h-54",
@@ -43,6 +45,10 @@ interface BookPreviewProps {
 	 * Determine context and and size of component
 	 */
 	bookSize: keyof typeof bookSizes;
+	/**
+	 * Has the user added this book to their favorites?
+	 */
+	isFaved: boolean;
 }
 
 /**
@@ -55,12 +61,29 @@ export const BookPreview = ({
 	bookTitle,
 	bookAuthor,
 	linkHref,
+	isFaved,
 }: BookPreviewProps) => {
-	const [faved, setFaved] = useState(false);
+	const queryClient = useQueryClient();
+	const [faved, setFaved] = useState(isFaved);
+	const { mutate: borrowBook } = useMutation(updateBook, {
+		onSuccess: () => {
+			queryClient.invalidateQueries(["books"]);
+		},
+	});
+
+	useEffect(() => {
+		if (faved === true) {
+			// if faved connect book to user
+		} else {
+			// disconnect book from user
+		}
+	}, []);
 
 	function toggleFavorite() {
-		setFaved(!faved);
+		setFaved((faved) => !faved);
 	}
+
+	const bgColor = placeholderColors[randomInt(3)];
 
 	// TODO: if we change design for larger screen we need to modify the sizes below.
 	let sizes = "100vw";
@@ -98,9 +121,10 @@ export const BookPreview = ({
 	if (!imgSrc) {
 		imageTag = (
 			<div
+				id="test"
 				className={clsx(
 					"flex h-full w-full flex-col items-center justify-between p-4 text-center font-arno text-white",
-					placeholderColors[randomInt(3)]
+					bgColor
 				)}
 			>
 				<p
@@ -155,9 +179,12 @@ export const BookPreview = ({
 					"relative flex h-44 w-40 items-center justify-center bg-linen"
 				)}
 			>
-				<div className="relative aspect-6/9 h-5/6 bg-linen drop-shadow">
-					{isAvailable ? imageTag : unavailableOverlay}
-				</div>
+				<Link href={linkHref}>
+					<a className="relative aspect-6/9 h-5/6 bg-linen drop-shadow">
+						{isAvailable ? imageTag : unavailableOverlay}{" "}
+					</a>
+				</Link>
+
 				<div className="text-gray-400 absolute bottom-0 right-0 flex aspect-square w-1/4 items-center justify-center bg-white opacity-90 ">
 					<button
 						className="flex h-full w-full items-center justify-center"

@@ -8,33 +8,11 @@ import Carousel from "../components/carousel/Carousel";
 import fetchBooks from "../utils/fetchBooks";
 import { Book } from "@prisma/client";
 import { HomeSearchBar } from "../components/SearchBars/HomeSearchbar/HomeSearchBar";
-import { useState } from "react";
 import SubHeading2 from "../components/Subheading/Subheading";
-
-export interface SearchParams {
-  query: string;
-  zipCode: string;
-  languages: {
-    English: boolean;
-    German: Boolean;
-    French: boolean;
-  };
-}
-
-const initialSearchParams: SearchParams = {
-  query: "",
-  zipCode: "",
-  languages: {
-    English: false,
-    German: false,
-    French: false,
-  },
-};
+import checkQuery from "../utils/checkQuery";
 
 const Home: NextPage = (props) => {
-  const [searchParams, setSearchParams] = useState(initialSearchParams);
   const genres = ["Cookbook", "Fiction"];
-  const isLoggedIn = false;
 
   const categoryData = Object.fromEntries(
     genres.map((genre) => [
@@ -53,39 +31,21 @@ const Home: NextPage = (props) => {
     fetchBooks({ orderBy: "createdAt", isAvailable: true })
   );
 
-  console.log(recentUploadsQuery.isError, recentUploadsQuery.data);
-
-  return (
+  const indexPageContent = (
     <>
-      <HomeSearchBar
-        searchParams={searchParams}
-        setSearchParams={setSearchParams}
-      />
+      <HomeSearchBar />
       <div className="pl-6">
         <section id="carousel">
           <div key="0">
             <SubHeading2>Recent Uploads</SubHeading2>
-            {recentUploadsQuery.isError ? (
-              <p>Something went wrong...</p>
-            ) : recentUploadsQuery.isLoading ? (
-              <p>Loading...</p>
-            ) : (
-              //   <Carousel books={recentUploadsQuery.data} />
-              <Carousel books={[]} />
-            )}
+            <Carousel books={recentUploadsQuery.data} />
           </div>
           {Object.entries(categoryData).map(([category, query], index) => {
             return (
               <div key={index + 1}>
                 <SubHeading2>{category}</SubHeading2>
-                {query.isError ? (
-                  <p>Something went wrong...</p>
-                ) : query.isLoading ? (
-                  <p>Loading...</p>
-                ) : (
-                  // <Carousel books={query.data} />
-                  <Carousel books={[]} />
-                )}
+
+                <Carousel books={query.data} />
               </div>
             );
           })}
@@ -93,6 +53,14 @@ const Home: NextPage = (props) => {
       </div>
     </>
   );
+
+  const queryCheck = checkQuery({
+    queryStatus: recentUploadsQuery.status,
+    queryItem: recentUploadsQuery.data,
+    queryName: "books",
+    successReturn: indexPageContent,
+  });
+  return queryCheck;
 };
 
 export default Home;
