@@ -1,3 +1,4 @@
+import { Datatype } from "@faker-js/faker/modules/datatype";
 import { isError } from "lodash";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -19,9 +20,10 @@ export default function Login() {
       const user = await fetch("http://bookshare.local/api/user", {
         method: "POST",
         body: JSON.stringify({
-          username: response.username,
+          username:
+            response.username || response.first_name + new Date().getTime,
           telegramId: response.id.toString(),
-          image: response.photo_url,
+          image: response.photo_url || "",
           name: `${response.first_name} ${response.last_name || ""}`,
         }),
       }).then((res) => res.json());

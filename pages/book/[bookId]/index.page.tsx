@@ -65,6 +65,21 @@ export default function BookDescription(
     return <p>Loading...</p>;
   }
 
+  async function sendMessage() {
+    try {
+      const me = JSON.parse(localStorage.getItem("c6-tid"));
+      console.log(me);
+      const owner = await fetch(
+        `http://bookshare.local/api/user/${book.ownerId}}`
+      ).then((res) => res.json());
+      await fetch(
+        `http://bookshare.local/api/message/${me.tid}/${owner.telegramId}`
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <div className="flex h-max w-full flex-col gap-5 px-10 py-5">
       <div className="flex h-full w-full flex-col items-center gap-4 rounded-3xl border-black bg-[#fef1e0] py-6 px-4">
@@ -117,7 +132,7 @@ export default function BookDescription(
         })}
       </div>
       <div className="flex justify-between gap-2">
-        <CustomButton onClick={() => {}} functionality="ExternalApp">
+        <CustomButton onClick={sendMessage} functionality="ExternalApp">
           <FaTelegram />
           Message user
         </CustomButton>
