@@ -1,14 +1,14 @@
 # These tests are all working
 
-GET http://localhost:3000/api/book
+GET http://localhost:8080/api/book
 
 ###
 
-GET  http://localhost:3000/api/book/1422380f-1c43-425b-af91-370756228e16
+GET  http://localhost:8080/api/book/1422380f-1c43-425b-af91-370756228e16
 
 ###
 
-POST  http://localhost:3000/api/book/
+POST  http://localhost:8080/api/book/
 content-type: application/json
 
 {
@@ -22,4 +22,4 @@ content-type: application/json
 
 ###
 
-DELETE http://localhost:3000/api/book/65bedd93-910f-4b33-996e-4c7c03ae515d
+DELETE http://localhost:8080/api/book/65bedd93-910f-4b33-996e-4c7c03ae515d

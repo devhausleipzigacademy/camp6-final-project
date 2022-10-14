@@ -25,6 +25,7 @@ Primary.args = {
 	bookTitle: "Thraxas and the Dance of Death",
 	bookAuthor: "Martin Scott",
 	bookSize: "homepage",
+	isAvailable: true,
 };
 
 export const Secondary = Template.bind({});
@@ -36,6 +37,7 @@ Secondary.args = {
 		"https://wp.en.aleteia.org/wp-content/uploads/sites/2/2017/05/web3-raphaels-school-of-athens-fresco-apostolic-palace-vatican-city-raphael-pd.jpg",
 	bookTitle: "School of Athens",
 	bookAuthor: "Raphael",
+	isAvailable: true,
 };
 
 export const Tertiary = Template.bind({});
@@ -48,6 +50,7 @@ Tertiary.args = {
 		"https://marketplace.canva.com/EAD7WuSVrt0/1/0/1003w/canva-colorful-illustration-young-adult-book-cover-LVthABb24ik.jpg",
 	bookTitle: "The Hypocrite World",
 	bookAuthor: "Sophia Hill",
+	isAvailable: true,
 };
 
 export const Fourth = Template.bind({});
@@ -59,6 +62,7 @@ Fourth.args = {
 		"https://miblart.com/wp-content/uploads/2021/01/april-young-adult-768x1152.jpeg",
 	bookTitle: "The Disguised Princess",
 	bookAuthor: "Anastasis Blythe",
+	isAvailable: true,
 };
 
 export const Fifth = Template.bind({});
@@ -70,6 +74,7 @@ Fifth.args = {
 		"https://i.guim.co.uk/img/media/af1ea48f1eeaab4300691b35f585d326e6ed24bb/0_0_784_1200/master/784.jpg?width=700&quality=85&auto=format&fit=max&s=07b76b55b36cf2f0b56086c33d9e2763",
 	bookTitle: "Sorrow and Bliss",
 	bookAuthor: "Meg Mason",
+	isAvailable: true,
 };
 
 export const Sixth = Template.bind({});
@@ -81,6 +86,7 @@ Sixth.args = {
 		"https://kbimages1-a.akamaihd.net/f16e3461-030b-41c0-aed5-03e1a54c3dea/353/569/90/False/design-a-book-cover.jpg",
 	bookTitle: "Design a Book Cover",
 	bookAuthor: "Tim Shaker",
+	isAvailable: false,
 };
 
 export const Placeholder = Template.bind({});
@@ -90,6 +96,7 @@ Placeholder.args = {
 	bookSize: "homepage",
 	bookTitle: "Dragon Banner",
 	bookAuthor: "Rebecca Gablie",
+	isAvailable: true,
 };
 
 export const LongTitle = Template.bind({});
@@ -99,4 +106,5 @@ LongTitle.args = {
 	bookSize: "homepage",
 	bookTitle: "My grandmother asked me to tell you she's sorry",
 	bookAuthor: "Fredrik Backman",
+	isAvailable: true,
 };
