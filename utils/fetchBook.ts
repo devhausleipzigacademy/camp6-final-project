@@ -6,7 +6,7 @@ const host =
     : process.env.NEXT_PUBLIC_DEV_HOST;
 
 export default function fetchBook(bookId: string): Promise<Book> {
-  return fetch(`http://${host}/api/book/${bookId}`, {
+  return fetch(`${host}/api/book/${bookId}`, {
     method: "GET",
   }).then((res) => {
     if (!res.ok) throw Error;
