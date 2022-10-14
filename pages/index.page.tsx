@@ -36,8 +36,8 @@ const Home: NextPage = (props) => {
 
   const { data, isLoading } = useQuery<Book[]>(
     ["getBooks", "createdAt"],
-    () => fetch("http://bookshare.local/api/book").then((res) => res.json())
-    // fetchBooks({ orderBy: "createdAt", isAvailable: true })
+    // () => fetch("http://bookshare.local/api/book").then((res) => res.json())
+    () => fetchBooks({ orderBy: "createdAt", isAvailable: true })
   );
 
   const indexPageContent = (
@@ -82,17 +82,15 @@ interface GenreProps {
   genre: string;
 }
 function Genre({ genre }: GenreProps) {
-  const { data, isLoading } = useQuery<Book[]>(
-    ["books", genre],
-    () =>
-      fetch(`http://bookshare.local/api/book?genre=${genre}`).then((res) =>
-        res.json()
-      )
-    // fetchBooks({
-    //   orderBy: "createdAt",
-    //   isAvailable: true,
-    //   genre,
-    // })
+  const { data, isLoading } = useQuery<Book[]>(["books", genre], () =>
+    // fetch(`http://bookshare.local/api/book?genre=${genre}`).then((res) =>
+    //   res.json()
+    // )
+    fetchBooks({
+      orderBy: "createdAt",
+      isAvailable: true,
+      genre,
+    })
   );
   console.log(data);
   return (

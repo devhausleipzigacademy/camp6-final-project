@@ -23,7 +23,7 @@ export default function fetchBooks({
   borrowed,
   likedBy,
 }: FetchBookProps) {
-  let URLString = `http://${host}/api/book?`;
+  let URLString = `${host}/api/book?`;
 
   if (isAvailable !== undefined) {
     URLString += `isAvailable=${isAvailable}&`;
