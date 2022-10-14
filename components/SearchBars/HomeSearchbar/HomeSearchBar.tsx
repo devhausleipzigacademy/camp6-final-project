@@ -129,11 +129,10 @@ export function HomeSearchBar({}) {
         onSubmit={handleSubmit}
         className="flex h-full w-80 rounded-lg border-2 border-searchBar pr-1"
       >
-        <Link
-          href={`/search/${query}`}
-          className=" flex aspect-square h-full justify-center self-start"
-        >
-          <FiSearch className="h-full w-12  stroke-2 p-1 pl-3 text-searchBar" />
+        <Link href={`/search/${query}`}>
+          <a className=" flex aspect-square h-full justify-center self-start">
+            <FiSearch className="h-full w-12  stroke-2 p-1 pl-3 text-searchBar" />
+          </a>
         </Link>
         <input
           className="w-full focus:outline-none"

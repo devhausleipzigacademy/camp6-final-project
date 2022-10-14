@@ -22,8 +22,7 @@ export default function Login() {
           username: response.username,
           telegramId: response.id.toString(),
           image: response.photo_url,
-          firstName: response.first_name,
-          lastName: response.last_name,
+          name: `${response.first_name} ${response.last_name || ""}`,
         }),
       }).then((res) => res.json());
       const telegramId = localStorage.getItem("c6-tid");

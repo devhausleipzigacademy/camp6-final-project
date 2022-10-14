@@ -7,8 +7,7 @@ const postUser = z.object({
   username: z.string(),
   telegramId: z.string(),
   image: z.string(),
-  firstName: z.string(),
-  lastName: z.string(),
+  name: z.string(),
 });
 
 export type PostUser = z.infer<typeof postUser>;
@@ -23,6 +22,7 @@ export default async function handler(
       res.status(200).json(users);
     }
     if (req.method === "POST") {
+      console.log(req.body);
       const data = JSON.parse(req.body);
       const foundUser = await prisma.user.findUnique({
         where: { telegramId: data.telegramId },
