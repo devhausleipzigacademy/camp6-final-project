@@ -171,36 +171,36 @@ export const BookPreview = ({
     </div>
   );
 
-	if (bookSize === "previewGrid") {
-		return (
-			<div
-				className={clsx(
-					bookSizes[bookSize],
-					"relative flex h-44 w-40 items-center justify-center bg-linen"
-				)}
-			>
-				<Link href={linkHref}>
-					<a className="relative aspect-6/9 h-5/6 bg-linen drop-shadow">
-						{isAvailable ? imageTag : unavailableOverlay}{" "}
-					</a>
-				</Link>
+  if (bookSize === "previewGrid") {
+    return (
+      <div
+        className={clsx(
+          bookSizes[bookSize],
+          "relative flex h-44 w-40 items-center justify-center bg-linen"
+        )}
+      >
+        <Link href={linkHref}>
+          <a className="relative aspect-6/9 h-5/6 bg-linen drop-shadow">
+            {isAvailable ? imageTag : unavailableOverlay}{" "}
+          </a>
+        </Link>
 
-				<div className="text-gray-400 absolute bottom-0 right-0 flex aspect-square w-1/4 items-center justify-center bg-white opacity-90 ">
-					<button
-						className="flex h-full w-full items-center justify-center"
-						onClick={toggleFavorite}
-					>
-						<FiHeart
-							className={clsx(
-								"h-5/6 w-5/6 stroke-1",
-								faved ? "fill-salmon text-salmon" : "text-grey"
-							)}
-						/>
-					</button>
-				</div>
-			</div>
-		);
-	}
+        <div className="text-gray-400 absolute bottom-0 right-0 flex aspect-square w-1/4 items-center justify-center bg-white opacity-90 ">
+          <button
+            className="flex h-full w-full items-center justify-center"
+            onClick={toggleFavorite}
+          >
+            <FiHeart
+              className={clsx(
+                "h-5/6 w-5/6 stroke-1",
+                faved ? "fill-salmon text-salmon" : "text-grey"
+              )}
+            />
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div

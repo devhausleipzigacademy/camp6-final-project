@@ -8,8 +8,6 @@ generator client {
     previewFeatures = ["fullTextSearch"]
 }
 
-
-
 model Book {
     identifier       String   @id @default(uuid())
     createdAt       DateTime @default(now())   
@@ -33,6 +31,7 @@ model Book {
     requests Request[] @relation("requested")
 	location Location? @relation(name: "booklocation", fields: [locationId], references: [identifier])
     locationId String? 
+    	likedBy         User[] @relation("liked")
 }
 
     
@@ -50,6 +49,7 @@ model User {
 	booksOwned    Book[]   @relation("owning")
 	bookRequests  Request[] @relation("requesting")
 	locations	  Location[] @relation(name: "userlocations")
+    	likedBooks      Book[] @relation("liked")
 
 }
 

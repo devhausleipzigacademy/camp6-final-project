@@ -7,6 +7,8 @@ model User {
     identifier                  String   @id @default(uuid())
     booksBorrowed       Book[] @relation("borrowing")
     booksOwned          Book[] @relation("owning")
+	likedBooks      Book[] @relation("liked")
+
 }
 
 model Book {
@@ -30,7 +32,8 @@ model Book {
 	borrower User? @relation(name: "borrowing", fields: [borrowerId], references: [identifier])
 	borrowDate DateTime? 
 	location Location? @relation(name: "booklocation", fields: [locationId], references: [identifier])
-	locationId String? 
+	locationId 		String? 
+	likedBy         User[] @relation("liked")
 }
 
 model Location {

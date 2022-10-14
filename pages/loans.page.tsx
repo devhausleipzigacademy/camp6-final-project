@@ -17,6 +17,8 @@ export default function Loans() {
     fetchBooks({ borrowed: true })
   );
 
+  console.log("books: ", books);
+
   const loansPageContent = (
     <>
       <h2 className="pageTitle">

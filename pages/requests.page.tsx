@@ -9,11 +9,10 @@ import { BookPreview } from "../components/bookPreview/BookPreview";
 import { fetchRequests } from "../utils/fetchRequests";
 import { useDeleteRequest, useDeleteRequests } from "../utils/fetchRequest";
 import { updateBook } from "../utils/updateBook";
-import { stat } from "fs";
 import checkQuery from "../utils/checkQuery";
 
 // renders out the list of borrow requests
-export default function Library() {
+export default function Requests() {
   const { data: requests, status: status } = useQuery<
     (Request & {
       book: Book;
@@ -21,31 +20,34 @@ export default function Library() {
     })[]
   >(["requests"], () => fetchRequests({}));
 
-  const requestPageContent = (
-    <>
-      <h2 className="pageTitle">Requests</h2>
-
-      {requests.map((request) => (
-        <div className="flex flex-col justify-evenly border-b-0.75 border-grey p-5">
-          <RequestItem
-            key={request.identifier}
-            book={request.book}
-            request={request}
-            requesterName={request.requester.name}
-            bookId={request.bookId}
-          />
-        </div>
-      ))}
-    </>
-  );
-
   const queryCheck = checkQuery({
     queryStatus: status,
     queryItem: requests,
-    queryName: "books",
-    successReturn: requestPageContent,
+    queryName: "requests",
+    successReturn: requestPageContent(requests),
   });
   return queryCheck;
+}
+
+function requestPageContent(requests) {
+  if (requests !== undefined && requests !== null)
+    return (
+      <>
+        <h2 className="pageTitle">Requests</h2>
+
+        {requests.map((request) => (
+          <div className="flex flex-col justify-evenly border-b-0.75 border-grey p-5">
+            <RequestItem
+              key={request.identifier}
+              book={request.book}
+              request={request}
+              requesterName={request.requester.name}
+              bookId={request.bookId}
+            />
+          </div>
+        ))}
+      </>
+    );
 }
 
 // individual borrow request

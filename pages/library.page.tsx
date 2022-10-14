@@ -16,8 +16,6 @@ export default function Library() {
     fetchBooks({ orderBy: "title" })
   );
 
-  console.log(books);
-
   const queryCheck = checkQuery({
     queryStatus: booksStatus,
     queryItem: books,

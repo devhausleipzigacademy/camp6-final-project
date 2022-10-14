@@ -11,8 +11,6 @@ export const putBook = z.object({
   description: z.string().optional(),
   isbn: z.string().optional(),
   publishYear: z.date().optional(),
-  borrowerId: z.union([z.string(), z.null()]).optional(),
-  borrowDate: z.date().optional(),
   genres: z
     .enum(GENRES)
     .array()

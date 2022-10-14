@@ -9,7 +9,7 @@ export function fetchRequests({}: FetchRequestProps) {
       ? process.env.NEXT_PUBLIC_PROD_HOST
       : process.env.NEXT_PUBLIC_DEV_HOST;
 
-  return fetch(`http://${host}/api/request`, {
+  return fetch(`http://${host}/api/request/`, {
     method: "GET",
   }).then((res) => {
     return res.json();
