@@ -18,6 +18,15 @@ Then, either start Storybook to work on the components:
 yarn storybook
 ```
 
+In order to use the telegram login locally you'll have to proxy your localhost to `bookshare.local`
+
+```
+sudo vim /private/etc/hosts
+
+# add the line
+127.0.0.1 bookshare.local
+```
+
 Open [http://localhost:6006](http://localhost:6006) with your browser to see the result.
 
 Or run the development server:

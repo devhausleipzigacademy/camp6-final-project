@@ -4,43 +4,51 @@ import { z, ZodError } from "zod";
 import { createUser } from "./interactions";
 
 const postUser = z.object({
-	username: z.string(),
-	telegramId: z.string(),
-	image: z.string().optional(),
-	name: z.string().optional(),
-	createdAt: z.date(),
-	uptadedAt: z.date(),
+  username: z.string(),
+  telegramId: z.string(),
+  image: z.string(),
+  firstName: z.string(),
+  lastName: z.string(),
 });
 
 export type PostUser = z.infer<typeof postUser>;
 
 export default async function handler(
-	req: NextApiRequest,
-	res: NextApiResponse
+  req: NextApiRequest,
+  res: NextApiResponse
 ) {
-	if (req.method === "GET") {
-		const users = await prisma.user.findMany();
-		res.status(200).json(users);
-	}
-	try {
-		if (req.method === "POST") {
-			postUser.parse(req.body);
-			// const data = PrismaClient.parse(req.body);
+  try {
+    if (req.method === "GET") {
+      const users = await prisma.user.findMany();
+      res.status(200).json(users);
+    }
+    if (req.method === "POST") {
+      const data = JSON.parse(req.body);
+      const foundUser = await prisma.user.findUnique({
+        where: { telegramId: data.telegramId },
+      });
+      if (!foundUser) {
+        postUser.parse(data);
+        // const data = PrismaClient.parse(req.body);
 
-			const user = await createUser(req.body);
+        const user = await createUser(data);
 
-			res.status(201).json({ id: user.identifier });
-		}
-	} catch (err) {
-		if (err instanceof ZodError) {
-			res.status(422).send({
-				message: "invalid user.",
-				error: err,
-			});
-		}
-		res.status(400).send({
-			message: "The server encountered an error",
-			error: err,
-		});
-	}
+        res.status(201).json(user);
+      } else {
+        res.status(200).json(foundUser);
+      }
+    }
+  } catch (err) {
+    if (err instanceof ZodError) {
+      res.status(422).send({
+        message: "invalid user.",
+        error: err,
+      });
+    }
+    console.log(err);
+    res.status(400).send({
+      message: "The server encountered an error",
+      error: err,
+    });
+  }
 }
