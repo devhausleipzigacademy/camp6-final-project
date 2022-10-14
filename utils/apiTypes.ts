@@ -1,4 +1,4 @@
-type BooksResponse = {
+export type BooksResponse = {
   totalItems: number;
   items: GoogleBook[];
 };
