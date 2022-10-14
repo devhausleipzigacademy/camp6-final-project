@@ -56,47 +56,44 @@ const Home: NextPage = (props) => {
 
   //   console.log(recentUploadsQuery.isError, recentUploadsQuery.data);
 
-  if (!isLoggedIn) {
-    return <Login />;
-  }
-
   return (
-    <>
-      <HomeSearchBar
-        searchParams={searchParams}
-        setSearchParams={setSearchParams}
-      />
-      <div className="pl-6">
-        <section id="carousel">
-          <div key="0">
-            <SubHeading2>Recent Uploads</SubHeading2>
-            {recentUploadsQuery.isError ? (
-              <p>Something went wrong...</p>
-            ) : recentUploadsQuery.isLoading ? (
-              <p>Loading...</p>
-            ) : (
-              //   <Carousel books={recentUploadsQuery.data} />
-              <Carousel books={[]} />
-            )}
-          </div>
-          {Object.entries(categoryData).map(([category, query], index) => {
-            return (
-              <div key={index + 1}>
-                <SubHeading2>{category}</SubHeading2>
-                {query.isError ? (
-                  <p>Something went wrong...</p>
-                ) : query.isLoading ? (
-                  <p>Loading...</p>
-                ) : (
-                  // <Carousel books={query.data} />
-                  <Carousel books={[]} />
-                )}
-              </div>
-            );
-          })}
-        </section>
-      </div>
-    </>
+    <div>Home</div>
+    // <>
+    //   <HomeSearchBar
+    //     searchParams={searchParams}
+    //     setSearchParams={setSearchParams}
+    //   />
+    //   <div className="pl-6">
+    //     <section id="carousel">
+    //       <div key="0">
+    //         <SubHeading2>Recent Uploads</SubHeading2>
+    //         {recentUploadsQuery.isError ? (
+    //           <p>Something went wrong...</p>
+    //         ) : recentUploadsQuery.isLoading ? (
+    //           <p>Loading...</p>
+    //         ) : (
+    //           //   <Carousel books={recentUploadsQuery.data} />
+    //           <Carousel books={[]} />
+    //         )}
+    //       </div>
+    //       {Object.entries(categoryData).map(([category, query], index) => {
+    //         return (
+    //           <div key={index + 1}>
+    //             <SubHeading2>{category}</SubHeading2>
+    //             {query.isError ? (
+    //               <p>Something went wrong...</p>
+    //             ) : query.isLoading ? (
+    //               <p>Loading...</p>
+    //             ) : (
+    //               // <Carousel books={query.data} />
+    //               <Carousel books={[]} />
+    //             )}
+    //           </div>
+    //         );
+    //       })}
+    //     </section>
+    //   </div>
+    // </>
   );
 };
 
