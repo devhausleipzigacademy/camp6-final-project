@@ -12,20 +12,20 @@ export const updateBook = ({
   bookId: string;
   book: PutBook;
 }) => {
-  return fetch(`http://${host}/api/book/${bookId}`, {
+  return fetch(`${host}/api/book/${bookId}`, {
     method: "PUT",
     body: JSON.stringify(book),
   });
 };
 
 export function deleteBook(bookId: string) {
-  return fetch(`http://${host}/api/book/${bookId}`, {
+  return fetch(`${host}/api/book/${bookId}`, {
     method: "DELETE",
   });
 }
 
 export function createBook(data: PostBook) {
-  return fetch(`http://${host}/api/book/`, {
+  return fetch(`${host}/api/book/`, {
     method: "POST",
     body: JSON.stringify(data),
   });

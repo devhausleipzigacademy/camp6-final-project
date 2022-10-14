@@ -62,7 +62,7 @@ export default function fetchBooks({
 }
 
 export function searchBooks(searchRequest: String) {
-  return fetch(`http://${host}/api/book?searchRequest=${searchRequest}`, {
+  return fetch(`${host}/api/book?searchRequest=${searchRequest}`, {
     method: "GET",
   }).then((res) => {
     if (!res.ok) throw Error;
@@ -71,7 +71,7 @@ export function searchBooks(searchRequest: String) {
 }
 
 export function countLanguages() {
-  return fetch(`http://${host}/api/book/languageList/`, {
+  return fetch(`${host}/api/book/languageList/`, {
     method: "GET",
   }).then((res) => {
     if (!res.ok) throw Error;

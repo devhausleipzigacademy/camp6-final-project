@@ -6,7 +6,7 @@ const host =
     : process.env.NEXT_PUBLIC_DEV_HOST;
 
 export function fetchUser(userId: string): Promise<User> {
-  return fetch(`http://${host}/api/user/${userId}`, {
+  return fetch(`${host}/api/user/${userId}`, {
     method: "GET",
   }).then((res) => {
     if (!res.ok) throw Error;
