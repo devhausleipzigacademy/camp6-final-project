@@ -9,6 +9,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Head from "next/head";
 import Header from "../components/Header/Header";
 import { useRouter } from "next/router";
+import { Footer } from "../components/Footer";
 
 function MyApp({ Component, pageProps }) {
   const [queryClient] = React.useState(() => new QueryClient());
@@ -35,8 +36,11 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
-          <Header />
-          <Component {...pageProps} />
+          <div className="flex h-screen flex-col">
+            <Header />
+            <Component {...pageProps} />
+            <Footer />
+          </div>
           <ReactQueryDevtools initialIsOpen={false} />
         </Hydrate>
       </QueryClientProvider>
