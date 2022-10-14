@@ -1,4 +1,4 @@
-import { PutBook } from "../pages/api/book/model.zod";
+import { PostBook, PutBook } from "../pages/api/book/model.zod";
 
 const host =
   process.env.NODE_ENV == "production"
@@ -17,3 +17,16 @@ export const updateBook = ({
     body: JSON.stringify(book),
   });
 };
+
+export function deleteBook(bookId: string) {
+  return fetch(`http://${host}/api/book/${bookId}`, {
+    method: "DELETE",
+  });
+}
+
+export function createBook(data: PostBook) {
+  return fetch(`http://${host}/api/book/`, {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}

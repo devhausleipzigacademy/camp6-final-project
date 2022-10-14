@@ -10,35 +10,16 @@ import { CustomButton } from "../components/button/Button";
 import { FaTelegram } from "react-icons/fa";
 import { fetchUser } from "../utils/fetchUser";
 import { updateBook } from "../utils/updateBook";
-import { date } from "zod";
+import checkQuery from "../utils/checkQuery";
 
 export default function Loans() {
-  const { data: books, status: status } = useQuery<Book[]>(["books"], () =>
+  const { data: books, status: booksStatus } = useQuery<Book[]>(["books"], () =>
     fetchBooks({ borrowed: true })
   );
 
-  if (status === "loading")
-    return (
-      <p className=" flex justify-center pt-16 font-montserrat text-base text-black">
-        Loading...
-      </p>
-    );
+  console.log("books: ", books);
 
-  if (status === "error")
-    return (
-      <p className=" flex justify-center pt-16 font-montserrat text-base text-black">
-        No requests found.
-      </p>
-    );
-
-  if (books.length === 0)
-    return (
-      <p className=" flex justify-center pt-16 font-montserrat text-base text-black">
-        You have no open loans.
-      </p>
-    );
-
-  return (
+  const loansPageContent = (
     <>
       <h2 className="pageTitle">
         <Link href="/library">
@@ -52,6 +33,13 @@ export default function Loans() {
       ))}
     </>
   );
+  const queryCheck = checkQuery({
+    queryStatus: booksStatus,
+    queryItem: books,
+    queryName: "loans",
+    successReturn: loansPageContent,
+  });
+  return queryCheck;
 }
 interface LoanItemProps {
   book: Book;
@@ -76,12 +64,10 @@ function LoanItem({ book }: LoanItemProps) {
   if (!borrowerIsLoading && borrower === undefined)
     return <p>no borrowed book found</p>;
 
-  if (borrower === null) return <p>no borrowed book found</p>;
-
   const [year, month, rest] = book.borrowDate.toString().split("-");
-  const [day] = rest.split("T");
+  const [day, time] = rest.split("T");
 
-  // const preferredLanguage = checkPreferredLanguage();
+  // const preferredLanguage = checkPreferredLanguage()
   let date = `${day}/${month}/${year}`;
 
   // if (preferredLanguage == 'English') date =

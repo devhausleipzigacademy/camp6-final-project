@@ -44,13 +44,13 @@ describe("Test Book DB Interactions", () => {
 	});
 	// 3 Test
 	it("retrieveBooks returns array of books objects (or empty)", async () => {
-		const booksdb = await retrieveBooks([]);
+		const booksdb = await retrieveBooks({ clauses: undefined });
 
 		expect(isArray(booksdb)).toEqual(true);
 	});
 
 	it("retrieveBooks returns array, if array not empty check for book key author", async () => {
-		const booksdb = await retrieveBooks([]);
+		const booksdb = await retrieveBooks({ clauses: undefined });
 
 		if (booksdb.length > 1) expect(booksdb[0].author).toBeDefined();
 	});

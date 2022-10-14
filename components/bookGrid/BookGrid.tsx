@@ -1,4 +1,5 @@
 import { Book } from "@prisma/client";
+import Link from "next/link";
 import { BookPreview } from "../bookPreview/BookPreview";
 
 interface BookGridProps {
@@ -15,7 +16,7 @@ export function BookGrid({ books }: BookGridProps) {
 	return (
 		<div className="grid grid-cols-1 justify-items-center gap-3 px-8 pt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
 			{books.map((book) => (
-				<div>
+				<div key={book.identifier}>
 					<BookPreview
 						isAvailable={book.isAvailable}
 						bookTitle={book.title}
@@ -23,14 +24,21 @@ export function BookGrid({ books }: BookGridProps) {
 						bookAuthor={book.author}
 						linkHref={`/book/${book.identifier}`}
 						bookSize={"previewGrid"}
-						isFaved={true}
 					/>
-					<p className="w-full truncate font-arno text-xs font-bold text-textGrey">
-						{book.author}
-					</p>
-					<p className="w-full truncate font-montserrat text-xs font-normal text-textGrey">
-						{book.title}
-					</p>
+					<Link href={`/book/${book.identifier}`}>
+						<a>
+							<p className="w-full truncate font-arno text-xs font-bold text-textGrey">
+								{book.author}
+							</p>
+						</a>
+					</Link>
+					<Link href={`/book/${book.identifier}`}>
+						<a>
+							<p className="w-full truncate font-montserrat text-xs font-normal text-textGrey">
+								{book.title}
+							</p>
+						</a>
+					</Link>
 				</div>
 			))}
 		</div>

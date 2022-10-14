@@ -23,6 +23,7 @@ module.exports = {
 			linen: "#F8F3ED",
 			//needed for toggle switch
 			buttonGrey: "#D4D3D3",
+			searchBar: "#E7EAEE",
 		},
 		fontFamily: {
 			arno: ["arno", "sans-serif"],
@@ -39,11 +40,6 @@ module.exports = {
 			plusButton: "0px 4px 4px rgba(0, 0, 0, 0.25)",
 		},
 		extend: {
-			borderWidth: { 0.75: "0.75px" },
-			// Iphone Screen width
-			screens: {
-				sm: "414px",
-			},
 			aspectRatio: {
 				// needed for book thumbnails/previews
 				"6/9": "6 / 9",
@@ -52,9 +48,14 @@ module.exports = {
 				//needed for toggle switch
 				toggleGradient: "linear-gradient(180deg, #FFFFFF 0%, #E8EAEA 100%)",
 			},
+			borderWidth: { 0.75: "0.75px" },
+
 			boxShadow: {
 				//needed for toggle switch
 				toggleSwitch: "inset 0px 6px 8px 3px rgba(0, 0, 0, 0.1)",
+			},
+			fontSize: {
+				"2xs": "10px",
 			},
 			height: {
 				// needed for book thumbnails/previews
@@ -63,8 +64,12 @@ module.exports = {
 				89: "22.25rem /* 356pixel*/",
 				22: "5.5rem /* 88pixel*/",
 			},
-			fontSize: {
-				"2xs": "10px",
+			// Iphone Screen width
+			screens: {
+				sm: "414px",
+			},
+			strokeWidth: {
+				3: "3px",
 			},
 			width: {
 				mobile: "640px",

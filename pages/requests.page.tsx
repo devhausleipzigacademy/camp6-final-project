@@ -9,9 +9,10 @@ import { BookPreview } from "../components/bookPreview/BookPreview";
 import { fetchRequests } from "../utils/fetchRequests";
 import { useDeleteRequest, useDeleteRequests } from "../utils/fetchRequest";
 import { updateBook } from "../utils/updateBook";
+import checkQuery from "../utils/checkQuery";
 
 // renders out the list of borrow requests
-export default function Library() {
+export default function Requests() {
   const { data: requests, status: status } = useQuery<
     (Request & {
       book: Book;
@@ -19,46 +20,34 @@ export default function Library() {
     })[]
   >(["requests"], () => fetchRequests({}));
 
-  if (status === "loading")
+  const queryCheck = checkQuery({
+    queryStatus: status,
+    queryItem: requests,
+    queryName: "requests",
+    successReturn: requestPageContent(requests),
+  });
+  return queryCheck;
+}
+
+function requestPageContent(requests) {
+  if (requests !== undefined && requests !== null)
     return (
-      <p className=" flex justify-center pt-16 font-montserrat text-base text-black">
-        Loading...
-      </p>
+      <>
+        <h2 className="pageTitle">Requests</h2>
+
+        {requests.map((request) => (
+          <div className="flex flex-col justify-evenly border-b-0.75 border-grey p-5">
+            <RequestItem
+              key={request.identifier}
+              book={request.book}
+              request={request}
+              requesterName={request.requester.name}
+              bookId={request.bookId}
+            />
+          </div>
+        ))}
+      </>
     );
-
-  if (status === "error")
-    return (
-      <p className=" flex justify-center pt-16 font-montserrat text-base text-black">
-        No requests found.
-      </p>
-    );
-
-  if (requests.length === 0)
-    return (
-      <p className=" flex justify-center pt-16 font-montserrat text-base text-black">
-        You have no open requests.
-      </p>
-    );
-
-  // TODO: abstract status notification as util function
-
-  return (
-    <>
-      <h2 className="pageTitle">Requests</h2>
-
-      {requests.map((request) => (
-        <div className="flex flex-col justify-evenly border-b-0.75 border-grey p-5">
-          <RequestItem
-            key={request.identifier}
-            book={request.book}
-            request={request}
-            requesterName={request.requester.name}
-            bookId={request.bookId}
-          />
-        </div>
-      ))}
-    </>
-  );
 }
 
 // individual borrow request
@@ -94,7 +83,6 @@ function RequestItem({
         linkHref={`/book/${book.identifier}`}
         bookSize={"listItemSmall"}
         isAvailable={book.isAvailable}
-        isFaved={false}
       />
 
       <div className="flex flex-col justify-center p-4 px-5">

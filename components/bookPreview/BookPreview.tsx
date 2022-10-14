@@ -179,9 +179,12 @@ export const BookPreview = ({
 					"relative flex h-44 w-40 items-center justify-center bg-linen"
 				)}
 			>
-				<div className="relative aspect-6/9 h-5/6 bg-linen drop-shadow">
-					{isAvailable ? imageTag : unavailableOverlay}
-				</div>
+				<Link href={linkHref}>
+					<a className="relative aspect-6/9 h-5/6 bg-linen drop-shadow">
+						{isAvailable ? imageTag : unavailableOverlay}{" "}
+					</a>
+				</Link>
+
 				<div className="text-gray-400 absolute bottom-0 right-0 flex aspect-square w-1/4 items-center justify-center bg-white opacity-90 ">
 					<button
 						className="flex h-full w-full items-center justify-center"

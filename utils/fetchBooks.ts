@@ -10,7 +10,7 @@ type FetchBookProps = {
   author?: string;
   language?: string;
   isAvailable?: boolean;
-  borrowed?: boolean;
+  borrowed?: Boolean;
   likedBy?: string;
 };
 
@@ -56,6 +56,25 @@ export default function fetchBooks({
   return fetch(URLString, {
     method: "GET",
   }).then((res) => {
+    if (!res.ok) throw Error;
+    return res.json();
+  });
+}
+
+export function searchBooks(searchRequest: String) {
+  return fetch(`http://${host}/api/book?searchRequest=${searchRequest}`, {
+    method: "GET",
+  }).then((res) => {
+    if (!res.ok) throw Error;
+    return res.json();
+  });
+}
+
+export function countLanguages() {
+  return fetch(`http://${host}/api/book/languageList/`, {
+    method: "GET",
+  }).then((res) => {
+    if (!res.ok) throw Error;
     return res.json();
   });
 }
