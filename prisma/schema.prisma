@@ -19,8 +19,8 @@ model Book {
     description String?
     isbn        String?
     publishYear DateTime?
-    genres      Json
-    tags        Json
+    genres      String[]
+    tags        String[]
     isAvailable Boolean   @default(true)
     isReserved  Boolean   @default(false)
     ownerId     String

@@ -18,15 +18,7 @@ export function BookGrid({ books }: BookGridProps) {
       {books.map((book) => (
         <Link href={`/book/${book.identifier}`} key={book.identifier}>
           <a className="flex flex-col items-center text-center">
-            <BookPreview
-              isAvailable={book.isAvailable}
-              bookTitle={book.title}
-              imgSrc={book.image}
-              bookAuthor={book.author}
-              linkHref={`/book/${book.identifier}`}
-              bookSize={"previewGrid"}
-              isFaved={false}
-            />
+            <BookPreview book={book} bookSize={"previewGrid"} isFaved={false} />
             <p className="w-full truncate font-arno text-xs font-bold text-textGrey">
               {book.author}
             </p>

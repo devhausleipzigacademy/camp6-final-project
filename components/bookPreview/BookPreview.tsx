@@ -9,6 +9,7 @@ import clsx from "clsx";
 // local imports
 import { randomInt } from "../../utils/random";
 import { updateBook } from "../../utils/updateBook";
+import { Book } from "@prisma/client";
 
 const bookSizes = {
   homepage: "h-54",
@@ -21,55 +22,22 @@ const bookSizes = {
 
 const placeholderColors = ["bg-blue", "bg-salmon", "bg-dustyRose"];
 interface BookPreviewProps {
-  /**
-   * Source of Image?
-   */
-  imgSrc?: string | StaticImageData;
-  /**
-   * Book title?
-   */
-  bookTitle;
-  /**
-   * Book author?
-   */
-  bookAuthor;
-  /**
-   * Link target of where preview takes you
-   */
-  linkHref: string;
-  /**
-   * Is the book available for requesting and searching?
-   */
-  isAvailable: boolean;
-  /**
-   * Determine context and and size of component
-   */
+  book: Book;
   bookSize: keyof typeof bookSizes;
-  /**
-   * Has the user added this book to their favorites?
-   */
   isFaved: boolean;
 }
 
 /**
  * Book thumbnail that can be used in lists and overviews. Aspect ratio fixed to prevent distorted images.
  */
-export const BookPreview = ({
-  isAvailable,
-  bookSize,
-  imgSrc,
-  bookTitle,
-  bookAuthor,
-  linkHref,
-  isFaved,
-}: BookPreviewProps) => {
-  const queryClient = useQueryClient();
+export const BookPreview = ({ book, isFaved, bookSize }: BookPreviewProps) => {
+  // const queryClient = useQueryClient();
   const [faved, setFaved] = useState(isFaved);
-  const { mutate: borrowBook } = useMutation(updateBook, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(["books"]);
-    },
-  });
+  // const { mutate: borrowBook } = useMutation(updateBook, {
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries(["books"]);
+  //   },
+  // });
 
   useEffect(() => {
     if (faved === true) {
@@ -118,7 +86,7 @@ export const BookPreview = ({
   let imageTag;
 
   // if no image provide we fill image tag with placeholder
-  if (!imgSrc) {
+  if (!book.image) {
     imageTag = (
       <div
         id="test"
@@ -130,7 +98,7 @@ export const BookPreview = ({
         <p
           className={clsx(tinyText ? "w-full truncate text-[11px]" : "text-sm")}
         >
-          {bookTitle}
+          {book.title}
         </p>
         <p
           className={clsx(
@@ -138,18 +106,18 @@ export const BookPreview = ({
             tinyText ? "text-[9px]" : "text-xs"
           )}
         >
-          {bookAuthor}
+          {book.author}
         </p>
       </div>
     );
   } else {
     imageTag = (
       <Image
-        src={imgSrc}
+        src={book.image}
         fill
-        alt={bookAuthor + ": " + bookTitle}
-        // sizes={sizes}
-        title={bookTitle}
+        alt={`${book.author}: ${book.title}`}
+        sizes={sizes}
+        title={book.title}
         style={{ objectFit: "contain" }}
       />
     );
@@ -179,9 +147,9 @@ export const BookPreview = ({
           "relative flex h-44 w-40 items-center justify-center bg-linen"
         )}
       >
-        <Link href={linkHref}>
+        <Link href={`/book/${book.identifier}`}>
           <a className="relative aspect-6/9 h-5/6 bg-linen drop-shadow">
-            {isAvailable ? imageTag : unavailableOverlay}{" "}
+            {book.isAvailable ? imageTag : unavailableOverlay}{" "}
           </a>
         </Link>
 
@@ -210,8 +178,8 @@ export const BookPreview = ({
         modifiedShadow ? "drop-shadow-carouselItem" : "drop-shadow"
       )}
     >
-      <Link href={linkHref}>
-        <a>{isAvailable ? imageTag : unavailableOverlay}</a>
+      <Link href={`/book/${book.identifier}`}>
+        <a>{book.isAvailable ? imageTag : unavailableOverlay}</a>
       </Link>
     </div>
   );

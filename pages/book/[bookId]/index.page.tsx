@@ -1,72 +1,40 @@
+import { Book } from "@prisma/client";
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FaTelegram } from "react-icons/fa";
 import { GoLocation } from "react-icons/go";
 import { HiChevronLeft } from "react-icons/hi";
-import { ExampleTags } from "../../../components/bookDescription/BookDescription.story";
+
 import { CustomButton } from "../../../components/button/Button";
-import { useQuery } from "@tanstack/react-query";
-import { Book } from "@prisma/client";
-import { dehydrate, QueryClient } from "@tanstack/react-query";
+import { Tags } from "../../../components/tags/Tags";
 import fetchBook from "../../../utils/fetchBook";
-import checkQuery from "../../../utils/checkQuery";
-import { InferGetStaticPropsType } from "next/types";
 
-const tagColors = [
-  "bg-blue",
-  "bg-dustyRose",
-  "bg-salmon",
-  "bg-yellow",
-  "bg-green",
-  "bg-linen",
-];
-export async function getStaticProps({ params }) {
-  const { bookId } = params;
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery(
-    ["getBook", bookId],
-    () => fetchBook(bookId),
-    {
-      staleTime: 360000,
-    }
-  );
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-}
-
-export async function getStaticPaths() {
-  return {
-    paths: [],
-    fallback: "blocking",
-  };
-}
-
-export default function BookDescription(
-  props: InferGetStaticPropsType<typeof getStaticProps>
-) {
+export default function BookDescription() {
   const router = useRouter();
-  const { bookId } = router.query;
+  const bookId = router.query.bookId as string;
+
+  const [sending, setSending] = useState(false);
 
   const { data: book, isLoading } = useQuery<Book>(
     ["getBook", bookId],
     () => fetchBook(String(bookId)),
     {
-      enabled: bookId.length > 0,
+      enabled: !!bookId,
     }
   );
 
-  if (isLoading) {
-    return <p>Loading...</p>;
+  function handleFavorite() {
+    console.log("favorite");
   }
+
+  if (isLoading) return <p>Loading...</p>;
 
   async function sendMessage() {
     try {
+      setSending(true);
       const me = JSON.parse(localStorage.getItem("c6-tid"));
       console.log(me);
       const owner = await fetch(
@@ -75,10 +43,13 @@ export default function BookDescription(
       await fetch(
         `http://bookshare.local/api/message/${me.tid}/${owner.telegramId}`
       );
+      setSending(false);
     } catch (err) {
       console.log(err);
     }
   }
+
+  // TODO: save sent message to db so we can disable the button if a message was already sent (prevent spamming)
 
   return (
     <div className="flex h-max w-full flex-col gap-5 px-10 py-5">
@@ -87,12 +58,7 @@ export default function BookDescription(
           <button onClick={() => router.back()} className="">
             <HiChevronLeft className="h-10 w-10" />
           </button>
-          <button
-            onClick={() => {
-              console.log("favorite");
-            }}
-            className=""
-          >
+          <button onClick={handleFavorite}>
             <AiOutlineHeart className="h-8 w-8" />
           </button>
         </div>
@@ -116,25 +82,21 @@ export default function BookDescription(
           <p className="text-gray-400 text-sm">{book.description}</p>
         </div>
       </div>
-      <div className="flex gap-2">
-        {Object.entries(book.genres).map(([key, value], index) => {
-          console.log(key);
-          return (
-            <p
-              key={key}
-              className={`${
-                tagColors[index % tagColors.length]
-              } w-fit rounded-lg   px-2  py-1 text-black`}
-            >
-              {value}
-            </p>
-          );
-        })}
-      </div>
-      <div className="flex justify-between gap-2">
-        <CustomButton onClick={sendMessage} functionality="ExternalApp">
-          <FaTelegram />
-          Message user
+      <Tags book={book} />
+      <div className="flex justify-between gap-6">
+        <CustomButton
+          disabled={sending}
+          onClick={sendMessage}
+          functionality="ExternalApp"
+        >
+          {sending ? (
+            <span>Sending...</span>
+          ) : (
+            <>
+              <FaTelegram />
+              Message user
+            </>
+          )}
         </CustomButton>
         <CustomButton onClick={() => {}} functionality="ExternalApp">
           <GoLocation className="text-white" />
